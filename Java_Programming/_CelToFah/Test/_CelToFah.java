@@ -27,7 +27,7 @@ public class _CelToFah {
 				Scanner inputC = new Scanner(System.in);
 				System.out.print("섭씨온도 입력 : ");
 				double c = inputC.nextDouble();
-				 
+				
 	            double f = c * 1.8 + 32;
 	            System.out.printf("섭씨온도 %.3f는 화씨온도 %.3f입니다.", c, f);
 	            b = false;
