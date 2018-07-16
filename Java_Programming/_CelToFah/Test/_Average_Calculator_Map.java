@@ -9,9 +9,6 @@ public class _Average_Calculator_Map {
 		
 		Map<String, Integer>  scores = new HashMap<String, Integer>( );
 		
-		String[] s = new String[4];
-		int[] v = new int[4];
-		
 		scores.put("수학", 50);
 		scores.put("영어", 60);
 		scores.put("물리", 60);
