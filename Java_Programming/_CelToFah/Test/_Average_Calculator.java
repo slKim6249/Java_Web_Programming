@@ -6,7 +6,6 @@ public class _Average_Calculator {
 
 	public static void main(String[] args) {
 		
-		int Math, Eng, Phy, Pro;
 		int result = 0;
 		int[] s = new int[4];
 		
