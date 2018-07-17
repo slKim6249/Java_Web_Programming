@@ -9,7 +9,7 @@ public class Average_Calculator_Grade_Infinite_Loop {
 		boolean b = true;
 		boolean bb = true;
 		int n = 0;
-		String s = null;
+		String s;
 		
 		Scanner input = new Scanner(System.in);
 		Scanner inputS = new Scanner(System.in);
