@@ -6,8 +6,8 @@ public class _Average_Calculator {
 
 	public static void main(String[] args) {
 		
-		int result = 0;
-		int[] score = new int[4];
+		double result = 0;
+		double[] score = new double[4];
 		
 		System.out.println("수학, 영어, 물리, 프로그래밍 점수를 차례대로 입력하세요\n");
 		
@@ -19,7 +19,7 @@ public class _Average_Calculator {
 		}
 		
 		result = result/score.length;
-		System.out.printf("모든 과목의 평균은 %d입니다.", result);
+		System.out.printf("모든 과목의 평균은 %.2f입니다.", result);
 		
 	}
 }
