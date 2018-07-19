@@ -8,32 +8,32 @@ public class prac {
 		
 		Scanner input = new Scanner(System.in);
 		
-//		System.out.println("첫번째 숫자를 입력하세요.");
-//		int one = input.nextInt();
-//		System.out.println("두번째 숫자를 입력하세요.");
-//		int two = input.nextInt();
-//		
-//		if( one > two ) {
-//			System.out.printf("큰 숫자는 %d입니다.", one);
-//		} else {
-//			System.out.printf("큰 숫자는 %d입니다.", two);
-//		}
+		double money = 1_500_000;
+		double usaPort = 2_000_000;
 		
-		System.out.println("첫번째 숫자를 입력하세요.");
-		int one = input.nextInt();
-		System.out.println("두번째 숫자를 입력하세요.");
-		int two = input.nextInt();
-		System.out.println("세번째 숫자를 입력하세요.");
-		int three = input.nextInt();
+		System.out.println("현금입니까 ?\n맞으면 1 아니면 아무 키를 입력해주세요.");
+		int select = input.nextInt();
 		
-		if( one > two && two < three ) {
-			System.out.printf("가장 작은 수는 %d입니다.", two);
-		} else if( two > one && one < three ) {
-			System.out.printf("가장 작은 수는 %d입니다.", one);
+		if( select == 1 ) {
+			
+			usaPort *= 0.9;
+			
+			if( money > usaPort ) {
+				System.out.println("구입 완료");
+			} else {
+				System.out.println("구입 불가");
+			}
+			
 		} else {
-			System.out.printf("가장 작은 수는 %d입니다.", three);
+			
+			if( money > usaPort ) {
+				System.out.println("구입 완료");
+			} else {
+				System.out.println("구입 불가");
+			}
+			
 		}
-
+		
 	}
 
 }
