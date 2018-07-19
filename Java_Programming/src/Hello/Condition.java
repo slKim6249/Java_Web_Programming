@@ -37,8 +37,29 @@ public class Condition {
 		
 		System.out.printf("%.2f\n" ,average);
 		
-		if ( isGrade = average > 95 ) {
+		if ( isGrade = average >= 95 ) {
 			String grade = "A+입니다.";
+			System.out.println( grade );
+		} else if ( isGrade = average > 90 && average < 95 ) {
+			String grade = "A입니다.";
+			System.out.println( grade );
+		} else if ( isGrade = average > 85 && average < 90 ) {
+			String grade = "B+입니다.";
+			System.out.println( grade );
+		} else if ( isGrade = average > 80 && average < 85 ) {
+			String grade = "B입니다.";
+			System.out.println( grade );
+		} else if ( isGrade = average > 75 && average < 80 ) {
+			String grade = "C+입니다.";
+			System.out.println( grade );
+		} else if ( isGrade = average > 70 && average < 75 ) {
+			String grade = "C입니다.";
+			System.out.println( grade );
+		} else if ( isGrade = average > 60 && average < 70 ) {
+			String grade = "D입니다.";
+			System.out.println( grade );
+		} else {
+			String grade = "F입니다.";
 			System.out.println( grade );
 		}
 		
