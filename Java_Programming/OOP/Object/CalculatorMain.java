@@ -4,6 +4,7 @@ public class CalculatorMain {
 
 	public static void main(String[] args) {
 		
+		int number = 100;
 		Calculator calculator = new Calculator();
 		
 		calculator.numberOne = 60;
@@ -11,6 +12,9 @@ public class CalculatorMain {
 		
 		calculator.printAdditionResult();
 		calculator.printDivisionResult();
+		
+		System.out.println(number);
+		System.out.println(calculator);
 		
 	}
 
