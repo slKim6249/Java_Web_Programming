@@ -25,6 +25,9 @@ public class GameObjectMain {
       character.setHealthPotionList(characterHPList);
       character.setManaPotionList(characterMPList);
       
+      List<String> characterHPList2 = character.getHealthPotionList();
+      characterHPList2.clear(); // 모든 데이터 삭제
+      
       // 몬스터
       GameObject monster = new GameObject();
       
