@@ -13,7 +13,7 @@ public class Computer {
 	
 	public Computer() {
 		this.cpu = "intel";
-		this.gpu = "gpu";
+		this.gpu = "geforce";
 		
 		this.ramList = new ArrayList<String>();
 		this.ramList.add("16GB");
@@ -21,6 +21,15 @@ public class Computer {
 		this.hddList.add("1TB");
 		this.ssdList = new ArrayList<String>();
 		this.ssdList.add("256GB");
+		
+	}
+	
+	public Computer(String cpu, 
+					String gpu) {
+		
+		this(); // 기본 생성자 호출
+		this.cpu = cpu;
+		this.gpu = gpu;
 		
 	}
 
@@ -39,14 +48,14 @@ public class Computer {
 	}
 
 	public void setGpu(String gpu) {
-		if( gpu.toLowerCase().startsWith("nvdia") ) {
+		if( gpu.toLowerCase().startsWith("geforce") ) {
 			this.gpu = gpu;
 		}
 	}
 
 	public List<String> getRamList() {
 		List<String> ramListCopy = new ArrayList<String>();
-		ramListCopy.addAll(this.getRamList());
+		ramListCopy.addAll(this.ramList);
 		return ramListCopy;
 	}
 
@@ -58,7 +67,7 @@ public class Computer {
 
 	public List<String> getHddList() {
 		List<String> hddListCopy = new ArrayList<String>();
-		hddListCopy.addAll(this.getHddList());
+		hddListCopy.addAll(this.hddList);
 		return hddListCopy;
 	}
 
@@ -70,7 +79,7 @@ public class Computer {
 
 	public List<String> getSsdList() {
 		List<String> ssdListCopy = new ArrayList<String>();
-		ssdListCopy.addAll(this.getSsdList());
+		ssdListCopy.addAll(this.ssdList);
 		return ssdListCopy;
 	}
 
