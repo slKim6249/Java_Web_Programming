@@ -12,21 +12,25 @@ public class GameObject {
 	private List<String> healthPotionList;
 	private List<String> manaPotionList;
 
-//	public void setHealthPoint(int healthPoint) {
-//
-//		if (healthPoint <= 10_000) {
-//			this.healthPoint = healthPoint;
-//		}
-//
-//	}
-//
-//	public void setManaPoint(int manaPoint) {
-//
-//		if (manaPoint <= healthPoint) {
-//			this.manaPoint = manaPoint;
-//		}
-//
-//	}
+	public GameObject() {
+		System.out.println("생성자 호출");
+		this.healthPoint = 30;
+		this.manaPoint = 50;
+		this.damagePoint = 2;
+		
+		this.healthPotionList = new ArrayList<String>();
+		this.healthPotionList.add("HP 포션");
+		this.healthPotionList.add("HP 포션");
+		this.healthPotionList.add("HP 포션");
+		this.healthPotionList.add("HP 포션");
+		
+		this.manaPotionList = new ArrayList<String>();
+		this.manaPotionList.add("MP 포션");
+		this.manaPotionList.add("MP 포션");
+		this.manaPotionList.add("MP 포션");
+		this.manaPotionList.add("MP 포션");
+		
+	}
 
 	public int getDamagePoint() {
 		return damagePoint;
@@ -133,5 +137,9 @@ public class GameObject {
 		} else {
 			return "";
 		}
+	}
+
+	public void setHealthPoint(int i) {
+		this.healthPoint = i;
 	}
 }

@@ -1,43 +1,29 @@
 package Object;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class GameObjectMain {
 
    public static void main(String[] args) {
       
-      GameObject character = new GameObject();
+	   // 캐릭터
+      GameObject character = new GameObject(); // 생성자 이용
+      /*
+       * 생성자를 호출하면서 생성자에 지정된 기본 값 사용 
+       * 캐릭터의 HP = 30
+       * 캐릭터의 MP = 50
+       * 캐릭터의 DamagePoint = 2
+       */
       
-      List<String> characterHPList = new ArrayList<String>();
-      characterHPList.add("HP물약");
-      characterHPList.add("HP물약");
-      characterHPList.add("HP물약");
-      characterHPList.add("HP물약");
-      
-      List<String> characterMPList = new ArrayList<String>();
-      characterMPList.add("MP물약");
-      characterMPList.add("MP물약");
-      characterMPList.add("MP물약");
-      characterMPList.add("MP물약");
-      
-      character.setDamagePoint(30);
-      character.setHealthPotionList(characterHPList);
-      character.setManaPotionList(characterMPList);
-      
-      List<String> characterHPList2 = character.getHealthPotionList();
-      characterHPList2.clear(); // 모든 데이터 삭제
+      character.setDamagePoint(5); // DamagePoint 지정
+      character.setHealthPoint(500);
       
       // 몬스터
       GameObject monster = new GameObject();
-      
-      List<String> monsterHPList = new ArrayList<String>();
-      monsterHPList.add("몬스터 HP 물약");
-      monsterHPList.add("몬스터 HP 물약");
-      
-      monster.setDamagePoint(10);
-      monster.setHealthPotionList(monsterHPList);
-      monster.setManaPotionList(new ArrayList<String>());
+      /*
+       * 생성자를 호출하면서 생성자에 지정된 기본 값 사용 
+       * 몬스터의 HP = 30
+       * 몬스터의 MP = 50
+       * 몬스터의 DamagePoint = 2
+       */
       
       while ( true ) {
          monster.attack();
