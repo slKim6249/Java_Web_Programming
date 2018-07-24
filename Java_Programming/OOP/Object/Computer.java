@@ -10,6 +10,19 @@ public class Computer {
 	private List<String> ramList;
 	private List<String> hddList;
 	private List<String> ssdList;
+	
+	public Computer() {
+		this.cpu = "intel";
+		this.gpu = "gpu";
+		
+		this.ramList = new ArrayList<String>();
+		this.ramList.add("16GB");
+		this.hddList = new ArrayList<String>();
+		this.hddList.add("1TB");
+		this.ssdList = new ArrayList<String>();
+		this.ssdList.add("256GB");
+		
+	}
 
 	public String getCpu() {
 		return cpu;
