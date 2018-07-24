@@ -37,7 +37,12 @@ public class GameObject {
 	}
 
 	public List<String> getHealthPotionList() {
-		return healthPotionList;
+		
+		List<String> healthPotionListCopy = 
+				new ArrayList<String>();
+		healthPotionListCopy.addAll(this.healthPotionList);
+		
+		return healthPotionListCopy;
 	}
 
 	public void setHealthPotionList(List<String> healthPotionList) {
@@ -46,7 +51,10 @@ public class GameObject {
 	}
 
 	public List<String> getManaPotionList() {
-		return manaPotionList;
+		List<String> manaPotionListCopy = 
+				new ArrayList<String>();
+		manaPotionListCopy.addAll(this.manaPotionList);
+		return manaPotionListCopy;
 	}
 
 	public void setManaPotionList(List<String> manaPotionList) {
