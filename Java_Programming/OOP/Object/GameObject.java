@@ -45,22 +45,10 @@ public class GameObject {
 						int manaPoint,
 						int damagePoint) {
 		
-		System.out.println("생성자 호출");
+		this(); // 기본 생성자 호출
 		this.healthPoint = healthPoint;
 		this.manaPoint = manaPoint;
 		this.damagePoint = damagePoint;
-		
-		this.healthPotionList = new ArrayList<String>();
-		this.healthPotionList.add("HP 포션");
-		this.healthPotionList.add("HP 포션");
-		this.healthPotionList.add("HP 포션");
-		this.healthPotionList.add("HP 포션");
-		
-		this.manaPotionList = new ArrayList<String>();
-		this.manaPotionList.add("MP 포션");
-		this.manaPotionList.add("MP 포션");
-		this.manaPotionList.add("MP 포션");
-		this.manaPotionList.add("MP 포션");
 		
 	}
 
