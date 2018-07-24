@@ -5,16 +5,13 @@ public class GameObjectMain {
    public static void main(String[] args) {
       
 	   // 캐릭터
-      GameObject character = new GameObject(); // 생성자 이용
+      GameObject character = new GameObject(1000, 5000, 200); // 생성자 오버로딩 이용
       /*
        * 생성자를 호출하면서 생성자에 지정된 기본 값 사용 
        * 캐릭터의 HP = 30
        * 캐릭터의 MP = 50
        * 캐릭터의 DamagePoint = 2
        */
-      
-      character.setDamagePoint(5); // DamagePoint 지정
-      character.setHealthPoint(500);
       
       // 몬스터
       GameObject monster = new GameObject();

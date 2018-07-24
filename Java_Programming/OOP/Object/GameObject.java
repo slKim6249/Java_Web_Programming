@@ -31,6 +31,38 @@ public class GameObject {
 		this.manaPotionList.add("MP 포션");
 		
 	}
+	
+	
+	/**
+	 * Constructer Overloading
+	 * 생성자 오버로딩 => 같은 이름을 가진 메소드이지만,
+	 * 아큐먼츠가 다른 경우다
+	 * @param healthPoint
+	 * @param manaPoint
+	 * @param damagePoint
+	 */
+	public GameObject(int healthPoint, 
+						int manaPoint,
+						int damagePoint) {
+		
+		System.out.println("생성자 호출");
+		this.healthPoint = healthPoint;
+		this.manaPoint = manaPoint;
+		this.damagePoint = damagePoint;
+		
+		this.healthPotionList = new ArrayList<String>();
+		this.healthPotionList.add("HP 포션");
+		this.healthPotionList.add("HP 포션");
+		this.healthPotionList.add("HP 포션");
+		this.healthPotionList.add("HP 포션");
+		
+		this.manaPotionList = new ArrayList<String>();
+		this.manaPotionList.add("MP 포션");
+		this.manaPotionList.add("MP 포션");
+		this.manaPotionList.add("MP 포션");
+		this.manaPotionList.add("MP 포션");
+		
+	}
 
 	public int getDamagePoint() {
 		return damagePoint;
