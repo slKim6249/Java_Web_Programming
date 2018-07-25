@@ -4,5 +4,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="_CelToFah"/>
 	<classpathentry kind="src" path="OOP"/>
+	<classpathentry kind="src" path="Bicycle"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
