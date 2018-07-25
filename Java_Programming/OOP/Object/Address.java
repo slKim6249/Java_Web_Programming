@@ -5,7 +5,7 @@ public class Address {
 	private String name;
 	private String picture;
 	private String number;
-
+	
 	public Address(String name, String picture, String number) {
 		
 		this.name = name;
