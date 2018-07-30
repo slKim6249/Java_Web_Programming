@@ -36,7 +36,14 @@ public class Ktds {
 		friendList.add(friend);
 		
 		for (Friend f : friendList) {
-			System.out.println(f);
+			System.out.println(f.getName());
+			
+			if( f instanceof KtdsFriend ) {
+				KtdsFriend kf = (KtdsFriend) f;
+				System.out.println(kf.getAge());
+				System.out.println(kf.getPhone());
+			}
+			
 		}
 	}
 
