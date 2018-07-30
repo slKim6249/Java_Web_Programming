@@ -72,5 +72,11 @@ public class LGTV implements TV {
 	}
 	
 	
+	public void mute() {
+		System.out.println("음소거 모드");
+		volume = MIN_VOLUME;
+	}
+	
+	
 	
 }

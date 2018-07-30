@@ -11,7 +11,7 @@ public class LivingRoom {
 		
 	}
 	
-	public void run( TV tv ) {
+	public void run( LGTV tv ) {
 		// Sub Class is a Super Class
 		// Sub Class => LGTV
 		// Super Class => TV
@@ -19,6 +19,13 @@ public class LivingRoom {
 		// tv = new LGTV();
 		
 		tv.On();
+		
+		// tv가 MutableTV인지 확인
+		if( tv instanceof MutableTV )  { 
+			MutableTV mTV = (MutableTV) tv;
+			mTV.Mute();
+		}
+		
 		tv.channelUP();
 		tv.channelDown();
 		tv.volumeUp();
