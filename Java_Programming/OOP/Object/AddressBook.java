@@ -33,7 +33,7 @@ public class AddressBook {
 			// 메뉴 입력 받음
 			int menu = input.nextInt();
 			
-			if ( menu == 1 ) {
+			if ( menu == Menu.LISTING ) {
 				System.out.println("===============================");
 				System.out.println(" 주소록 전체 조회");
 				System.out.println("===============================");
@@ -54,7 +54,7 @@ public class AddressBook {
 				}
 				
 				
-			} else if ( menu == 2 ) {
+			} else if ( menu == Menu.SEARCH ) {
 				System.out.println("===============================");
 				System.out.println(" 주소록 검색");
 				System.out.println("===============================");
@@ -72,7 +72,7 @@ public class AddressBook {
 					System.out.println("검색 결과가 존재하지 않습니다.");
 				}
 				
-			} else if ( menu == 3 ) {
+			} else if ( menu == Menu.REGIST ) {
 				System.out.println("===============================");
 				System.out.println(" 주소록 등록");
 				System.out.println("===============================");
@@ -92,7 +92,7 @@ public class AddressBook {
 					System.out.println(e.getMessage());
 				}
 				
-			} else if ( menu == 4 ) {
+			} else if ( menu == Menu.MODIFY ) {
 				System.out.println("===============================");
 				System.out.println(" 주소록 수정");
 				System.out.println("===============================");
@@ -119,7 +119,7 @@ public class AddressBook {
 				}
 				
 				
-			} else if ( menu == 5 ) {
+			} else if ( menu == Menu.REMOVE ) {
 				System.out.println("===============================");
 				System.out.println(" 주소록 삭제");
 				System.out.println("===============================");
@@ -130,7 +130,7 @@ public class AddressBook {
 				addressManager.removeByName(name);
 				System.out.println("삭제가 완료되었습니다.");
 				
-			} else if ( menu == 9 ) {
+			} else if ( menu == Menu.QUIT ) {
 				System.out.println("종료합니다.");
 				break;
 			} else {
