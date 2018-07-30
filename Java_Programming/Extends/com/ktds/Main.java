@@ -10,7 +10,7 @@ public class Main {
 	
 	public void run() {
 		
-		Logging logger = new MessageLogger() {};
+		Logging logger = new MessageLogger();
 		
 		logger.printLogging();
 	}

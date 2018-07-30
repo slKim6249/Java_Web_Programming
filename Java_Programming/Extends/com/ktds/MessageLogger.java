@@ -1,6 +1,6 @@
 package com.ktds;
 
-public abstract class MessageLogger extends Logging {
+public class MessageLogger extends Logging {
 
 	@Override
 	public String setMessage() {
