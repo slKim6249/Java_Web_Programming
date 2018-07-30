@@ -6,5 +6,6 @@
 	<classpathentry kind="src" path="OOP"/>
 	<classpathentry kind="src" path="Bicycle"/>
 	<classpathentry kind="src" path="Market"/>
+	<classpathentry kind="src" path="Drink"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
