@@ -13,7 +13,8 @@ public class NumberFormatExceptionTest {
 		
 		String numberStr = "10.0";
 		
-		Pattern p = Pattern.compile("[0-9]+"); // 정규 표현식, 0~9까지의 범위중에 반복 되는지
+		Pattern p = Pattern.compile("[0-9]+"); // 정규 표현식, 0~9까지의 범위중에 반복 되는지,
+												// +는 하나 이상 존재하는지, 숫자만 존재하는 패턴인지
 		Matcher m = p.matcher(numberStr);
 		
 		int number = 0;
