@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="_CelToFah"/>
 	<classpathentry kind="src" path="OOP"/>
@@ -12,5 +16,7 @@
 	<classpathentry kind="src" path="Extends"/>
 	<classpathentry kind="src" path="Zerg"/>
 	<classpathentry kind="src" path="Exception"/>
+	<classpathentry kind="src" path="HumanResource"/>
+	<classpathentry kind="lib" path="HumanResource/ojdbc6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
