@@ -11,5 +11,6 @@
 	<classpathentry kind="src" path="Interface"/>
 	<classpathentry kind="src" path="Extends"/>
 	<classpathentry kind="src" path="Zerg"/>
+	<classpathentry kind="src" path="Exception"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
