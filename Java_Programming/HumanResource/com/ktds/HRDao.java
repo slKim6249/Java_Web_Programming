@@ -64,8 +64,30 @@ public class HRDao {
 			}
 		} catch (SQLException e) {
 			System.out.println( e.getMessage() );
+		} finally {
+			// 연결을 하고 있다면
+			// DB 연결 해제 - DB를 연 역순으로 close
+			if ( rs != null ) {
+				try {
+					// DB 연결 해제
+					rs.close();
+				} catch (SQLException e) {} 
+			}
+			
+			if ( pstmt != null ) {
+				try {
+					// DB 연결 해제
+					pstmt.close();
+				} catch (SQLException e) {} 
+			}
+			
+			if ( conn != null ) {
+				try {
+					// DB 연결 해제
+					conn.close();
+				} catch (SQLException e) {} 
+			}
 		}
-		
 		
 	}
 
