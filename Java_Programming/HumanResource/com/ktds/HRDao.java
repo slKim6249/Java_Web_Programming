@@ -17,10 +17,46 @@ public class HRDao {
 		
 //		Java 9
 //		List<String> cityList = List.of("JP", "CA", "US", "UK");
+//		new HRDao().getCities(cityList);
 		
 //		new HRDao().getCities(List.of("JP", "CA", "US", "UK"));
 		
-		new HRDao().searchEmployeeByName("v"); // v가 들어간 이름 찾기
+//		new HRDao().searchEmployeeByName("v"); // v가 들어간 이름 찾기
+		new HRDao().printEmployees();
+	}
+	
+	public void printEmployees() {
+		
+		Sql sql = new Sql() {
+
+			@Override
+			public PreparedStatement preparedStatement(Connection conn) throws SQLException {
+				StringBuffer query = new StringBuffer();
+				query.append("SELECT  FIRST_NAME || ' ' || LAST_NAME NAME "                );
+				query.append("        , CASE  "                                        	   );
+				query.append("            WHEN COMMISSION_PCT IS NOT NULL THEN "           );
+				query.append("                SALARY + SALARY * COMMISSION_PCT "           );
+				query.append("            ELSE "                                           );
+				query.append("                SALARY "                                     );
+				query.append("            END SALARY "                                     );
+				query.append("        , TO_CHAR(HIRE_DATE, 'YYYY. MM. DD. ') HIRE_DATE "   );
+				query.append("FROM    EMPLOYEES"                                           );
+
+				
+				PreparedStatement pstmt = conn.prepareStatement(query.toString());
+				return pstmt;
+			}
+
+			@Override
+			public void printRow(ResultSet rs) throws SQLException {
+				String name = rs.getString("NAME");
+				int salary = rs.getInt("SALARY");
+				String hireDate = rs.getString("HIRE_DATE");
+				
+				System.out.printf("%s %d %s\n",name, salary, hireDate);
+			}};
+		
+		sql.select();
 	}
 	
 	public void searchEmployeeByName( String name ) {
