@@ -21,9 +21,9 @@ public class HRDao {
 		countryIdList.add("UK");
 		
 		// Java 9
-		List<String> cityList = List.of("JP", "CA", "US", "UK");
+//		List<String> cityList = List.of("JP", "CA", "US", "UK");
 		
-		new HRDao().getCities(cityList);
+		new HRDao().getCities(List.of("JP", "CA", "US", "UK"));
 	}
 	
 	public void getCities(List<String> countryIdList) {
