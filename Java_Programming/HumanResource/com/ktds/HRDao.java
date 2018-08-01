@@ -13,12 +13,50 @@ import oracle.jdbc.proxy.annotation.GetCreator;
 public class HRDao {
 
 	public static void main(String[] args) {
-		new HRDao().run();
+//		new HRDao().run();
 		
 //		Java 9
 //		List<String> cityList = List.of("JP", "CA", "US", "UK");
 		
 //		new HRDao().getCities(List.of("JP", "CA", "US", "UK"));
+		
+		new HRDao().searchEmployeeByName("v"); // v가 들어간 이름 찾기
+	}
+	
+	public void searchEmployeeByName( String name ) {
+		Sql sql = new Sql() {
+
+			@Override
+			public PreparedStatement preparedStatement(Connection conn) throws SQLException {
+				// 바인딩 기호 양옆에 % 사용해서 name 찾기
+				String searchName = "%" + name + "%";
+				
+				// StringBuffer - Buffer로 잠시 모아둠
+				StringBuffer query = new StringBuffer();
+				// (앞,)뒤로 한 칸씩 공백 추가 - 겹치지 않기 위해
+				query.append("SELECT	* ");
+				query.append("FROM		EMPLOYEES ");
+				query.append("WHERE		FIRST_NAME LIKE ? ");
+				query.append("OR		LAST_NAME LIKE ? ");
+				
+				PreparedStatement pstmt = conn.prepareStatement(query.toString());
+				// ?는 바인딩 기호, 문자물음표, 숫자인지, 문자인지 확인해서 자동 설정
+				pstmt.setString(1, searchName);
+				pstmt.setString(2, searchName);
+				
+				return pstmt;
+			}
+
+			@Override
+			public void printRow(ResultSet rs) throws SQLException {
+				String firstName = rs.getString("FIRST_NAME");
+				String lastName = rs.getString("LAST_NAME");
+				
+				System.out.println(firstName);
+				System.out.println(lastName);
+			}};
+			
+			sql.select();
 	}
 	
 	public void getCities(List<String> countryIdList) {
