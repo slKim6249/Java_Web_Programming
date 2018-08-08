@@ -27,7 +27,7 @@ public class HRDao {
 	
 	public void printEmployees() {
 		
-		Sql sql = new Sql() {
+		Sqle sql = new Sqle() {
 
 			@Override
 			public PreparedStatement preparedStatement(Connection conn) throws SQLException {

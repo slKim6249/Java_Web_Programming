@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class Run extends Sql {
+public class Run extends Sqle {
 
 	@Override
 	public PreparedStatement preparedStatement(Connection conn) {
