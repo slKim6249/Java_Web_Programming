@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.StringJoiner;
 
 import com.ktds.Sql;
 import com.ktds.delivery.man.vo.DeliveryMan;
@@ -14,7 +13,7 @@ public class DeliveryManDAO {
 	
 	public List<DeliveryMan> selectAllDeliveryMan() {
 		
-		Sql sql = new Sql() {
+		Sql sql = new Sql() { // Template CallBack
 
 			@Override
 			public PreparedStatement preparedStatement(Connection conn) throws SQLException {
@@ -24,7 +23,7 @@ public class DeliveryManDAO {
 				query.append("FROM		DELIVERY_MAN ");
 				
 				PreparedStatement pstmt = conn.prepareStatement(query.toString());
-				return pstmt;
+				return pstmt; // return Query 
 			}
 
 			@Override

@@ -68,8 +68,7 @@ public abstract class Sql {
 				try {
 					// DB 연결 해제
 					conn.close();
-				} catch (SQLException e) {
-				}
+				} catch (SQLException e) {}
 			}
 		}
 	}
@@ -130,8 +129,7 @@ public abstract class Sql {
 					try {
 						// DB 연결 해제
 						conn.close();
-					} catch (SQLException e) {
-					}
+					} catch (SQLException e) {}
 				}
 			}
 		}
@@ -171,10 +169,10 @@ public abstract class Sql {
 						try {
 							// DB 연결 해제
 							conn.close();
-						} catch (SQLException e) {
-						}
+						} catch (SQLException e) {}
 					}
 				}
-	}
+				
+		}
 
 }
