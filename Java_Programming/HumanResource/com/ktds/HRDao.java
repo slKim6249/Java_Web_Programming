@@ -60,7 +60,7 @@ public class HRDao {
 	}
 	
 	public void searchEmployeeByName( String name ) {
-		Sql sql = new Sql() {
+		Sqle sql = new Sqle() {
 
 			@Override
 			public PreparedStatement preparedStatement(Connection conn) throws SQLException {
@@ -97,7 +97,7 @@ public class HRDao {
 	
 	public void getCities(List<String> countryIdList) {
 		
-		Sql sql = new Sql() {
+		Sqle sql = new Sqle() {
 
 			@Override
 			public PreparedStatement preparedStatement(Connection conn) throws SQLException {
@@ -124,7 +124,7 @@ public class HRDao {
 		// 추상클래스를 객체화 하지않고 쓰는 고급 기술
 		// 직접 객체화하고 메소드 구현
 		// Template CallBack - 한 프로세스에서 변경되는 부분만 분리하여 즉시 객체화 시킴
-		Sql sql = new Sql() {
+		Sqle sql = new Sqle() {
 
 			@Override
 			public PreparedStatement preparedStatement(Connection conn) throws SQLException {
