@@ -25,7 +25,7 @@ public class ArticleController {
 		int articleID = ++index;
 		article.setArticleID(articleID);
 		
-		int viewCount = ++viewCnt;
+		int viewCount = viewCnt;
 		article.setViewCount(viewCount);
 		
 		System.out.print("등록할 게시물의 제목을 입력하세요.");
@@ -64,7 +64,7 @@ public class ArticleController {
 	public void printOnearticle() {
 		System.out.println("게시물 조회");
 		
-		System.out.println("찾으려는 게시물의 ID를 입력하세요");
+		System.out.println("찾으려는 게시물의 회원 ID를 입력하세요");
 		String articleID = Common.INPUT.next();
 		
 		Article article = 
@@ -80,6 +80,8 @@ public class ArticleController {
 			System.out.println("회원 ID : " + article.getMemberId());
 		} catch (NullPointerException e) {
 			System.out.println("찾으려는 ID가 등록되어있지 않습니다.");
+		} finally {
+			viewCnt++;
 		}
 		
 	}

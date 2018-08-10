@@ -103,10 +103,10 @@ public class MemberDao {
 				
 				PreparedStatement pstmt = 
 						conn.prepareStatement(query.toString());
-				pstmt.setString(1, member.getMemberID() );
-				pstmt.setString(2, member.getName() );
-				pstmt.setString(3, member.getPassword() );
-				pstmt.setString(4, member.getRegisteredDate() );
+				int index = 0;
+				pstmt.setString(++index, member.getMemberID() );
+				pstmt.setString(++index, member.getPassword() );
+				pstmt.setString(++index, member.getName() );
 				return pstmt;
 			}
 

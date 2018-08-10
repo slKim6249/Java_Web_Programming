@@ -117,7 +117,6 @@ public class ArticleDao {
 				pstmt.setString(++index, article.getSubject());
 				pstmt.setString(++index, article.getContent());
 				pstmt.setInt(++index, article.getViewCount());
-				pstmt.setString(++index, article.getWriteDate());
 				pstmt.setString(++index, article.getMemberId());
 				return pstmt;
 			}
