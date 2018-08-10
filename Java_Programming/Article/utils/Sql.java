@@ -1,4 +1,4 @@
-package com.ktds;
+package utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -29,7 +29,7 @@ public abstract class Sql {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "DLVRY", "dlvry");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "BOARD", "board");
 
 			// 2. Query 준비 및 실행
 			pstmt = preparedStatement(conn);
@@ -82,7 +82,7 @@ public abstract class Sql {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "DLVRY", "dlvry");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "BOARD", "board");
 			
 			// 2. Query 준비 및 실행
 			pstmt = preparedStatement(conn);
@@ -135,7 +135,7 @@ public abstract class Sql {
 		PreparedStatement pstmt = null;
 
 		try {
-			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "DLVRY", "dlvry");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "BOARD", "board");
 			
 			// 2. Query 준비 및 실행
 			pstmt = preparedStatement(conn);

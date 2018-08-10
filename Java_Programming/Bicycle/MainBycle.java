@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Main {
+public class MainBycle {
 	
 	public static void viewHome() {
 		System.out.println("==================================");
@@ -66,7 +66,7 @@ public class Main {
 	public static void main(String[] args) {
 		// Main.main = new Main();
 		// main.run();
-		new Main().run();
+		new MainBycle().run();
 	}
 
 }

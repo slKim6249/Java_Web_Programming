@@ -17,6 +17,7 @@
 	<classpathentry kind="src" path="Zerg"/>
 	<classpathentry kind="src" path="Exception"/>
 	<classpathentry kind="src" path="HumanResource"/>
+	<classpathentry kind="src" path="Article"/>
 	<classpathentry kind="lib" path="HumanResource/ojdbc6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
