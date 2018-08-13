@@ -29,4 +29,14 @@
     <servlet-name>MeServlet</servlet-name>
     <url-pattern>/me</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GoodgagServlet</display-name>
+    <servlet-name>GoodgagServlet</servlet-name>
+    <servlet-class>com.ktds.goodgag.web.GoodgagServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GoodgagServlet</servlet-name>
+    <url-pattern>/goodgag</url-pattern>
+  </servlet-mapping>
 </web-app>
