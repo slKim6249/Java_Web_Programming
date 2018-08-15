@@ -1,0 +1,60 @@
+@charset "UTF-8";
+
+#wrapper {
+	 width: 500px;
+	 margin: 0 auto;
+}
+
+#logo {
+	text-align: center;
+}
+
+.form-box {
+	margin-bottom: 12px;
+}
+
+.form-box > img {
+	vertical-align: middle;
+	width: 48px;
+	height: 51px; 
+}
+
+input {
+	vertical-align: middle;
+	width: 448px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+
+#join {
+	background-color: #0074e9;
+	text-align: center;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	color: #FFFFFF;
+	font-size: 19px;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+#agreement {
+	font-size: 13px;
+	color: #333333;
+	margin-top: 5px;
+}
+
+#agreement > .bold {
+	font-weight: bold;
+}
+
+#agreement > .underline {
+	text-decoration: underline;
+}
+
+#copyright {
+	text-align: center;
+	margin-top: 15px;
+	margin-bottom: 20px;
+	color: #333333;
+	font-size: 13px;
+}

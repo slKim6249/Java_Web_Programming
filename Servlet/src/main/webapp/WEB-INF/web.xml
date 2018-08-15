@@ -39,4 +39,14 @@
     <servlet-name>MeServlet</servlet-name>
     <url-pattern>/me</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>MemberJoinServlet</display-name>
+    <servlet-name>MemberJoinServlet</servlet-name>
+    <servlet-class>com.ktds.coupang.web.MemberJoinServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MemberJoinServlet</servlet-name>
+    <url-pattern>/memberJoin</url-pattern>
+  </servlet-mapping>
 </web-app>
