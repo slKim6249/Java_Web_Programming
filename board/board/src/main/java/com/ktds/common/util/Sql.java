@@ -118,7 +118,7 @@ public abstract class Sql<T> {
    }
    
    private Connection createDatabaseConnection() throws SQLException {
-      return DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "BOARD", "BOARD");
+      return DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "BOARD", "board");
    }
    
    private void closeSessions(ResultSet rs, PreparedStatement pstmt, Connection conn) {

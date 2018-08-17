@@ -33,6 +33,11 @@ public class BoardServiceImpl implements BoardService {
 	public boolean updateOneBoard(BoardVO boardVO) {
 		return this.boardDao.updateOneBoard(boardVO) > 0;
 	}
+	
+	@Override
+	public boolean updateRecommendOneBoard(String boardId) {
+		return this.boardDao.updateRecommendOneBoard(boardId) > 0;
+	}
 
 	@Override
 	public boolean deleteOneBoard(String boardId) {

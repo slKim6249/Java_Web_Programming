@@ -19,5 +19,6 @@
 	</p>
 	<hr>
 	<a href="/board/recommend?boardId=${boardVO.boardId }">추천</a>
+	<a href="/board/delete?boardId=${boardVO.boardId }">삭제</a>
 </body>
 </html>

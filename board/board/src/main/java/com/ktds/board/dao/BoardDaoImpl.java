@@ -145,7 +145,7 @@ public class BoardDaoImpl implements BoardDao {
 	}
 
 	@Override
-	public int updateOneBoard(BoardVO boardVO) {
+	public int updateOneBoard( BoardVO boardVO ) {
 		Sql sql = new Sql() {
 
 			@Override
@@ -176,6 +176,31 @@ public class BoardDaoImpl implements BoardDao {
 		return sql.insert();
 	}
 
+	@Override
+	public int updateRecommendOneBoard( String boardId ) {
+		Sql sql = new Sql() {
+
+			@Override
+			public PreparedStatement preparedStatement(Connection conn) throws SQLException {
+				StringBuffer query = new StringBuffer();
+				query.append("UPDATE	BOARD ");
+				query.append("SET		RECOMMEND_COUNT = RECOMMEND_COUNT + 1 ");
+				query.append("WHERE	BOARD_ID = ? ");
+				
+				PreparedStatement pstmt = conn.prepareStatement(query.toString());
+				pstmt.setString(1, boardId);
+				return pstmt;
+			}
+
+			@Override
+			public Object makeRow(ResultSet rs) throws SQLException {
+				return null;
+			}
+			
+		};
+		return sql.insert();
+	}
+	
 	@Override
 	public int deleteOneBoard(String boardId) {
 		Sql sql = new Sql() {
