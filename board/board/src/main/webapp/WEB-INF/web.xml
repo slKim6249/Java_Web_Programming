@@ -39,4 +39,14 @@
     <servlet-name>BoardRecommendServlet</servlet-name>
     <url-pattern>/recommend</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>BoardWriteServlet</display-name>
+    <servlet-name>BoardWriteServlet</servlet-name>
+    <servlet-class>com.ktds.board.web.BoardWriteServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BoardWriteServlet</servlet-name>
+    <url-pattern>/write</url-pattern>
+  </servlet-mapping>
 </web-app>

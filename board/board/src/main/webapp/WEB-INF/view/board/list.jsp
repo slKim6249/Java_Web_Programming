@@ -9,6 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<!-- 
 List Page ${name} // EL(Extended Language) // JSTL
 	<div>
 		<span>${boardList.get(0).getBoardId() }</span> / 
@@ -22,5 +23,7 @@ List Page ${name} // EL(Extended Language) // JSTL
 		<span>${boardList.get(0).getViewCount() }</span> / 
 		<span>${boardList.get(0).getRecommendCount() }</span>
 	</div>
+	 -->
+<a href="/board/write">글쓰기</a>
 </body>
 </html>
