@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>board</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>BoardListServlet</display-name>
+    <servlet-name>BoardListServlet</servlet-name>
+    <servlet-class>com.ktds.board.web.BoardListServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BoardListServlet</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>BoardDetailServlet</display-name>
+    <servlet-name>BoardDetailServlet</servlet-name>
+    <servlet-class>com.ktds.board.web.BoardDetailServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BoardDetailServlet</servlet-name>
+    <url-pattern>/detail</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>BoardRecommendServlet</display-name>
+    <servlet-name>BoardRecommendServlet</servlet-name>
+    <servlet-class>com.ktds.board.web.BoardRecommendServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BoardRecommendServlet</servlet-name>
+    <url-pattern>/recommend</url-pattern>
+  </servlet-mapping>
+</web-app>
