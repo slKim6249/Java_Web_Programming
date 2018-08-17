@@ -26,6 +26,9 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public BoardVO readOneBoard(String boardId) {
+		// 1. 조회수 증가
+		this.boardDao.updateViewCountOneBoard(boardId);
+		// 2. 게시글 조회
 		return this.boardDao.selectOneBoard(boardId);
 	}
 

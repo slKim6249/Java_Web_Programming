@@ -22,8 +22,11 @@ public class BoardDetailServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		BoardVO boardVO = this.boardService.readOneBoard(request.getParameter("boardId"));
 		
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		
+		BoardVO boardVO = this.boardService.readOneBoard(request.getParameter("boardId"));
 		request.setAttribute("boardVO", boardVO);
 		
 		String path = "/WEB-INF/view/board/detail.jsp";

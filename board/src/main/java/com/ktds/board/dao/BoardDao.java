@@ -14,6 +14,8 @@ public interface BoardDao {
 	// U
 	public int updateOneBoard( BoardVO boardVO );
 	public int updateRecommendOneBoard( String boardId );
+	public int updateViewCountOneBoard( String boardId );
+	
 	// D
 	public int deleteOneBoard( String boardId );
 }

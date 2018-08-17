@@ -18,6 +18,7 @@
 		${boardVO.content }
 	</p>
 	<hr>
+	<a href="/board/update?boardId=${boardVO.boardId }">수정</a>
 	<a href="/board/recommend?boardId=${boardVO.boardId }">추천</a>
 	<a href="/board/delete?boardId=${boardVO.boardId }">삭제</a>
 </body>
