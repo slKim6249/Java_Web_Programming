@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 
+		BoardDaoImpl board.dao = new BoardDaoImpl();
+		BoardServiceImpl board.service = new BoardServiceImpl();
+		board.service.setBoardDao(board.Dao);
+	 -->
+
+	<!-- Spring에서 객체 한개는 Bean 여러개는 Beans -->
+	<!-- BoardDaoImpl board.dao = new BoardDaoImpl(); -->
+	<!-- id는 객체 이름, class는 class -->
+	<bean id="board.dao"
+		  class="com.ktds.board.dao.BoardDaoImpl"></bean> <!-- Red Line -> Ctrl + Space -->
+		  
+	<!-- BoardServiceImpl board.service = new BoardServiceImpl(); -->
+    <bean id="board.service"
+          class="com.ktds.board.service.BoardServiceImpl">
+       <!-- board.service.setBoardDao(board.Dao); -->
+       <!-- name->Setter, ref->Parameter -->
+          <property name="boardDao" ref="board.dao"></property> <!-- Reference Type -->
+          <!-- <property name="" value=""></property> (String Type) -->
+    </bean>
+          
+</beans>

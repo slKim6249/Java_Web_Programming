@@ -1,17 +1,23 @@
 package com.ktds.board.web;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ktds.board.service.BoardService;
+import com.ktds.board.service.BoardServiceImpl;
+import com.ktds.board.vo.BoardVO;
 
 public class BoardUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private BoardService boardService;   
 	
     public BoardUpdateServlet() {
-    	this.boardService = new BoardserviceImpl();
+    	this.boardService = new BoardServiceImpl();
     }
 
 	protected void doGet(HttpServletRequest request, 
@@ -23,8 +29,8 @@ public class BoardUpdateServlet extends HttpServlet {
 		request.setAttribute("boardVO", boardVO);
 		
 		String path = "/WEB-INF/view/board/update.jsp";
-		RequestDispatcher rd = request.getRequestDisPatcher(path);
-		rd.foward(request, response);
+		RequestDispatcher rd = request.getRequestDispatcher(path);
+		rd.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, 
