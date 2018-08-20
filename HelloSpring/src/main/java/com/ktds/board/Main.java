@@ -19,7 +19,10 @@ public class Main {
 		
 		// Bean Container에서 board.service 객체를 참조한다.
 		// getBean("id", 참조.class);
-		BoardService boardService = ctx.getBean("board.service", BoardService.class);
+//		BoardService boardService = ctx.getBean("board.service", BoardService.class);
+//		boardService.createBoard();
+		
+		BoardService boardService = ctx.getBean("board.service2", BoardService.class);
 		boardService.createBoard();
 		
 	}

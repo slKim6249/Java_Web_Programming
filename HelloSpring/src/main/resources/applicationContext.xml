@@ -23,5 +23,12 @@
           <property name="boardDao" ref="board.dao"></property> <!-- Reference Type -->
           <!-- <property name="" value=""></property> (String Type) -->
     </bean>
+    
+    <!-- BoardServiceImpl2 board.service2 = new BoardServiceImpl2(board.dao) -->
+    <bean id="board.service2"
+    	  class="com.ktds.board.service.BoardServiceImpl2">
+    	  <!-- boardDao에 board.dao를 전달한다. -->
+    	  <constructor-arg name="boardDao" ref="board.dao" /> <!-- 기본생성자 -->
+    </bean>
           
 </beans>
