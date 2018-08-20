@@ -3,17 +3,18 @@ package com.ktds.delivery.controller;
 import java.util.List;
 
 import com.ktds.delivery.service.DeliveryService;
+import com.ktds.delivery.service.DeliveryServiceInter;
 import com.ktds.delivery.vo.Delivery;
 import com.ktds.utils.Common;
 
 public class DeliveryController {
 
-	private DeliveryService deliveryService;
+	private DeliveryServiceInter deliveryService;
 	
-	public DeliveryController() {
-		this.deliveryService = new DeliveryService();
+	public void setDeliveryService(DeliveryServiceInter deliveryService) {
+		this.deliveryService = deliveryService;
 	}
-	
+
 	public boolean createOneDelivery() {
 		
 		System.out.println("택배 등록 프로세스");

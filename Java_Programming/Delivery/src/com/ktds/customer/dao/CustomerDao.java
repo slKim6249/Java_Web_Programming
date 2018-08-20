@@ -6,14 +6,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import com.ktds.Sql;
 import com.ktds.customer.vo.Customer;
+import com.ktds.utils.Sql2;
 
-public class CustomerDao {
+public class CustomerDao implements CustomerDaoInter {
 
+	@Override
 	public List<Customer> selectAllCustomer() {
 		
-		Sql sql = new Sql() {
+		Sql2 sql = new Sql2() {
 
 			@Override
 			public PreparedStatement preparedStatement(Connection conn) throws SQLException {
@@ -44,9 +45,10 @@ public class CustomerDao {
 		
 	}
 	
+	@Override
 	public Customer selectOneCustomer(String phone) {
 		
-		Sql sql = new Sql() {
+		Sql2 sql = new Sql2() {
 
 			@Override
 			public PreparedStatement preparedStatement(Connection conn) throws SQLException {
@@ -79,9 +81,10 @@ public class CustomerDao {
 		
 	}
 	
+	@Override
 	public int insertOneCustomer(Customer customer) {
 		
-		Sql sql = new Sql() {
+		Sql2 sql = new Sql2() {
 
 			@Override
 			public PreparedStatement preparedStatement(Connection conn) throws SQLException {

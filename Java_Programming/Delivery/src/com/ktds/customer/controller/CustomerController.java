@@ -3,17 +3,18 @@ package com.ktds.customer.controller;
 import java.util.List;
 
 import com.ktds.customer.service.CustomerService;
+import com.ktds.customer.service.CustomerServiceInter;
 import com.ktds.customer.vo.Customer;
 import com.ktds.utils.Common;
 
 public class CustomerController {
 
-	private CustomerService customerService;
+	private CustomerServiceInter customerService;
 	
-	public CustomerController() {
-		this.customerService = new CustomerService();
+	public void setCustomerService(CustomerServiceInter customerService) {
+		this.customerService = customerService;
 	}
-	
+
 	public boolean registOneCustomer() {
 		
 		System.out.println("고객 등록 프로세스");

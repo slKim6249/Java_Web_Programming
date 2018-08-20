@@ -6,15 +6,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import com.ktds.Sql;
 import com.ktds.delivery.man.vo.DeliveryMan;
 import com.ktds.delivery.vo.Delivery;
+import com.ktds.utils.Sql2;
 
-public class DeliveryDao {
+public class DeliveryDao implements DeliveryDaoInter {
 
+	@Override
 	public List<Delivery> selectAllDelivery() {
 		
-		Sql sql = new Sql() {
+		Sql2 sql = new Sql2() {
 
 			@Override
 			public PreparedStatement preparedStatement(Connection conn) throws SQLException {
@@ -73,9 +74,10 @@ public class DeliveryDao {
 		
 	}
 	
+	@Override
 	public Delivery selectOneDelivery(String deliveryId) {
 		
-		Sql sql = new Sql() {
+		Sql2 sql = new Sql2() {
 
 			@Override
 			public PreparedStatement preparedStatement(Connection conn) throws SQLException {
@@ -136,9 +138,10 @@ public class DeliveryDao {
 		
 	}
 	
+	@Override
 	public int insertOneDeliveryMan(Delivery delivery) {
 		
-		Sql sql = new Sql() {
+		Sql2 sql = new Sql2() {
 
 			@Override
 			public PreparedStatement preparedStatement(Connection conn) throws SQLException {

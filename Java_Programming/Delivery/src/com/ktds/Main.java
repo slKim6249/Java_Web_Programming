@@ -1,5 +1,8 @@
 package com.ktds;
 
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import com.ktds.customer.controller.CustomerController;
 import com.ktds.delivery.controller.DeliveryController;
 import com.ktds.delivery.man.controller.DeliveryManController;
@@ -18,7 +21,19 @@ public class Main {
 	}
 	
 	public static void main(String[] args) {
-		new Main().run();
+		
+		
+		String applicationContext = "/applicationContext.xml";
+		
+		AbstractApplicationContext ctx =
+				new ClassPathXmlApplicationContext(applicationContext);
+		
+		Main main = new Main();
+		main.customerController = ctx.getBean("customer.controller", CustomerController.class);
+		main.deliveryController = ctx.getBean("delivery.controller", DeliveryController.class);
+		main.deliveryManController = ctx.getBean("deliveryMan.controller", DeliveryManController.class);
+		
+		main.run();
 	}
 	
 	

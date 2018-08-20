@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="customer.dao"
+		  class="com.ktds.customer.dao.CustomerDao"></bean>
+	<bean id="customer.service"
+		  class="com.ktds.customer.service.CustomerService">
+		  <property name="customerDao" ref="customer.dao"></property>	  
+	</bean>
+	<bean id="customer.controller"
+		  class="com.ktds.customer.controller.CustomerController">
+		  <property name="customerService" ref="customer.service"></property>	  
+	</bean>	  
+	
+	<bean id="delivery.dao"
+		  class="com.ktds.delivery.dao.DeliveryDao"></bean>
+	<bean id="delivery.service"
+		  class="com.ktds.delivery.service.DeliveryService">
+		  <property name="deliveryDao" ref="delivery.dao"></property>	  
+	</bean>
+	<bean id="delivery.controller"
+		  class="com.ktds.delivery.controller.DeliveryController">
+		  <property name="deliveryService" ref="delivery.service"></property>	  
+	</bean>	
+		  
+	<bean id="deliveryMan.dao"
+		  class="com.ktds.delivery.man.dao.DeliveryManDao"></bean>
+	<bean id="deliveryMan.service"
+		  class="com.ktds.delivery.man.service.DeliveryManService">
+		  <property name="deliveryManDao" ref="deliveryMan.dao"></property>	  
+	</bean>
+	<bean id="deliveryMan.controller"
+		  class="com.ktds.delivery.man.controller.DeliveryManController">
+		  <property name="deliveryManService" ref="deliveryMan.service"></property>	  
+	</bean>	
+
+</beans>

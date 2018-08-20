@@ -3,17 +3,18 @@ package com.ktds.delivery.man.controller;
 import java.util.List;
 
 import com.ktds.delivery.man.service.DeliveryManService;
+import com.ktds.delivery.man.service.DeliveryManServiceInter;
 import com.ktds.delivery.man.vo.DeliveryMan;
 import com.ktds.utils.Common;
 
 public class DeliveryManController {
 
-	private DeliveryManService deliveryManService;
+	private DeliveryManServiceInter deliveryManService;
 	
-	public DeliveryManController() {
-		this.deliveryManService = new DeliveryManService();
+	public void setDeliveryManService(DeliveryManServiceInter deliveryManService) {
+		this.deliveryManService = deliveryManService;
 	}
-	
+
 	public boolean registOneDeliveryMan() {
 		System.out.println("배송기사 등록 프로세스");
 		
