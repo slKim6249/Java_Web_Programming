@@ -13,9 +13,61 @@
 		  <property name="prefix" value="/WEB-INF/view/"></property>
 		  <property name="suffix" value=".jsp" ></property>
 	</bean>
+	
+	<!-- settings.properties 파일의 내용을 Bean Container에 적재시키기 -->
+	<context:property-placeholder location="/WEB-INF/spring/settings.properties" />
 
-
-
+	<!-- DBCP 설정 -->
+	<!-- Connection 여러개 만들어서 모아두는 Pool -->
+	<bean id="dataSource"
+	      class="org.apache.commons.dbcp.BasicDataSource">
+	      <property name="driverClassName" value="${jdbc.driver}" />
+	      <property name="url" value="${jdbc.url}" />
+	      <property name="username" value="${jdbc.id}" />
+	      <property name="password" value="${jdbc.password}" />
+	</bean>
+	
+	<!-- JDBCTemplate Bean 생성 -->
+	<bean id="jdbc.Template"
+	      class="org.springframework.jdbc.core.JdbcTemplate">
+	      <property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<!-- BoardDaoImpl이 사용할 Query 작성 -->
+	<bean id="boardQueries"
+	      class="java.util.ArrayList">
+	      <constructor-arg name="c">
+	      	<list>
+	      		<!-- 0번 Index, Insert -->
+	      		<value>
+					INSERT INTO SPRING.BOARD (
+									   ID
+									   , SUBJECT
+									   , CONTENT
+									   , EMAIL
+									   , CRT_DT
+									   , MDFY_DT
+									   , FILE_NAME
+									   , ORIGIN_FILE_NAME
+									   ) 
+					VALUES ( 
+								       BOARD_ID_SEQ.NEXTVAL
+									   , ?
+									   , ?
+									   , ?
+									   , SYSDATE
+									   , SYSDATE
+									   , ?
+									   , ?  
+					 )
+	      		</value>
+	      		<!-- 1번 Index -->
+	      		<value></value>
+	      	</list>
+	      </constructor-arg>
+	</bean>
+	
+	
 
 	<!-- 
 		BoardDaoImpl board.dao = new BoardDaoImpl();

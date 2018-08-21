@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ktds.board.dao.BoardDao;
+import com.ktds.board.vo.BoardVO;
 
 @Service
 public class BoardServiceImpl2 implements BoardService {
@@ -12,15 +13,15 @@ public class BoardServiceImpl2 implements BoardService {
 	private BoardDao boardDao;
 	
 	@Override
-	public boolean createBoard() {
+	public boolean createBoard(BoardVO boardVO) {
 		System.out.println("BoardServiceImpl2.createBoard();");
-		return this.boardDao.insertBoard() > 0;
+		return this.boardDao.insertBoard(boardVO) > 0;
 	}
 
 	@Override
-	public boolean updateBoard() {
+	public boolean updateBoard(BoardVO boardVO) {
 		System.out.println("BoardServiceImpl2.updateBoard();");
-		return this.boardDao.updateBoard() > 0;
+		return this.boardDao.updateBoard(boardVO) > 0;
 	}
 
 }
