@@ -22,7 +22,8 @@ public class Main {
 //		BoardService boardService = ctx.getBean("board.service", BoardService.class);
 //		boardService.createBoard();
 		
-		BoardService boardService = ctx.getBean("board.service2", BoardService.class);
+		// class명 가져와서 앞에있는것만 소문자로
+		BoardService boardService = ctx.getBean("boardServiceImpl2", BoardService.class);
 		boardService.createBoard();
 		
 	}

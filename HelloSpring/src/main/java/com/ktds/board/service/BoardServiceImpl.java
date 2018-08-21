@@ -1,16 +1,15 @@
 package com.ktds.board.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.ktds.board.dao.BoardDao;
 
+@Service
 public class BoardServiceImpl implements BoardService {
 	
+	@Autowired
 	private BoardDao boardDao;
-	
-	public void setBoardDao(BoardDao boardDao) {
-		System.out.println("Spring에서 호출함");
-		System.out.println(boardDao);
-		this.boardDao = boardDao;
-	}
 
 	@Override
 	public boolean createBoard() {

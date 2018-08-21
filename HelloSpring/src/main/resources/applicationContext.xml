@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<!-- package이하에 있는 동일한 Interface로 등록된 모든 클래스를 찾아 자동으로 주입 -->
+	<context:component-scan base-package="com.ktds.board" />
 
 	<!-- 
 		BoardDaoImpl board.dao = new BoardDaoImpl();
@@ -12,23 +17,23 @@
 	<!-- Spring에서 객체 한개는 Bean 여러개는 Beans -->
 	<!-- BoardDaoImpl board.dao = new BoardDaoImpl(); -->
 	<!-- id는 객체 이름, class는 class -->
-	<bean id="board.dao"
-		  class="com.ktds.board.dao.BoardDaoImpl"></bean> <!-- Red Line -> Ctrl + Space -->
+	<!-- <bean id="board.dao"
+		  class="com.ktds.board.dao.BoardDaoImpl"></bean> --> <!-- Red Line -> Ctrl + Space -->
 		  
 	<!-- BoardServiceImpl board.service = new BoardServiceImpl(); -->
-    <bean id="board.service"
-          class="com.ktds.board.service.BoardServiceImpl">
+    <!-- <bean id="board.service"
+          class="com.ktds.board.service.BoardServiceImpl"> -->
        <!-- board.service.setBoardDao(board.Dao); -->
        <!-- name->Setter, ref->Parameter -->
-          <property name="boardDao" ref="board.dao"></property> <!-- Reference Type -->
-          <!-- <property name="" value=""></property> (String Type) -->
-    </bean>
+          <!-- <property name="boardDao" ref="board.dao"></property> Reference Type
+          <property name="" value=""></property> (String Type)
+    </bean> -->
     
     <!-- BoardServiceImpl2 board.service2 = new BoardServiceImpl2(board.dao) -->
-    <bean id="board.service2"
+    <!-- <bean id="board.service2"
     	  class="com.ktds.board.service.BoardServiceImpl2">
-    	  <!-- boardDao에 board.dao를 전달한다. -->
-    	  <constructor-arg name="boardDao" ref="board.dao" /> <!-- 기본생성자 -->
-    </bean>
+    	  boardDao에 board.dao를 전달한다.
+    	  <constructor-arg name="boardDao" ref="board.dao" /> 기본생성자
+    </bean> -->
           
 </beans>
