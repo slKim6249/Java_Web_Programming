@@ -17,6 +17,13 @@ import com.ktds.common.dao.support.BindData;
 @Repository
 public class BoardDaoImpl implements BoardDao {
 
+	// Inner Class / Inner InterFace
+	private interface Query {
+		int INSERT_QUERY = 0;    
+		int SELECT_ONE_QUERY = 1;
+		int DELETE_ONE_QUERY = 2;
+	}
+	
 	@Autowired
 	private JdbcTemplate jdbcTmplate;
 	
@@ -26,7 +33,7 @@ public class BoardDaoImpl implements BoardDao {
 	@Override
 	public int insertBoard(BoardVO boardVO) {
 		return this.jdbcTmplate.update( 
-					this.boardQueries.get(0)
+					this.boardQueries.get(Query.INSERT_QUERY)
 					, boardVO.getSubject()
 					, boardVO.getContent()
 					, boardVO.getEmail()
@@ -45,7 +52,7 @@ public class BoardDaoImpl implements BoardDao {
 	public BoardVO selectOneBoard(int id) {
 		// 1개만 가져올때는 queryForObject
 		return this.jdbcTmplate.queryForObject(
-						this.boardQueries.get(1) // 1번 Index의 Query
+						this.boardQueries.get(Query.SELECT_ONE_QUERY) // 1번 Index의 Query
 						, new Object[] {id} // Object[] {}으로 초기화 id값 만큼
 						, new RowMapper<BoardVO>() {
 							// RowMapper가 주는 ResultSet의 결과를
@@ -56,6 +63,14 @@ public class BoardDaoImpl implements BoardDao {
 								return BindData.bindData(rs, new BoardVO());
 							} 
 						});
+	}
+
+	@Override
+	public int deleteOneBoard(int id) {
+		return this.jdbcTmplate.update(
+						this.boardQueries.get(Query.DELETE_ONE_QUERY)
+						, id
+						);
 	}
 	
 }

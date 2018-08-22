@@ -29,4 +29,9 @@ public class BoardServiceImpl2 implements BoardService {
 		return this.boardDao.selectOneBoard(id);
 	}
 
+	@Override
+	public boolean deleteOneBoard(int id) {
+		return this.boardDao.deleteOneBoard(id) > 0;
+	}
+
 }

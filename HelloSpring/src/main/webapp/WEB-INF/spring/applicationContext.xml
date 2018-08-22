@@ -74,6 +74,12 @@
 					FROM	BOARD
 					WHERE	ID = ?
 	      		</value>
+	      		<!-- 2번 Index, Delete -->
+	      		<value>
+	      			DELETE
+	      			FROM	BOARD
+	      			WHERE	ID = ?
+	      		</value>
 	      	</list>
 	      </constructor-arg>
 	</bean>

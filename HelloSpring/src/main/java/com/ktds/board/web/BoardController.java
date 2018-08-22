@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -45,14 +46,20 @@ public class BoardController {
 //		return this.boardService.createBoard(boardVO) ? "redirect:/list" : "redirect:/write";
 	}
 	
-	// http://localhost:8080/HelloSpring/board/detail?id=1
-	@RequestMapping("/board/detail")
-	public ModelAndView viewBoardDetailPage( @RequestParam int id ) {
+	// http://localhost:8080/HelloSpring/board/detail/1
+	@RequestMapping("/board/detail/{id}")
+	public ModelAndView viewBoardDetailPage( @PathVariable int id ) {
 		BoardVO boardVO = this.boardService.selectOneBoard(id);
 		
 		ModelAndView view = new ModelAndView("board/detail");
 		view.addObject("boardVO", boardVO);
 		return view;
+	}
+	
+	@RequestMapping("/board/delete/{id}")
+	public String doBoardDeleteAction( @PathVariable int id ) {
+		boolean isSuccess = this.boardService.deleteOneBoard(id);
+		return "redirect:/list";
 	}
 	
 }

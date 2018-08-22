@@ -10,4 +10,5 @@ public interface BoardService {
 	
 	public BoardVO selectOneBoard(int id);
 	
+	public boolean deleteOneBoard(int id);
 }

@@ -20,5 +20,9 @@
 		${boardVO.content}
 	</div>
 	
+	<div>
+		<a href="/HelloSpring/board/delete/${boardVO.id}">삭제</a>
+	</div>
+	
 </body>
 </html>

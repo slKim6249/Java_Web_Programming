@@ -11,4 +11,5 @@ public interface BoardDao {
 	// 사용자가 요청하는 Param
 	public BoardVO selectOneBoard( int id );
 	
+	public int deleteOneBoard( int id );
 }
