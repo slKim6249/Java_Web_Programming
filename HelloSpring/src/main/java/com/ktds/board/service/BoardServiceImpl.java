@@ -1,5 +1,7 @@
 package com.ktds.board.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,13 +27,18 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public BoardVO selectOneBoard(int id) {
+	public BoardVO readOneBoard(int id) {
 		return this.boardDao.selectOneBoard(id);
 	}
 
 	@Override
 	public boolean deleteOneBoard(int id) {
 		return this.boardDao.deleteOneBoard(id) > 0;
+	}
+
+	@Override
+	public List<BoardVO> readAllBoards() {
+		return this.boardDao.selectAllBoards();
 	}
 	
 }

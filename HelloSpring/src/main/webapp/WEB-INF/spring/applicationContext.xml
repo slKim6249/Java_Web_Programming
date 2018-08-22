@@ -2,11 +2,14 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
 	<!-- package이하에 있는 동일한 Interface로 등록된 모든 클래스를 찾아 자동으로 주입 -->
 	<context:component-scan base-package="com.ktds.board" />
+	<context:component-scan base-package="com.ktds.member" />
 
 	<bean id="viewResolver"
 		  class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -31,6 +34,48 @@
 	<bean id="jdbc.Template"
 	      class="org.springframework.jdbc.core.JdbcTemplate">
 	      <property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="memberQueries"
+		  class="java.util.ArrayList">
+		  <constructor-arg name="c">
+		  	<list>
+		  		<!-- 0번 Index, Insert Member -->
+	      		<value>
+	      			INSERT INTO SPRING.MEMBERS (
+	   							EMAIL
+	   							, NAME
+	   							, PASSWORD
+   							)
+					VALUES ( 
+								 ?
+								 , ?
+								 , ?
+						    )
+	      		</value>
+	      		<!-- 1번 Index, Select -->
+	      		<value>
+	      			SELECT	EMAIL
+	      					, NAME
+	      					, PASSWORD
+					FROM	MEMBERS
+					WHERE	EMAIL = ?
+	      		</value>
+	      		<!-- 2번 Index, Delete -->
+	      		<value>
+	      			DELETE
+      				FROM	MEMBERS
+      				WHERE	EMAIL = ?
+	      		</value>
+	      		<!-- 3번 Index, Select -->
+	      		<value>
+	      			SELECT	EMAIL
+	      					, NAME
+	      					, PASSWORD
+					FROM	MEMBERS
+	      		</value>
+		  	</list>
+		  </constructor-arg>
 	</bean>
 	
 	<!-- BoardDaoImpl이 사용할 Query 작성 -->
@@ -79,6 +124,19 @@
 	      			DELETE
 	      			FROM	BOARD
 	      			WHERE	ID = ?
+	      		</value>
+	      		<!-- 3번 Index, Select -->
+	      		<value>
+	      			SELECT	ID            
+							, SUBJECT         
+							, CONTENT         
+							, EMAIL           
+							, CRT_DT          
+							, MDFY_DT         
+							, FILE_NAME       
+							, ORIGIN_FILE_NAME
+					FROM	BOARD
+					ORDER	BY ID DESC
 	      		</value>
 	      	</list>
 	      </constructor-arg>

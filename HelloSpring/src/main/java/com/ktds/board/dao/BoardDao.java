@@ -1,5 +1,7 @@
 package com.ktds.board.dao;
 
+import java.util.List;
+
 import com.ktds.board.vo.BoardVO;
 
 public interface BoardDao {
@@ -12,4 +14,7 @@ public interface BoardDao {
 	public BoardVO selectOneBoard( int id );
 	
 	public int deleteOneBoard( int id );
+	
+	public List<BoardVO> selectAllBoards();
+	
 }

@@ -22,6 +22,7 @@ public class BoardDaoImpl implements BoardDao {
 		int INSERT_QUERY = 0;    
 		int SELECT_ONE_QUERY = 1;
 		int DELETE_ONE_QUERY = 2;
+		int SELECT_ALL_QUERY = 3;
 	}
 	
 	@Autowired
@@ -71,6 +72,18 @@ public class BoardDaoImpl implements BoardDao {
 						this.boardQueries.get(Query.DELETE_ONE_QUERY)
 						, id
 						);
+	}
+
+	@Override
+	public List<BoardVO> selectAllBoards() {
+		return this.jdbcTemplate.query(
+					this.boardQueries.get(Query.SELECT_ALL_QUERY)
+					, new RowMapper<BoardVO> () {
+						@Override
+						public BoardVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+							return BindData.bindData(rs, new BoardVO());
+						}
+					});
 	}
 	
 }

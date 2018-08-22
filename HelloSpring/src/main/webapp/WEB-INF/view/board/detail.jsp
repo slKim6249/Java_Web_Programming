@@ -22,6 +22,7 @@
 	
 	<div>
 		<a href="/HelloSpring/board/delete/${boardVO.id}">삭제</a>
+		<a href="/HelloSpring/board/list">목록으로 돌아가기</a>
 	</div>
 	
 </body>

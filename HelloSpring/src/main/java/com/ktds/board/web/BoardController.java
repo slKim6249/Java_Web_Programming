@@ -1,6 +1,6 @@
 package com.ktds.board.web;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ktds.board.service.BoardService;
@@ -24,24 +22,28 @@ public class BoardController {
 	@Qualifier("boardServiceImpl")
 	private BoardService boardService;
 	
-	@RequestMapping("/list")
-	public String viewBoardListPage() {
-		return "board/list";
+	@RequestMapping("/board/list")
+	public ModelAndView viewBoardListPage() {
+		List<BoardVO> boardVOList = this.boardService.readAllBoards();
+		
+		ModelAndView view = new ModelAndView("board/list");
+		view.addObject("boardVOList", boardVOList);
+		return view;
 	}
 	
 	// doGet과 같은 역할
 	// Spring 4.2 이하에서 사용
 	// @RequestMapping(value="/write", method=RequestMethod.GET)
 	// Spring 4.3 이상에서 사용
-	@GetMapping("/write")
+	@GetMapping("/board/write")
 	public String viewBoardWritePage() {
 		return "board/write";
 	}
 	
-	@PostMapping("/write")
+	@PostMapping("/board/write")
 	public String viewBoardWriteAction(@ModelAttribute BoardVO boardVO ) {
 		boolean isSuccess = this.boardService.createBoard(boardVO);
-		return "redirect:/list";
+		return "redirect:/board/list";
 		// 1줄로 하는법 - 삼항연산자, JVM이 if로 변환하기 때문에 느리다. 
 //		return this.boardService.createBoard(boardVO) ? "redirect:/list" : "redirect:/write";
 	}
@@ -49,7 +51,7 @@ public class BoardController {
 	// http://localhost:8080/HelloSpring/board/detail/1
 	@RequestMapping("/board/detail/{id}")
 	public ModelAndView viewBoardDetailPage( @PathVariable int id ) {
-		BoardVO boardVO = this.boardService.selectOneBoard(id);
+		BoardVO boardVO = this.boardService.readOneBoard(id);
 		
 		ModelAndView view = new ModelAndView("board/detail");
 		view.addObject("boardVO", boardVO);
@@ -59,7 +61,7 @@ public class BoardController {
 	@RequestMapping("/board/delete/{id}")
 	public String doBoardDeleteAction( @PathVariable int id ) {
 		boolean isSuccess = this.boardService.deleteOneBoard(id);
-		return "redirect:/list";
+		return "redirect:/board/list";
 	}
 	
 }
