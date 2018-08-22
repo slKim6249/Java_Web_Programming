@@ -61,8 +61,19 @@
 									   , ?  
 					 )
 	      		</value>
-	      		<!-- 1번 Index -->
-	      		<value></value>
+	      		<!-- 1번 Index, Select -->
+	      		<value>
+	      			SELECT	ID            
+							, SUBJECT         
+							, CONTENT         
+							, EMAIL           
+							, CRT_DT          
+							, MDFY_DT         
+							, FILE_NAME       
+							, ORIGIN_FILE_NAME
+					FROM	BOARD
+					WHERE	ID = ?
+	      		</value>
 	      	</list>
 	      </constructor-arg>
 	</bean>

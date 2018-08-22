@@ -8,10 +8,17 @@
 </head>
 <body>
 	
-	<h1>${message}</h1>
-	<h2>${name}</h2>
-	<h3>${age}</h3>
-	<h4>${isAgree}</h4>
+	<h1>
+		${boardVO.subject}
+		<span style="font-size: 15px">${boardVO.crtDt}</span>
+	</h1>
+	<h2>${boardVO.email}</h2>
+	
+	<p>${boardVO.fileName}</p>
+	
+	<div>
+		${boardVO.content}
+	</div>
 	
 </body>
 </html>

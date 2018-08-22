@@ -23,5 +23,10 @@ public class BoardServiceImpl implements BoardService {
 		System.out.println("Call BoardService.updateBoard();");
 		return this.boardDao.updateBoard(boardVO) > 0;
 	}
+
+	@Override
+	public BoardVO selectOneBoard(int id) {
+		return this.boardDao.selectOneBoard(id);
+	}
 	
 }

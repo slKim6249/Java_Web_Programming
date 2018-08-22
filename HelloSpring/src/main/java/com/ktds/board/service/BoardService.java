@@ -8,4 +8,6 @@ public interface BoardService {
 	
 	public boolean updateBoard(BoardVO boardVO);
 	
+	public BoardVO selectOneBoard(int id);
+	
 }

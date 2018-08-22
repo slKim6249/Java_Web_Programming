@@ -1,14 +1,24 @@
 package com.ktds.board.vo;
 
+import com.ktds.common.dao.support.Types;
+
 public class BoardVO {
 
+	@Types
 	private int id;
+	@Types
 	private String subject;
+	@Types
 	private String content;
+	@Types
 	private String email;
+	@Types
 	private String crtDt;
+	@Types
 	private String mdfyDt;
+	@Types
 	private String fileName;
+	@Types
 	private String originFileName;
 
 	public int getId() {

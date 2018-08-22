@@ -24,4 +24,9 @@ public class BoardServiceImpl2 implements BoardService {
 		return this.boardDao.updateBoard(boardVO) > 0;
 	}
 
+	@Override
+	public BoardVO selectOneBoard(int id) {
+		return this.boardDao.selectOneBoard(id);
+	}
+
 }

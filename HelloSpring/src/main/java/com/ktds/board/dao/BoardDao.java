@@ -8,4 +8,7 @@ public interface BoardDao {
 	
 	public int updateBoard(BoardVO boardVO);
 	
+	// 사용자가 요청하는 Param
+	public BoardVO selectOneBoard( int id );
+	
 }
