@@ -25,14 +25,14 @@ public class BoardDaoImpl implements BoardDao {
 	}
 	
 	@Autowired
-	private JdbcTemplate jdbcTmplate;
+	private JdbcTemplate jdbcTemplate;
 	
 	@Resource(name="boardQueries")
 	private List<String> boardQueries;
 	
 	@Override
 	public int insertBoard(BoardVO boardVO) {
-		return this.jdbcTmplate.update( 
+		return this.jdbcTemplate.update( 
 					this.boardQueries.get(Query.INSERT_QUERY)
 					, boardVO.getSubject()
 					, boardVO.getContent()
@@ -51,7 +51,7 @@ public class BoardDaoImpl implements BoardDao {
 	@Override
 	public BoardVO selectOneBoard(int id) {
 		// 1개만 가져올때는 queryForObject
-		return this.jdbcTmplate.queryForObject(
+		return this.jdbcTemplate.queryForObject(
 						this.boardQueries.get(Query.SELECT_ONE_QUERY) // 1번 Index의 Query
 						, new Object[] {id} // Object[] {}으로 초기화 id값 만큼
 						, new RowMapper<BoardVO>() {
@@ -67,7 +67,7 @@ public class BoardDaoImpl implements BoardDao {
 
 	@Override
 	public int deleteOneBoard(int id) {
-		return this.jdbcTmplate.update(
+		return this.jdbcTemplate.update(
 						this.boardQueries.get(Query.DELETE_ONE_QUERY)
 						, id
 						);
