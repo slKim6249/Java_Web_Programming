@@ -72,7 +72,7 @@
 			</c:otherwise>
 		</c:choose>
 		<div class="padded">
-			<a href="/HelloSpring/board/write">글 작성하기</a>
+			<a href="/HelloSpring/board/write">게시글 작성하기</a>
 		</div>
 	</div>
 </body>
