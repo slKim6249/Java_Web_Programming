@@ -117,7 +117,8 @@ public class BoardController {
 		
 		// 2Point 미만은 게시판 읽기 X , redirect 시키기
 		// 같은정보면 보기
-		if( memberVO.getPoint() < 2) {
+		if( !memberVO.getEmail().equals(boardVO.getEmail())
+				&& memberVO.getPoint() < 2) {
 			return new ModelAndView("redirect:/board/list");
 		} else if( memberVO.getEmail().equals(boardVO.getEmail()) ) {
 			return view;
