@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ktds.board.dao.BoardDao;
 import com.ktds.board.vo.BoardVO;
+import com.ktds.board.web.BoardController;
 import com.ktds.member.dao.MemberDao;
 import com.ktds.member.vo.MemberVO;
 
@@ -23,16 +24,22 @@ public class BoardServiceImpl implements BoardService {
 	public boolean createBoard(BoardVO boardVO, MemberVO memberVO) {
 		System.out.println("Call BoardService.createBoard();");
 		
-		MemberVO loginMemberVO = memberDao.selectOneMember(memberVO);
+		// 업로드를 했다면
+		boolean isUploadFile = boardVO.getOriginFileName().length() > 0;
 		
-		if ( loginMemberVO != null ) {
-			// db
-			memberDao.updatePoint(loginMemberVO.getEmail(), +10);
-			// session
-			int point = loginMemberVO.getPoint();
+		int point = 10;
+		if ( isUploadFile ) {
 			point += 10;
-			loginMemberVO.setPoint(point);
 		}
+		
+//		MemberVO loginMemberVO = memberDao.selectOneMember(memberVO);
+		// db
+		this.memberDao.updatePoint(memberVO.getEmail(), point);
+		
+		// session
+		int memberPoint = memberVO.getPoint();
+		memberPoint += point;
+		memberVO.setPoint(point);
 		
 		return this.boardDao.insertBoard(boardVO) > 0;
 	}
@@ -44,15 +51,24 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public BoardVO readOneBoard(int id, MemberVO memberVO) {
-		// db
-		this.memberDao.updatePoint(memberVO.getEmail(), -2);
-		// session
-		int point = memberVO.getPoint();
-		point -= 2;
-		memberVO.setPoint(point);
-		
+	public BoardVO readOneBoard(int id) {
 		return this.boardDao.selectOneBoard(id);
+	}
+
+	@Override
+	public BoardVO readOneBoard(int id, MemberVO memberVO) {
+		
+		// 같은 정보면 포인트 삭감 X
+		if( !memberVO.getEmail().equals( this.boardDao.selectOneBoard(id).getEmail() ) ) {
+			// db
+			this.memberDao.updatePoint(memberVO.getEmail(), -2);
+			// session
+			int point = memberVO.getPoint();
+			point -= 2;
+			memberVO.setPoint(point);
+		}
+		
+		return this.readOneBoard(id);
 	}
 
 	@Override
@@ -64,5 +80,5 @@ public class BoardServiceImpl implements BoardService {
 	public List<BoardVO> readAllBoards() {
 		return this.boardDao.selectAllBoards();
 	}
-	
+
 }

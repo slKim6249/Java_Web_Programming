@@ -11,6 +11,8 @@ public interface BoardService {
 	
 	public boolean updateBoard(BoardVO boardVO);
 	
+	public BoardVO readOneBoard(int id); // Point 사용 X
+
 	public BoardVO readOneBoard(int id, MemberVO memberVO);
 	
 	public boolean deleteOneBoard(int id);

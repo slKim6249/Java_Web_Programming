@@ -30,6 +30,11 @@ public class BoardServiceImpl2 implements BoardService {
 	}
 
 	@Override
+	public BoardVO readOneBoard(int id) {
+		return this.boardDao.selectOneBoard(id);
+	}
+
+	@Override
 	public BoardVO readOneBoard(int id, MemberVO memberVO) {
 		this.memberDao.updatePoint(memberVO.getEmail(), -2);
 		// session
@@ -37,7 +42,7 @@ public class BoardServiceImpl2 implements BoardService {
 		point -= 2;
 		memberVO.setPoint(point);
 		
-		return this.boardDao.selectOneBoard(id);
+		return this.readOneBoard(id);
 	}
 
 	@Override
@@ -49,5 +54,6 @@ public class BoardServiceImpl2 implements BoardService {
 	public List<BoardVO> readAllBoards() {
 		return this.boardDao.selectAllBoards();
 	}
+	
 
 }

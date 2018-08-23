@@ -2,10 +2,12 @@ package com.ktds.board.web;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.UUID;
 
-import javax.management.RuntimeErrorException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ktds.board.service.BoardService;
 import com.ktds.board.vo.BoardVO;
+import com.ktds.common.web.DownloadUtil;
 import com.ktds.member.vo.MemberVO;
 
 @Controller
@@ -107,22 +110,52 @@ public class BoardController {
 					, @SessionAttribute("_USER_") MemberVO memberVO
 					) {
 		
-		// 2Point 미만은 게시판 읽기 X , redirect 시키기
-		if( memberVO.getPoint() < 2) {
-			return new ModelAndView("redirect:/board/list");
-		}
-		
 		BoardVO boardVO = this.boardService.readOneBoard(id, memberVO);
 		
 		ModelAndView view = new ModelAndView("board/detail");
 		view.addObject("boardVO", boardVO);
+		
+		// 2Point 미만은 게시판 읽기 X , redirect 시키기
+		// 같은정보면 보기
+		if( memberVO.getPoint() < 2) {
+			return new ModelAndView("redirect:/board/list");
+		} else if( memberVO.getEmail().equals(boardVO.getEmail()) ) {
+			return view;
+		}
+		
 		return view;
 	}
-	
+
 	@RequestMapping("/board/delete/{id}")
 	public String doBoardDeleteAction( @PathVariable int id ) {
 		boolean isSuccess = this.boardService.deleteOneBoard(id);
 		return "redirect:/board/list";
+	}
+	
+	@RequestMapping("/board/download/{id}")
+	public void fileDownload(
+					@PathVariable int id
+					, HttpServletRequest request
+					, HttpServletResponse response
+					) {
+		
+		
+		BoardVO boardVO = this.boardService.readOneBoard(id);
+		
+		String originFileName = boardVO.getOriginFileName();
+		String fileName = boardVO.getFileName();
+		
+		// Windows \
+		// Unix , Linux /
+		
+		try {
+			// Download
+			new DownloadUtil(this.uploadPath + File.separator + fileName)
+					.download(request, response, originFileName);
+		} catch (UnsupportedEncodingException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
+		
 	}
 	
 }
