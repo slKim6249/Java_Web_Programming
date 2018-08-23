@@ -4,7 +4,7 @@ import com.ktds.common.dao.support.Types;
 
 public class MemberVO {
 
-	@Types
+	@Types(alias="M_EMAIL")
 	private String email;
 	@Types
 	private String name;

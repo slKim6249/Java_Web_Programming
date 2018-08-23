@@ -60,6 +60,7 @@
 	      					, PASSWORD
 					FROM	MEMBERS
 					WHERE	EMAIL = ?
+					AND		PASSWORD = ?
 	      		</value>
 	      		<!-- 2번 Index, Delete -->
 	      		<value>
@@ -108,16 +109,20 @@
 	      		</value>
 	      		<!-- 1번 Index, Select -->
 	      		<value>
-	      			SELECT	ID            
-							, SUBJECT         
-							, CONTENT         
-							, EMAIL           
-							, CRT_DT          
-							, MDFY_DT         
-							, FILE_NAME       
-							, ORIGIN_FILE_NAME
-					FROM	BOARD
-					WHERE	ID = ?
+	      			SELECT	B.ID            
+							, B.SUBJECT         
+							, B.CONTENT         
+							, B.EMAIL B_EMAIL        
+							, B.CRT_DT          
+							, B.MDFY_DT         
+							, B.FILE_NAME       
+							, B.ORIGIN_FILE_NAME
+							, M.EMAIL M_EMAIL
+							, M.NAME
+					FROM	BOARD B
+							, MEMBERS M
+					WHERE	B.EMAIL = M.EMAIL
+					AND		ID = ?
 	      		</value>
 	      		<!-- 2번 Index, Delete -->
 	      		<value>
@@ -127,15 +132,19 @@
 	      		</value>
 	      		<!-- 3번 Index, Select -->
 	      		<value>
-	      			SELECT	ID            
-							, SUBJECT         
-							, CONTENT         
-							, EMAIL           
-							, CRT_DT          
-							, MDFY_DT         
-							, FILE_NAME       
-							, ORIGIN_FILE_NAME
-					FROM	BOARD
+	      			SELECT	B.ID            
+							, B.SUBJECT         
+							, B.CONTENT         
+							, B.EMAIL B_EMAIL        
+							, B.CRT_DT          
+							, B.MDFY_DT         
+							, B.FILE_NAME       
+							, B.ORIGIN_FILE_NAME
+							, M.EMAIL M_EMAIL
+							, M.NAME
+					FROM	BOARD B
+							, MEMBERS M
+					WHERE	B.EMAIL = M.EMAIL
 					ORDER	BY ID DESC
 	      		</value>
 	      	</list>

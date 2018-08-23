@@ -22,10 +22,11 @@
 			<label for="con">내용:</label>
 			<input name="content" class="form-control" placeholder="내용을 입력하세요." id="con" />
 		</div>
-		<div class="form-group">
+		<!-- <div class="form-group">
 			<label for="em">E-Mail:</label>
-			<input type="email" class="form-control" name="email" placeholder="E-Mail을 입력하세요." id="em" />
-		</div>
+			<input type="email" class="form-control" name="email" placeholder="E-Mail을 입력하세요." id="em"
+					value="${sessionScope._USER_.email}" />
+		</div>  -->
 		<div class="form-group">
 			<input type="submit" class="btn btn-info" value="제출" />
 			<a href="/HelloSpring/board/list">목록으로 돌아가기</a>

@@ -60,7 +60,7 @@
 						 			${board.subject}
 						 		</a>
 						 	</div> <!--
-						 --><div class="writer box">${board.email}</div> <!--
+						 --><div class="writer box">${board.memberVO.name}</div> <!--
 						 --><div class="create-date box">${board.crtDt}</div>
 					</div>
 				</c:forEach>

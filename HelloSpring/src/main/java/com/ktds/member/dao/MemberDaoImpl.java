@@ -49,11 +49,11 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public MemberVO selectOneMember(String email) {
+	public MemberVO selectOneMember( MemberVO memberVO ) {
 			try {
 				return this.jdbcTemplate.queryForObject(
 						this.memberQueries.get(Query.SELECT_ONE_QUERY) 
-						, new Object[] {email} 
+						, new Object[] {memberVO.getEmail(), memberVO.getPassword()} 
 						, new RowMapper<MemberVO>() {
 
 							@Override
@@ -68,10 +68,10 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public int deleteOneMember(String email) {
+	public int deleteOneMember( MemberVO memberVO ) {
 		return this.jdbcTemplate.update(
 					this.memberQueries.get(Query.DELETE_ONE_QUERY)
-					, email
+					, memberVO.getEmail()
 				);
 	}
 

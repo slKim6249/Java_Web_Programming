@@ -9,15 +9,15 @@
 <body>
 	
 	<h1>
-		${boardVO.subject}
-		<span style="font-size: 15px">${boardVO.crtDt}</span>
+		제목 : ${boardVO.subject}
+		<span style="font-size: 15px">작성 시간 : ${boardVO.crtDt}</span>
 	</h1>
-	<h2>${boardVO.email}</h2>
+	<h2>작성자 : ${boardVO.memberVO.name}</h2>
 	
-	<p>${boardVO.fileName}</p>
+	<p>파일이름 : ${boardVO.fileName}</p>
 	
 	<div>
-		${boardVO.content}
+		내용 : ${boardVO.content}
 	</div>
 	
 	<div>

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ktds.board.vo.BoardVO;
 import com.ktds.common.dao.support.BindData;
+import com.ktds.member.vo.MemberVO;
 
 @Repository
 public class BoardDaoImpl implements BoardDao {
@@ -61,7 +62,12 @@ public class BoardDaoImpl implements BoardDao {
 
 							@Override
 							public BoardVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-								return BindData.bindData(rs, new BoardVO());
+								// Password를 제외하고 Email과 Name만 받아온다.
+								MemberVO memberVO = BindData.bindData(rs, new MemberVO());
+								BoardVO boardVO = BindData.bindData(rs, new BoardVO());
+								boardVO.setMemberVO(memberVO); // Table Join
+								
+								return boardVO;
 							} 
 						});
 	}
@@ -81,7 +87,11 @@ public class BoardDaoImpl implements BoardDao {
 					, new RowMapper<BoardVO> () {
 						@Override
 						public BoardVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-							return BindData.bindData(rs, new BoardVO());
+							MemberVO memberVO = BindData.bindData(rs, new MemberVO());
+							BoardVO boardVO = BindData.bindData(rs, new BoardVO());
+							boardVO.setMemberVO(memberVO); // Table Join
+							
+							return boardVO;
 						}
 					});
 	}

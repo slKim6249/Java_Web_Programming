@@ -15,7 +15,7 @@ public class MemberServiceImpl implements MemberService {
 	private MemberDao memberDao;
 	
 	@Override
-	public boolean cretaMember(MemberVO memberVO) {
+	public boolean createMember(MemberVO memberVO) {
 		System.out.println("Call BoardService.createMember();");
 		return memberDao.insertMember(memberVO) > 0;
 	}
@@ -26,13 +26,13 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public MemberVO readOneMember(String email) {
-		return memberDao.selectOneMember(email);
+	public MemberVO readOneMember(MemberVO memberVO) {
+		return memberDao.selectOneMember(memberVO);
 	}
 
 	@Override
-	public boolean deleteOneMember(String email) {
-		return memberDao.deleteOneMember(email) > 0;
+	public boolean deleteOneMember(MemberVO memberVO) {
+		return memberDao.deleteOneMember(memberVO) > 0;
 	}
 
 	@Override

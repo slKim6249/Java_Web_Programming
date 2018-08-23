@@ -1,6 +1,7 @@
 package com.ktds.board.vo;
 
 import com.ktds.common.dao.support.Types;
+import com.ktds.member.vo.MemberVO;
 
 public class BoardVO {
 
@@ -10,7 +11,7 @@ public class BoardVO {
 	private String subject;
 	@Types
 	private String content;
-	@Types
+	@Types(alias="B_EMAIL") // alias로 된 컬럼명 가져오기
 	private String email;
 	@Types
 	private String crtDt;
@@ -20,7 +21,9 @@ public class BoardVO {
 	private String fileName;
 	@Types
 	private String originFileName;
-
+	
+	private MemberVO memberVO;
+	
 	public int getId() {
 		return id;
 	}
@@ -84,5 +87,13 @@ public class BoardVO {
 	public void setOriginFileName(String originFileName) {
 		this.originFileName = originFileName;
 	}
+	
+	public MemberVO getMemberVO() {
+		return memberVO;
+	}
 
+	public void setMemberVO(MemberVO memberVO) {
+		this.memberVO = memberVO;
+	}
+	
 }

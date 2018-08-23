@@ -11,9 +11,9 @@ public interface MemberDao {
 	public int updateMember(MemberVO memberVO);
 	
 	// 사용자가 요청하는 Param
-	public MemberVO selectOneMember( String email );
+	public MemberVO selectOneMember( MemberVO memberVO );
 	
-	public int deleteOneMember( String email );
+	public int deleteOneMember( MemberVO memberVO );
 	
 	public List<MemberVO> selectAllMembers();
 	
