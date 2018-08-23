@@ -1,11 +1,16 @@
 package com.ktds.board.web;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
+import javax.management.RuntimeErrorException;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -13,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ktds.board.service.BoardService;
@@ -21,6 +27,10 @@ import com.ktds.member.vo.MemberVO;
 
 @Controller
 public class BoardController {
+	
+	// properties에서 쓰려면
+	@Value("${upload.path}")
+	private String uploadPath;
 	
 	@Autowired
 	@Qualifier("boardServiceImpl")
@@ -50,15 +60,44 @@ public class BoardController {
 	}
 	
 	@PostMapping("/board/write")
-	public String viewBoardWriteAction(@ModelAttribute BoardVO boardVO,
-										HttpSession session) {
-//		boolean isSuccess = this.boardService.createBoard(boardVO);
+	public String viewBoardWriteAction(
+							@ModelAttribute BoardVO boardVO
+							, HttpSession session) {
+		
+		MultipartFile uploadFile = boardVO.getFile();
+		if( !uploadFile.isEmpty() ) {
+			// 실제 파일이름
+			String originFileName = uploadFile.getOriginalFilename();
+			// 파일 시스템에 저장될 파일의 난수 이름
+			String fileName = UUID.randomUUID().toString();
+			
+			// Dir이 존재 하지 않으면 mk
+			File uploadDir = new File(uploadPath);
+			if( !uploadDir.exists() ) {
+				uploadDir.mkdirs();
+			}
+			
+			// 파일이 업로드 될 경로 지정
+			File destFile = new File(uploadPath, fileName);
+			
+			try {
+				// upload
+				uploadFile.transferTo(destFile);
+				// db에 file 정보 저장하기 위한 정보 세팅
+				boardVO.setOriginFileName(originFileName);
+				boardVO.setFileName(fileName);
+			} catch (IllegalStateException | IOException e) {
+				throw new RuntimeException(e.getMessage(), e);
+			}
+			
+		}
 		
 		MemberVO loginMemberVO = (MemberVO) session.getAttribute("_USER_");
 		String email = loginMemberVO.getEmail();
 		boardVO.setEmail(email);
 		
-		return this.boardService.createBoard(boardVO, loginMemberVO) ? "redirect:/board/list" : "redirect:/board/write";
+		return this.boardService.createBoard(boardVO, loginMemberVO) ? 
+				"redirect:/board/list" : "redirect:/board/write";
 	}
 	
 	// http://localhost:8080/HelloSpring/board/detail/1

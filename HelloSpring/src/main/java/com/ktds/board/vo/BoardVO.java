@@ -1,5 +1,7 @@
 package com.ktds.board.vo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.ktds.common.dao.support.Types;
 import com.ktds.member.vo.MemberVO;
 
@@ -21,6 +23,9 @@ public class BoardVO {
 	private String fileName;
 	@Types
 	private String originFileName;
+	
+	// fileUpload
+	private MultipartFile file;
 	
 	private MemberVO memberVO;
 	
@@ -86,6 +91,14 @@ public class BoardVO {
 
 	public void setOriginFileName(String originFileName) {
 		this.originFileName = originFileName;
+	}
+	
+	public MultipartFile getFile() {
+		return file;
+	}
+
+	public void setFile(MultipartFile file) {
+		this.file = file;
 	}
 	
 	public MemberVO getMemberVO() {

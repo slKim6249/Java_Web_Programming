@@ -161,34 +161,11 @@
 	      </constructor-arg>
 	</bean>
 	
-	
-
-	<!-- 
-		BoardDaoImpl board.dao = new BoardDaoImpl();
-		BoardServiceImpl board.service = new BoardServiceImpl();
-		board.service.setBoardDao(board.Dao);
-	 -->
-
-	<!-- Spring에서 객체 한개는 Bean 여러개는 Beans -->
-	<!-- BoardDaoImpl board.dao = new BoardDaoImpl(); -->
-	<!-- id는 객체 이름, class는 class -->
-	<!-- <bean id="board.dao"
-		  class="com.ktds.board.dao.BoardDaoImpl"></bean> --> <!-- Red Line -> Ctrl + Space -->
-		  
-	<!-- BoardServiceImpl board.service = new BoardServiceImpl(); -->
-    <!-- <bean id="board.service"
-          class="com.ktds.board.service.BoardServiceImpl"> -->
-       <!-- board.service.setBoardDao(board.Dao); -->
-       <!-- name->Setter, ref->Parameter -->
-          <!-- <property name="boardDao" ref="board.dao"></property> Reference Type
-          <property name="" value=""></property> (String Type)
-    </bean> -->
-    
-    <!-- BoardServiceImpl2 board.service2 = new BoardServiceImpl2(board.dao) -->
-    <!-- <bean id="board.service2"
-    	  class="com.ktds.board.service.BoardServiceImpl2">
-    	  boardDao에 board.dao를 전달한다.
-    	  <constructor-arg name="boardDao" ref="board.dao" /> 기본생성자
-    </bean> -->
+	<!-- FileUpload -->
+	<bean id="multipartResolver"
+		  class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="104857600" /> <!-- 100MB -->
+		<property name="defaultEncoding" value="UTF-8" />	  
+    </bean>
           
 </beans>
