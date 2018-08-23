@@ -17,4 +17,7 @@ public interface MemberDao {
 	
 	public List<MemberVO> selectAllMembers();
 	
+	// Point 증가
+	public int updatePoint(String email, int point);
+	
 }

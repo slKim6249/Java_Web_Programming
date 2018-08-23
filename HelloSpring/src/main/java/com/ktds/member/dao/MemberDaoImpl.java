@@ -24,6 +24,7 @@ public class MemberDaoImpl implements MemberDao {
 		int SELECT_ONE_QUERY = 1;
 		int DELETE_ONE_QUERY = 2;
 		int SELECT_ALL_QUERY = 3;
+		int POINT_UPDATE_QUERY = 4;
 	}
 	
 	@Autowired
@@ -85,6 +86,16 @@ public class MemberDaoImpl implements MemberDao {
 							return BindData.bindData(rs, new MemberVO());
 						}
 					});
+	}
+
+	@Override
+	public int updatePoint(String email, int point) {
+		
+		return this.jdbcTemplate.update(
+						this.memberQueries.get(Query.POINT_UPDATE_QUERY)
+						, point // Query문 순서대로 Argument를 넣는다.
+						, email
+				);
 	}
 	
 	

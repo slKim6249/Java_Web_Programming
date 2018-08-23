@@ -41,7 +41,7 @@ public class BoardController {
 	// Spring 4.3 이상에서 사용
 	@GetMapping("/board/write")
 	public String viewBoardWritePage( @SessionAttribute(name="_USER_", required=false) MemberVO memberVO ) {
-		
+		// session이 없으면 다시 login하게 시키기
 		if( memberVO == null ) {
 			return "redirect:/member/login";
 		}
@@ -58,13 +58,22 @@ public class BoardController {
 		String email = loginMemberVO.getEmail();
 		boardVO.setEmail(email);
 		
-		return this.boardService.createBoard(boardVO) ? "redirect:/board/list" : "redirect:/board/write";
+		return this.boardService.createBoard(boardVO, loginMemberVO) ? "redirect:/board/list" : "redirect:/board/write";
 	}
 	
 	// http://localhost:8080/HelloSpring/board/detail/1
 	@RequestMapping("/board/detail/{id}")
-	public ModelAndView viewBoardDetailPage( @PathVariable int id ) {
-		BoardVO boardVO = this.boardService.readOneBoard(id);
+	public ModelAndView viewBoardDetailPage( 
+					@PathVariable int id
+					, @SessionAttribute("_USER_") MemberVO memberVO
+					) {
+		
+		// 2Point 미만은 게시판 읽기 X , redirect 시키기
+		if( memberVO.getPoint() < 2) {
+			return new ModelAndView("redirect:/board/list");
+		}
+		
+		BoardVO boardVO = this.boardService.readOneBoard(id, memberVO);
 		
 		ModelAndView view = new ModelAndView("board/detail");
 		view.addObject("boardVO", boardVO);

@@ -27,7 +27,19 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public MemberVO readOneMember(MemberVO memberVO) {
-		return memberDao.selectOneMember(memberVO);
+		
+		MemberVO loginMemberVO = memberDao.selectOneMember(memberVO);
+		
+		if ( loginMemberVO != null ) {
+			// db
+			this.memberDao.updatePoint(loginMemberVO.getEmail(), +2);
+			// session
+			int point = loginMemberVO.getPoint();
+			point += 2;
+			loginMemberVO.setPoint(point);
+		}
+		
+		return loginMemberVO;
 	}
 
 	@Override

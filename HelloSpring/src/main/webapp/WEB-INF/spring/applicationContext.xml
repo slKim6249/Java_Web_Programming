@@ -58,6 +58,7 @@
 	      			SELECT	EMAIL
 	      					, NAME
 	      					, PASSWORD
+	      					, POINT
 					FROM	MEMBERS
 					WHERE	EMAIL = ?
 					AND		PASSWORD = ?
@@ -73,7 +74,14 @@
 	      			SELECT	EMAIL
 	      					, NAME
 	      					, PASSWORD
+							, POINT
 					FROM	MEMBERS
+	      		</value>
+	      		<!-- 4번 Index, Update -->
+	      		<value>
+	      			UPDATE	MEMBERS
+	      			SET		POINT = POINT + ?
+	      			WHERE	EMAIL = ?
 	      		</value>
 		  	</list>
 		  </constructor-arg>
@@ -119,6 +127,7 @@
 							, B.ORIGIN_FILE_NAME
 							, M.EMAIL M_EMAIL
 							, M.NAME
+							, M.POINT
 					FROM	BOARD B
 							, MEMBERS M
 					WHERE	B.EMAIL = M.EMAIL
@@ -142,6 +151,7 @@
 							, B.ORIGIN_FILE_NAME
 							, M.EMAIL M_EMAIL
 							, M.NAME
+							, M.POINT
 					FROM	BOARD B
 							, MEMBERS M
 					WHERE	B.EMAIL = M.EMAIL

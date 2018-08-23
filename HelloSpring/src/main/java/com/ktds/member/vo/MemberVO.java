@@ -10,6 +10,8 @@ public class MemberVO {
 	private String name;
 	@Types
 	private String password;
+	@Types
+	private int point;
 
 	public String getEmail() {
 		return email;
@@ -33,6 +35,14 @@ public class MemberVO {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public int getPoint() {
+		return point;
+	}
+
+	public void setPoint(int point) {
+		this.point = point;
 	}
 
 }
