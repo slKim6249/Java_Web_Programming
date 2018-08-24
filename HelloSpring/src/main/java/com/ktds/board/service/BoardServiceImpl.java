@@ -26,7 +26,7 @@ public class BoardServiceImpl implements BoardService {
 		System.out.println("Call BoardService.createBoard();");
 		
 		// 업로드를 했다면
-		boolean isUploadFile = boardVO.getOriginFileName().length() > 0;
+		boolean isUploadFile = boardVO.getOriginFileName() != null;
 		
 		int point = 10;
 		if ( isUploadFile ) {

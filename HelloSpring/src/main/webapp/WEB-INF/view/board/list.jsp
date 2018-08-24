@@ -5,42 +5,8 @@
 <html>
 <head>
 	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="/HelloSpring/css/layout.css">
 	<title>List Page</title>
-	<!-- Internal Style -->
-	<style type="text/css">
-		#wrapper {
-			width: 900px;
-		}
-		#no-articles {
-			padding: 15px;
-		}
-		.padded {
-			padding: 15px;
-		}
-		#wrapper > #headerWrapper > div,
-		#wrapper > .contentWrapper > div {
-			padding: 15px;
-		}
-		.header {
-			font-weight: bold;
-			text-align: center;
-		}
-		.number {
-			width: 55px;
-		}
-		.subject {
-			width: 385px;
-		}
-		.writer {
-			width: 120px;
-		}
-		.create-date {
-			width: 120px;
-		}
-		.box {
-			display: inline-block;
-		}
-	</style>
 	<script type="text/javascript">
 		var message = "${param.message}";
 		if( message != "" ) {
