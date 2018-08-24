@@ -58,6 +58,22 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public BoardVO readOneBoard(int id, MemberVO memberVO) {
 		
+//		BoardVO boardVO = this.readOneBoard(id);
+//		if ( !boardVO.getEmail().equals( memberVO.getEmail() ) ) {
+//			
+//			if( memberVO.getPoint() < 2 ) {
+//				throw new PolicyVio;ationException("You need more Point", "/boardlist");
+//			}
+//			this.memberDao.updatePoint(memberVO.getEmail(), -2);
+//			
+//			int point = memberVO.getPoint();
+//			point -= 2;
+//			memberVO.setPoint(point);
+//			
+//		}
+//		
+//		return boardVO;
+		
 		// 같은 정보면 포인트 삭감 X
 		if( !memberVO.getEmail().equals( this.boardDao.selectOneBoard(id).getEmail() ) ) {
 			// db

@@ -124,6 +124,10 @@ public class BoardController {
 			return view;
 		}
 		
+//		BoardVO boardVO = this.boardService.readOneBoard(id, memberVO);
+//		ModelAndView view = new ModelAndView("board/detail");
+//		view.addObject("boardVO", boardVO);	
+//		return view;
 		return view;
 	}
 
