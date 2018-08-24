@@ -44,4 +44,15 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	
+	<!-- needed for ContextLoaderListener -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/spring/*Context.xml</param-value> <!-- /WEB-INF/spring/아래 있는 Context.xml파일은 다 가져온다. -->
+	</context-param>
+
+	<!-- Bootstraps the root web application context before servlet initialization -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	
 </web-app>
