@@ -112,18 +112,19 @@ public class BoardController {
 					, @SessionAttribute("_USER_") MemberVO memberVO
 					) {
 		
+//		BoardVO boardVO = null;
+//		try {
+//			boardVO = this.boardService.readOneBoard(id, memberVO);
+//		} catch (PolicyViolationException e) {
+//			try {
+//				return new ModelAndView("redirect:" 
+//									+ e.getRedirect() 
+//									+ "?message" 
+//									+ URLEncoder.encode(e.getMessage(), "UTF-8") ); // Try-Catch
+//			} catch (UnsupportedEncodingException e1) {} 
+//		}
 		BoardVO boardVO = null;
-		try {
-			boardVO = this.boardService.readOneBoard(id, memberVO);
-		} catch (PolicyViolationException e) {
-			try {
-				return new ModelAndView("redirect:" 
-									+ e.getRedirect() 
-									+ "?message" 
-									+ URLEncoder.encode(e.getMessage(), "UTF-8") ); // Try-Catch
-			} catch (UnsupportedEncodingException e1) {} 
-		}
-		
+		boardVO = this.boardService.readOneBoard(id, memberVO);
 		ModelAndView view = new ModelAndView("board/detail");
 		view.addObject("boardVO", boardVO);	
 		return view;
@@ -156,8 +157,12 @@ public class BoardController {
 					@PathVariable int id
 					, HttpServletRequest request
 					, HttpServletResponse response
+					, @SessionAttribute("_USER_") MemberVO memberVO
 					) {
 		
+		if( memberVO.getPoint() < 5 ) {
+			throw new PolicyViolationException("포인트가 부족합니다", "/board/detail/" + id);
+		}
 		
 		BoardVO boardVO = this.boardService.readOneBoard(id);
 		
