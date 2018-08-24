@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.ktds.board.dao.BoardDao;
 import com.ktds.board.vo.BoardVO;
 import com.ktds.board.web.BoardController;
+import com.ktds.common.exceptions.PolicyViolationException;
 import com.ktds.member.dao.MemberDao;
 import com.ktds.member.vo.MemberVO;
 
@@ -58,33 +59,34 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public BoardVO readOneBoard(int id, MemberVO memberVO) {
 		
-//		BoardVO boardVO = this.readOneBoard(id);
-//		if ( !boardVO.getEmail().equals( memberVO.getEmail() ) ) {
-//			
-//			if( memberVO.getPoint() < 2 ) {
-//				throw new PolicyVio;ationException("You need more Point", "/boardlist");
-//			}
-//			this.memberDao.updatePoint(memberVO.getEmail(), -2);
-//			
-//			int point = memberVO.getPoint();
-//			point -= 2;
-//			memberVO.setPoint(point);
-//			
-//		}
-//		
-//		return boardVO;
+		BoardVO boardVO = this.readOneBoard(id);
+		if ( !boardVO.getEmail().equals( memberVO.getEmail() ) ) {
+			
+			if( memberVO.getPoint() < 2 ) {
+				throw new PolicyViolationException("포인트가 부족합니다. You Need More Point", "/board/list");
+			}
 		
-		// 같은 정보면 포인트 삭감 X
-		if( !memberVO.getEmail().equals( this.boardDao.selectOneBoard(id).getEmail() ) ) {
-			// db
 			this.memberDao.updatePoint(memberVO.getEmail(), -2);
-			// session
+			
 			int point = memberVO.getPoint();
 			point -= 2;
 			memberVO.setPoint(point);
+			
 		}
 		
-		return this.readOneBoard(id);
+		return boardVO;
+				
+//		// 같은 정보면 포인트 삭감 X
+//		if( !memberVO.getEmail().equals( this.boardDao.selectOneBoard(id).getEmail() ) ) {
+//			// db
+//			this.memberDao.updatePoint(memberVO.getEmail(), -2);
+//			// session
+//			int point = memberVO.getPoint();
+//			point -= 2;
+//			memberVO.setPoint(point);
+//		}
+//		
+//		return this.readOneBoard(id);
 	}
 
 	@Override

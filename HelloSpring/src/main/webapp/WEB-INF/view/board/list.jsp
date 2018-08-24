@@ -41,6 +41,12 @@
 			display: inline-block;
 		}
 	</style>
+	<script type="text/javascript">
+		var message = "${param.message}";
+		if( message != "" ) {
+			alert(message);
+		}
+	</script>
 </head>
 <body>
 	<div id="wrapper">

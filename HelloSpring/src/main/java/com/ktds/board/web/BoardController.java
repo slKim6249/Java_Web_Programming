@@ -3,6 +3,7 @@ package com.ktds.board.web;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ktds.board.service.BoardService;
 import com.ktds.board.vo.BoardVO;
+import com.ktds.common.exceptions.PolicyViolationException;
 import com.ktds.common.web.DownloadUtil;
 import com.ktds.member.vo.MemberVO;
 
@@ -110,25 +112,37 @@ public class BoardController {
 					, @SessionAttribute("_USER_") MemberVO memberVO
 					) {
 		
-		BoardVO boardVO = this.boardService.readOneBoard(id, memberVO);
-		
-		ModelAndView view = new ModelAndView("board/detail");
-		view.addObject("boardVO", boardVO);
-		
-		// 2Point 미만은 게시판 읽기 X , redirect 시키기
-		// 같은정보면 보기
-		if( !memberVO.getEmail().equals(boardVO.getEmail())
-				&& memberVO.getPoint() < 2) {
-			return new ModelAndView("redirect:/board/list");
-		} else if( memberVO.getEmail().equals(boardVO.getEmail()) ) {
-			return view;
+		BoardVO boardVO = null;
+		try {
+			boardVO = this.boardService.readOneBoard(id, memberVO);
+		} catch (PolicyViolationException e) {
+			try {
+				return new ModelAndView("redirect:" 
+									+ e.getRedirect() 
+									+ "?message" 
+									+ URLEncoder.encode(e.getMessage(), "UTF-8") ); // Try-Catch
+			} catch (UnsupportedEncodingException e1) {} 
 		}
 		
-//		BoardVO boardVO = this.boardService.readOneBoard(id, memberVO);
-//		ModelAndView view = new ModelAndView("board/detail");
-//		view.addObject("boardVO", boardVO);	
-//		return view;
+		ModelAndView view = new ModelAndView("board/detail");
+		view.addObject("boardVO", boardVO);	
 		return view;
+		
+//		BoardVO boardVO = this.boardService.readOneBoard(id, memberVO);
+//		
+//		ModelAndView view = new ModelAndView("board/detail");
+//		view.addObject("boardVO", boardVO);
+//		
+//		// 2Point 미만은 게시판 읽기 X , redirect 시키기
+//		// 같은정보면 보기
+//		if( !memberVO.getEmail().equals(boardVO.getEmail())
+//				&& memberVO.getPoint() < 2) {
+//			return new ModelAndView("redirect:/board/list");
+//		} else if( memberVO.getEmail().equals(boardVO.getEmail()) ) {
+//			return view;
+//		}
+//		
+//		return view;
 	}
 
 	@RequestMapping("/board/delete/{id}")
