@@ -11,6 +11,7 @@
 	<context:component-scan base-package="com.ktds" />
 	<mvc:annotation-driven />
 	
+	<!-- static resources -->
 	<mvc:resources location="/WEB-INF/static/js/" mapping="/js/**" />
 	<mvc:resources location="/WEB-INF/static/css/" mapping="/css/**" />
 	<mvc:resources location="/WEB-INF/static/img/" mapping="/img/**" />
