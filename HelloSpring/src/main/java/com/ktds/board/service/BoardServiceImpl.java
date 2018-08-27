@@ -23,7 +23,6 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public boolean createBoard(BoardVO boardVO, MemberVO memberVO) {
-		System.out.println("Call BoardService.createBoard();");
 		
 		// 업로드를 했다면
 		boolean isUploadFile = boardVO.getOriginFileName() != null;
@@ -42,6 +41,9 @@ public class BoardServiceImpl implements BoardService {
 		memberPoint += point;
 		memberVO.setPoint(point);
 		
+//		boolean isSuccess = this.boardDao.insertBoard(boardVO) > 0; // -> Rollback
+//		Integer.parseInt("ABC"); // NumberFormatException, -> Rollback
+		
 		return this.boardDao.insertBoard(boardVO) > 0;
 	}
 
@@ -53,6 +55,7 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public BoardVO readOneBoard(int id) {
+//		Integer.parseInt("ABC"); // NumberFormatException, -> Rollback
 		return this.boardDao.selectOneBoard(id);
 	}
 
