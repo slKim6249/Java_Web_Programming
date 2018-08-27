@@ -36,8 +36,11 @@ public class BoardController {
 	
 	// Logger
 //	private Logger logger = LoggerFactory.getLogger(BoardController.class);
+	
 	// logger name에 정의된 log 찍기
 	private Logger logger = LoggerFactory.getLogger("list.Statistics");
+	// Parameter와 Method의 결과의 Log를 찍기 위함.
+	private Logger paramLogger = LoggerFactory.getLogger(BoardController.class);
 	
 	// properties에서 쓰려면
 	@Value("${upload.path}")
@@ -79,9 +82,11 @@ public class BoardController {
 	@PostMapping("/board/write")
 	public String viewBoardWriteAction(
 							@ModelAttribute BoardVO boardVO
+							, HttpServletRequest request
 							, HttpSession session) {
 		
 		MultipartFile uploadFile = boardVO.getFile();
+		
 		if( !uploadFile.isEmpty() ) {
 			// 실제 파일이름
 			String originFileName = uploadFile.getOriginalFilename();
@@ -113,8 +118,21 @@ public class BoardController {
 		String email = loginMemberVO.getEmail();
 		boardVO.setEmail(email);
 		
-		return this.boardService.createBoard(boardVO, loginMemberVO) ? 
+		String view = this.boardService.createBoard(boardVO, loginMemberVO) ? 
 				"redirect:/board/list" : "redirect:/board/write";
+		
+		String paramFormat = "IP : %s, Param : %s, Result : %s";
+		paramLogger.debug( String.format(paramFormat 
+							, request.getRemoteAddr()
+							, boardVO.getSubject() + ", "
+							+ boardVO.getContent() + ", "
+							+ boardVO.getEmail() + ", "
+							+ boardVO.getFileName() + ", " 
+							+ boardVO.getOriginFileName()
+							, view 
+							) );
+		
+		return view;
 	}
 	
 	// http://localhost:8080/HelloSpring/board/detail/1
@@ -122,6 +140,7 @@ public class BoardController {
 	public ModelAndView viewBoardDetailPage( 
 					@PathVariable int id
 					, @SessionAttribute("_USER_") MemberVO memberVO
+					, HttpServletRequest request
 					) {
 		
 //		BoardVO boardVO = null;
@@ -139,6 +158,18 @@ public class BoardController {
 		boardVO = this.boardService.readOneBoard(id, memberVO);
 		ModelAndView view = new ModelAndView("board/detail");
 		view.addObject("boardVO", boardVO);	
+		
+		String paramFormat = "IP : %s, Param : %s, Result : %s";
+		paramLogger.debug( String.format(paramFormat
+							, request.getRemoteAddr()
+							, id
+							, boardVO.getSubject() + ", "
+							+ boardVO.getContent() + ", "
+							+ boardVO.getEmail() + ", "
+							+ boardVO.getFileName() + ", " 
+							+ boardVO.getOriginFileName() 
+						) );
+		
 		return view;
 		
 //		BoardVO boardVO = this.boardService.readOneBoard(id, memberVO);
@@ -159,8 +190,19 @@ public class BoardController {
 	}
 
 	@RequestMapping("/board/delete/{id}")
-	public String doBoardDeleteAction( @PathVariable int id ) {
+	public String doBoardDeleteAction( @PathVariable int id 
+									, HttpServletRequest request
+									, @SessionAttribute("_USER_") MemberVO memberVO) {
 		boolean isSuccess = this.boardService.deleteOneBoard(id);
+		
+		String paramFormat = "IP : %s, Actor : %s, Param : %s, Result : %s";
+		paramLogger.debug( String.format(paramFormat 
+							, request.getRemoteAddr()
+							, memberVO.getEmail()
+							, id
+							, isSuccess
+							) );
+		
 		return "redirect:/board/list";
 	}
 	
