@@ -109,4 +109,22 @@ public class BoardVO {
 		this.memberVO = memberVO;
 	}
 	
+	@Override
+	public String toString() {
+		String format = "BoardVO [ID : %d, Subject : %s, Content : %s, Email : %s, "
+				+ "crtDt : %s, mdfyDt : %s, fileName : %s, originFileName : %s,"
+				+ " MemberVO : %s]";
+		return String.format(format
+						, this.id
+						, this.subject 
+						, this.content
+						, this.email 
+						, this.crtDt
+						, this.mdfyDt
+						, this.fileName
+						, this.originFileName
+						, this.memberVO.toString()
+					);
+	}
+	
 }

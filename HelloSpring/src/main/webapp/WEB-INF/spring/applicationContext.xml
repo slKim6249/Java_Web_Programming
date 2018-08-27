@@ -3,9 +3,26 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+	<!-- 공통기능 클래스 AOP에 사용됨 -->
+	<bean id="daoParamAop"
+		  class="com.ktds.common.aop.DaoParamAop">
+	</bean>
+	
+	<!-- AOP 정의, 언제 어디에서 무엇을 실행할 것인지 -->
+	<aop:config>
+		<aop:aspect id="daoAspect" ref="daoParamAop"> <!-- bean을 받음 -->
+			<aop:pointcut expression="execution( * com.ktds..dao.*DaoImpl.*(..) )" 
+					      id="daoPointCut"/> <!-- pointcut -> 누구한테, *는 모든 return Type
+					      					, ..은 하위, *(..)은 모든 method, Parameter가 0개이상인 것 --> 
+			<aop:around method="getParam" pointcut-ref="daoPointCut"/>
+		</aop:aspect>
+	</aop:config>
 
 	<!-- package이하에 있는 동일한 Interface로 등록된 모든 클래스를 찾아 자동으로 주입 -->
 	<context:component-scan base-package="com.ktds" />

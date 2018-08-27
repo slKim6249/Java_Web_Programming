@@ -116,6 +116,7 @@ public class BoardController {
 		
 		MemberVO loginMemberVO = (MemberVO) session.getAttribute("_USER_");
 		String email = loginMemberVO.getEmail();
+		boardVO.setMemberVO(loginMemberVO);
 		boardVO.setEmail(email);
 		
 		String view = this.boardService.createBoard(boardVO, loginMemberVO) ? 

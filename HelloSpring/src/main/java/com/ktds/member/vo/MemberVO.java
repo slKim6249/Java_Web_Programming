@@ -44,5 +44,16 @@ public class MemberVO {
 	public void setPoint(int point) {
 		this.point = point;
 	}
+	
+	@Override
+	public String toString() {
+		String format = "MemberVO [Email : %s, Name : %s, Password : %s, Point : %d]";
+		return String.format(format 
+							, this.email
+							, this.name
+							, this.password
+							, this.point
+						 );
+	}
 
 }
