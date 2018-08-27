@@ -1,0 +1,32 @@
+<configuration>
+
+	<appender name="STDOUT"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>▶ %d{HH:mm:ss.SSS} %-5level %logger{0}.%method:%line - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+	
+	<appender name="statistics"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>DateTime : %d{HH:mm:ss.SSS}, %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+	
+	<!-- info까지만 찍힌다. -->
+	<logger level="info" name="list.Statistics">
+		<appender-ref ref="statistics" />
+	</logger>
+	
+	<logger level="info" name="org.springframework">
+		<appender-ref ref="STDOUT" />
+	</logger>
+
+	<!-- debug까지 -->
+	<!-- <root level="debug">
+		<appender-ref ref="STDOUT" />
+	</root> -->
+</configuration>

@@ -3,7 +3,6 @@ package com.ktds.board.web;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.List;
 import java.util.UUID;
 
@@ -11,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,6 +34,11 @@ import com.ktds.member.vo.MemberVO;
 @Controller
 public class BoardController {
 	
+	// Logger
+//	private Logger logger = LoggerFactory.getLogger(BoardController.class);
+	// logger name에 정의된 log 찍기
+	private Logger logger = LoggerFactory.getLogger("list.Statistics");
+	
 	// properties에서 쓰려면
 	@Value("${upload.path}")
 	private String uploadPath;
@@ -42,8 +48,14 @@ public class BoardController {
 	private BoardService boardService;
 	
 	@RequestMapping("/board/list")
-	public ModelAndView viewBoardListPage() {
+	public ModelAndView viewBoardListPage(HttpServletRequest request) {
+				
 		List<BoardVO> boardVOList = this.boardService.readAllBoards();
+		
+		// log
+		logger.info("URL : /board/list, IP : " + request.getRemoteAddr()
+					+ ", List Size : "
+					+ boardVOList.size());
 		
 		ModelAndView view = new ModelAndView("board/list");
 		view.addObject("boardVOList", boardVOList);
