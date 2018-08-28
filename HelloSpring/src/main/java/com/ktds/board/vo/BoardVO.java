@@ -1,5 +1,7 @@
 package com.ktds.board.vo;
 
+import javax.validation.constraints.NotEmpty;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ktds.common.dao.support.Types;
@@ -10,10 +12,12 @@ public class BoardVO {
 	@Types
 	private int id;
 	@Types
+	@NotEmpty(message="제목은 필수 입력 값입니다.")
 	private String subject;
 	@Types
+	@NotEmpty(message="내용은 필수 입력 값입니다.")
 	private String content;
-	@Types(alias="B_EMAIL") // alias로 된 컬럼명 가져오기
+	@Types(alias="B_EMAIL")
 	private String email;
 	@Types
 	private String crtDt;

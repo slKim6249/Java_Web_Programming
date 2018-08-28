@@ -9,6 +9,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,10 +81,20 @@ public class BoardController {
 	}
 	
 	@PostMapping("/board/write")
-	public String viewBoardWriteAction(
-							@ModelAttribute BoardVO boardVO
+	public ModelAndView viewBoardWriteAction(
+							@Valid @ModelAttribute BoardVO boardVO
+							, Errors errors
 							, HttpServletRequest request
 							, HttpSession session) {
+		
+		ModelAndView view = new ModelAndView("redirect:/board/list");
+		
+		// Validation Annotation이 실패했는지 체크
+		if ( errors.hasErrors() ) {
+			view.setViewName("board/write");
+			view.addObject("boardVO", boardVO);
+			return view;
+		}
 		
 		MultipartFile uploadFile = boardVO.getFile();
 		
@@ -119,8 +130,9 @@ public class BoardController {
 		boardVO.setMemberVO(loginMemberVO);
 		boardVO.setEmail(email);
 		
-		String view = this.boardService.createBoard(boardVO, loginMemberVO) ? 
-				"redirect:/board/list" : "redirect:/board/write";
+//		String view = this.boardService.createBoard(boardVO, loginMemberVO) ? 
+//				"redirect:/board/list" : "redirect:/board/write";
+		boolean isSuccess = this.boardService.createBoard(boardVO, loginMemberVO);
 		
 		String paramFormat = "IP : %s, Param : %s, Result : %s";
 		paramLogger.debug( String.format(paramFormat 
@@ -130,7 +142,7 @@ public class BoardController {
 							+ boardVO.getEmail() + ", "
 							+ boardVO.getFileName() + ", " 
 							+ boardVO.getOriginFileName()
-							, view 
+							, view.getViewName() // "redirect:/board/list"
 							) );
 		
 		return view;

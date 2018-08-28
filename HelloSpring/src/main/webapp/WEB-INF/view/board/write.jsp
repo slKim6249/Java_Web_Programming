@@ -16,11 +16,13 @@
 	<form method="post" action="/HelloSpring/board/write" enctype="multipart/form-data">
 		<div class="form-group">
 			<label for="sub">제목:</label>
-			<input type="text" class="form-control" name="subject" placeholder="제목을 입력하세요." id="sub" />
+			<input type="text" class="form-control" name="subject" placeholder="제목을 입력하세요." 
+					value="${boardVO.subject}" id="sub" />
 		</div>
 		<div class="form-group">
 			<label for="con">내용:</label>
-			<input name="content" class="form-control" placeholder="내용을 입력하세요." id="con" />
+			<input name="content" class="form-control" placeholder="내용을 입력하세요." id="con" 
+					value="${boardVO.content}" />
 		</div>
 		<div>
 			<input type="file" name="file" class="btn btn-info" placeholder="File을 선택하세요." />
