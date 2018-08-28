@@ -3,6 +3,7 @@ package com.ktds.member.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.ktds.member.dao.MemberDao;
@@ -12,6 +13,7 @@ import com.ktds.member.vo.MemberVO;
 public class MemberServiceImpl implements MemberService {
 
 	@Autowired
+	@Qualifier("memberDaoImplMybatis")
 	private MemberDao memberDao;
 	
 	@Override
