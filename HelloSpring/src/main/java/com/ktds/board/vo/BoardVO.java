@@ -1,11 +1,14 @@
 package com.ktds.board.vo;
 
+import java.util.List;
+
 import javax.validation.constraints.NotEmpty;
 
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ktds.common.dao.support.Types;
 import com.ktds.member.vo.MemberVO;
+import com.ktds.reply.vo.ReplyVO;
 
 public class BoardVO {
 
@@ -36,8 +39,8 @@ public class BoardVO {
 	private String originFileName;
 
 	private MultipartFile file;
-
 	private MemberVO memberVO;
+	private List<ReplyVO> replyList;
 
 	public BoardVO() {
 		this.fileName = "";
@@ -124,6 +127,14 @@ public class BoardVO {
 		this.memberVO = memberVO;
 	}
 	
+	public List<ReplyVO> getReplyList() {
+		return replyList;
+	}
+
+	public void setReplyList(List<ReplyVO> replyList) {
+		this.replyList = replyList;
+	}
+
 	@Override
 	public String toString() {
 		String format = "BoardVO [Id: %d, Subject: %s, Content: %s, Email: %s"

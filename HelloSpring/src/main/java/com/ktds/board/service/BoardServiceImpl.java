@@ -1,5 +1,7 @@
 package com.ktds.board.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,8 @@ import com.ktds.board.vo.BoardVO;
 import com.ktds.common.exceptions.PolicyViolationException;
 import com.ktds.member.biz.MemberBiz;
 import com.ktds.member.vo.MemberVO;
+import com.ktds.reply.dao.ReplyDao;
+import com.ktds.reply.vo.ReplyVO;
 
 import io.github.seccoding.web.pager.Pager;
 import io.github.seccoding.web.pager.PagerFactory;
@@ -25,6 +29,9 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Autowired
 	private MemberBiz memberBiz;
+	
+	@Autowired
+	private ReplyDao replyDao;
 	
 	@Override
 	public boolean createBoard(BoardVO boardVO, MemberVO memberVO) {
@@ -64,6 +71,9 @@ public class BoardServiceImpl implements BoardService {
 	public BoardVO readOneBoard(int id, MemberVO memberVO) {
 		
 		BoardVO boardVO = this.readOneBoard(id);
+		List<ReplyVO> replyList = this.replyDao.selectAllReplies(id);
+		boardVO.setReplyList(replyList);
+		
 		if ( !boardVO.getEmail().equals( memberVO.getEmail() ) ) {
 			
 			if ( memberVO.getPoint() < 2 ) {

@@ -32,5 +32,25 @@
 		<a href="/HelloSpring/board/list">목록</a>
 	</div>
 
+	<hr />
+	
+	<div>
+	<c:forEach items="${boardVO.replyList}" var="reply">
+		<div style="margin-left: ${(reply.level - 1) * 30}px;">
+			<div>${reply.memberVO.name} (${reply.memberVO.email})</div>
+			<div>${reply.crtDt}</div>
+			<div>${reply.reply}</div>
+		</div>
+	</c:forEach>
+	</div>
+	
+	
+	<form action="/HelloSpring/reply/write" method="post">
+		<input type="hidden" name="boardId" value="${boardVO.id}" />
+		<input type="hidden" name="parentReplyId" value="0" />
+		<textarea name="reply"></textarea>
+		<input type="submit" value="등록" />
+	</form>
+	
 </body>
 </html>
