@@ -15,7 +15,7 @@
 	</script>
 </head>
 <body>
-
+	<jsp:include page="/WEB-INF/view/common/header.jsp" />
 	<div id="wrapper">
 		<div id="headerWrapper">
 			<div class="number header box">글 번호</div><!-- 

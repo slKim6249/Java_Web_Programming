@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<jsp:include page="/WEB-INF/view/common/header.jsp" />
 	<h1>
 		${boardVO.subject} 
 		<span style="font-size: 12pt;">${boardVO.crtDt}</span>

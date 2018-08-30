@@ -23,6 +23,13 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 
+	@GetMapping("/member/logout")
+	public String doMemberLogoutAction( HttpSession session ) {
+		// Logout
+		session.invalidate();
+		return "redirect:/member/login";
+	}
+	
 	@GetMapping("/member/regist")
 	public String viewMemberRegistPage() {
 		return "member/regist";

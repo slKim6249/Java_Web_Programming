@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<jsp:include page="/WEB-INF/view/common/header.jsp" />
 	<form:form 	modelAttribute="boardVO"
 				method="post" 
 				action="/HelloSpring/board/write"
