@@ -1,30 +1,26 @@
 package com.ktds.member.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.ktds.member.biz.MemberBiz;
 import com.ktds.member.dao.MemberDao;
 import com.ktds.member.vo.MemberVO;
 
 @Service
 public class MemberServiceImpl implements MemberService {
-
+	
 	@Autowired
-	@Qualifier("memberDaoImplMybatis")
+	@Qualifier("memberDaoImplMyBatis")
 	private MemberDao memberDao;
 	
+	@Autowired
+	private MemberBiz memberBiz;
+	
 	@Override
-	public boolean createMember(MemberVO memberVO) {
-		System.out.println("Call BoardService.createMember();");
-		return memberDao.insertMember(memberVO) > 0;
-	}
-
-	@Override
-	public boolean updateMember(MemberVO memberVO) {
-		return memberDao.updateMember(memberVO) > 0;
+	public boolean createNewMember(MemberVO memberVO) {
+		return memberDao.insertNewMember(memberVO) > 0;
 	}
 
 	@Override
@@ -33,27 +29,22 @@ public class MemberServiceImpl implements MemberService {
 		MemberVO loginMemberVO = memberDao.selectOneMember(memberVO);
 		
 		if ( loginMemberVO != null ) {
-			// db
-			this.memberDao.updatePoint(loginMemberVO.getEmail(), +2);
-			// session
+			
+			this.memberBiz.updatePoint(memberVO.getEmail(), +2);
+			
 			int point = loginMemberVO.getPoint();
 			point += 2;
 			loginMemberVO.setPoint(point);
 		}
 		
+		
 		return loginMemberVO;
 	}
 
-	@Override
-	public boolean deleteOneMember(MemberVO memberVO) {
-		return memberDao.deleteOneMember(memberVO) > 0;
-	}
-
-	@Override
-	public List<MemberVO> readAllMember() {
-		return memberDao.selectAllMembers();
-	}
-	
-	
-	
 }
+
+
+
+
+
+

@@ -1,9 +1,10 @@
 package com.ktds.board.service;
 
-import java.util.List;
-
+import com.ktds.board.vo.BoardSearchVO;
 import com.ktds.board.vo.BoardVO;
 import com.ktds.member.vo.MemberVO;
+
+import io.github.seccoding.web.pager.explorer.PageExplorer;
 
 public interface BoardService {
 
@@ -11,12 +12,18 @@ public interface BoardService {
 	
 	public boolean updateBoard(BoardVO boardVO);
 	
-	public BoardVO readOneBoard(int id); // Point 사용 X
-
+	public BoardVO readOneBoard(int id);
 	public BoardVO readOneBoard(int id, MemberVO memberVO);
 	
 	public boolean deleteOneBoard(int id);
 	
-	public List<BoardVO> readAllBoards();
+	public PageExplorer readAllBoards(BoardSearchVO boardSearchVO);
 	
 }
+
+
+
+
+
+
+

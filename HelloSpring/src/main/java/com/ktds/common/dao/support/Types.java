@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Types {
 
-   public String alias() default "";
-   public boolean requires() default false;
+	public String alias() default "";
+	public boolean requires() default false;
 
 }

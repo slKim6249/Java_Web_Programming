@@ -6,11 +6,11 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
-	
-	<!-- 공통기능 Rollback, Commit 빈 생성 -->
-	<bean id="transactionManager"
-		  class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource"  />	  
+
+	<!-- 공통기능(Rollback, Commit) 빈 생성 -->
+	<bean	id="transactionManager"
+			class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
 	</bean>
 	
 	<!-- Rollback, Commit 대상 메소드 지정 -->
@@ -24,48 +24,59 @@
 		</tx:attributes>
 	</tx:advice>
 	
-	<!-- Transaction( Commit, Rollback ) 대상 클래스 지정 -->
+	<!-- Transaction(Commit, Rollback) 대상 클래스 지정 -->
 	<aop:config>
-		<aop:pointcut expression="execution( * com.ktds..service.*ServiceImpl.*(..) )" 
-			      	  id="transactionPointcut"/>
-		<aop:advisor advice-ref="transactionAdvisor" 
-					 pointcut-ref="transactionPointcut" />
+		<aop:pointcut 	expression="execution( * com.ktds..service.*ServiceImpl.*(..) )" 
+						id="transactionPointcut" />
+		<aop:advisor 	advice-ref="transactionAdvisor" 
+						pointcut-ref="transactionPointcut" />
 	</aop:config>
 	
+	
 	<!-- DBCP 설정 -->
-	<!-- Connection 여러개 만들어서 모아두는 Pool -->
-	<bean id="dataSource"
-	      class="org.apache.commons.dbcp.BasicDataSource">
-	      <property name="driverClassName" value="${jdbc.driver}" />
-	      <property name="url" value="${jdbc.url}" />
-	      <property name="username" value="${jdbc.id}" />
-	      <property name="password" value="${jdbc.password}" />
+	<bean 	id="dataSource"
+			class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${jdbc.driver}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.id}" />
+		<property name="password" value="${jdbc.password}" />
 	</bean>
 	
-	<!-- Spring JDBC -->
-	<!-- JDBCTemplate Bean 생성 -->
-	<bean id="jdbc.Template"
-	      class="org.springframework.jdbc.core.JdbcTemplate">
-	      <property name="dataSource" ref="dataSource" />
+	<!-- Spring JDBC 생성 -->
+	<bean 	id="jdbcTemplate"
+			class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" />
 	</bean>
 	
-	<!-- Java와 DataBase를 연동시켜주는 객체 -->
-	<!-- SqlSession == DataBase와 연결되어 있는 객체 -->
-	<bean id="sqlSessionFactory"
-		  class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource" />	  
-		<!-- <property name="mapperLocations" value="classpath:com/ktds/**/dao/sql.*xml" />
-		<property name="configLocation" value="classpath:mybatis.xml" /> -->
+	<!-- Java와 Database를 연동시켜주는 객체
+		SqlSession == Database와 연결되어있는 객체
+	 -->
+	<bean	id="sqlSessionFactory"
+			class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />		
+		<property name="mapperLocations" value="classpath:com/ktds/**/dao/sql/*.xml" />
+		<property name="configLocation" value="classpath:mybatis.xml" />
 	</bean>
-	
+
 	<!-- 
-		Query ( Insert, Select, Update, Delete ) 쿼리가 수행될 수 있도록
+		Query(Insert, Select, Update, Delete)쿼리가 수행될 수 있도록
 		코드를 미리 짜놓은 객체
 		Like Sql.java
 	 -->
-	<bean id="sqlSessionTemplate"
-		  class="org.mybatis.spring.SqlSessionTemplate">
+	<bean	id="sqlSessionTemplate"
+			class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
-
 </beans>
+
+
+
+
+
+
+
+
+
+
+
+

@@ -3,7 +3,6 @@ package com.ktds.board.web;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,23 +27,22 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ktds.board.service.BoardService;
+import com.ktds.board.vo.BoardSearchVO;
 import com.ktds.board.vo.BoardVO;
 import com.ktds.common.exceptions.PolicyViolationException;
+import com.ktds.common.session.Session;
 import com.ktds.common.web.DownloadUtil;
 import com.ktds.member.vo.MemberVO;
 
+import io.github.seccoding.web.pager.explorer.PageExplorer;
+
 @Controller
 public class BoardController {
-	
-	// Logger
+
 //	private Logger logger = LoggerFactory.getLogger(BoardController.class);
-	
-	// logger name에 정의된 log 찍기
-	private Logger logger = LoggerFactory.getLogger("list.Statistics");
-	// Parameter와 Method의 결과의 Log를 찍기 위함.
+	private Logger statisticsLogger = LoggerFactory.getLogger("list.statistics");
 	private Logger paramLogger = LoggerFactory.getLogger(BoardController.class);
 	
-	// properties에서 쓰려면
 	@Value("${upload.path}")
 	private String uploadPath;
 	
@@ -52,43 +50,62 @@ public class BoardController {
 	@Qualifier("boardServiceImpl")
 	private BoardService boardService;
 	
+	@RequestMapping("/board/list/init")
+	public String viewBoardListPageForInitiate( HttpSession session ) {
+		session.removeAttribute(Session.SEARCH);
+		return "redirect:/board/list";
+	}
+	
 	@RequestMapping("/board/list")
-	public ModelAndView viewBoardListPage(HttpServletRequest request) {
-				
-		List<BoardVO> boardVOList = this.boardService.readAllBoards();
+	public ModelAndView viewBoardListPage(
+				@ModelAttribute BoardSearchVO boardSearchVO
+				, HttpServletRequest request
+				, HttpSession session
+			) {
 		
-		// log
-		logger.info("URL : /board/list, IP : " + request.getRemoteAddr()
-					+ ", List Size : "
-					+ boardVOList.size());
+		// 전체검색 or 상세 -> 목록 or 글쓰기
+		if( boardSearchVO.getSearchKeyword() == null ) {
+			boardSearchVO = (BoardSearchVO) session.getAttribute(Session.SEARCH);
+			if ( boardSearchVO == null ) {
+				boardSearchVO = new BoardSearchVO();
+				boardSearchVO.setPageNo(0);
+			}
+		}
+		
+		PageExplorer pageExplorer = this.boardService.readAllBoards(boardSearchVO);
+		
+		statisticsLogger.info("URL : /board/list, IP : " 
+						+ request.getRemoteAddr() 
+						+ ", List Size : " 
+						+ pageExplorer.getList().size());
+		
+		session.setAttribute(Session.SEARCH, boardSearchVO);
 		
 		ModelAndView view = new ModelAndView("board/list");
-		view.addObject("boardVOList", boardVOList);
+		view.addObject("boardVOList", pageExplorer.getList());
+		view.addObject("pagenation", pageExplorer.make());
+		view.addObject("size", pageExplorer.getTotalCount());
+		view.addObject("boardSearchVO", boardSearchVO);
 		return view;
 	}
 	
-	// doGet과 같은 역할
-	// Spring 4.2 이하에서 사용
+	// Spring 4.2 이하에서 사용.
 	// @RequestMapping(value="/write", method=RequestMethod.GET)
-	// Spring 4.3 이상에서 사용
+	// Spring 4.3 이상에서 사용.
 	@GetMapping("/board/write")
-	public String viewBoardWritePage( @SessionAttribute(name="_USER_", required=false) MemberVO memberVO ) {
-		// session이 없으면 다시 login하게 시키기
-		if( memberVO == null ) {
-			return "redirect:/member/login";
-		}
-		
+	public String viewBoardWritePage( ) {
 		return "board/write";
 	}
 	
 	@PostMapping("/board/write")
-	public ModelAndView viewBoardWriteAction(
-							@Valid @ModelAttribute BoardVO boardVO
-							, Errors errors
-							, HttpServletRequest request
-							, HttpSession session) {
+	public ModelAndView doBoardWriteAction( 
+				@Valid @ModelAttribute BoardVO boardVO
+				, Errors errors
+				, HttpServletRequest request
+				, HttpSession session
+			) {
 		
-		ModelAndView view = new ModelAndView("redirect:/board/list");
+		ModelAndView view = new ModelAndView("redirect:/board/list/init");
 		
 		// Validation Annotation이 실패했는지 체크
 		if ( errors.hasErrors() ) {
@@ -99,25 +116,26 @@ public class BoardController {
 		
 		MultipartFile uploadFile = boardVO.getFile();
 		
-		if( !uploadFile.isEmpty() ) {
-			// 실제 파일이름
+		if ( !uploadFile.isEmpty() )  {
+			
+			// 실제 파일 이름
 			String originFileName = uploadFile.getOriginalFilename();
-			// 파일 시스템에 저장될 파일의 난수 이름
+			// 파일 시스템에 저장될 파일의 이름(난수)
 			String fileName = UUID.randomUUID().toString();
 			
-			// Dir이 존재 하지 않으면 mk
-			File uploadDir = new File(uploadPath);
-			if( !uploadDir.exists() ) {
+			// 폴더가 존재하지 않는다면, 생성
+			File uploadDir = new File(this.uploadPath);
+			if ( !uploadDir.exists() ) {
 				uploadDir.mkdirs();
 			}
 			
-			// 파일이 업로드 될 경로 지정
-			File destFile = new File(uploadPath, fileName);
+			// 파일이 업로드될 경로 지정
+			File destFile = new File(this.uploadPath, fileName);
 			
 			try {
-				// upload
+				// 업로드
 				uploadFile.transferTo(destFile);
-				// db에 file 정보 저장하기 위한 정보 세팅
+				// DB에 File 정보 저장하기 위한 정보 셋팅
 				boardVO.setOriginFileName(originFileName);
 				boardVO.setFileName(fileName);
 			} catch (IllegalStateException | IOException e) {
@@ -126,25 +144,29 @@ public class BoardController {
 			
 		}
 		
-		MemberVO loginMemberVO = (MemberVO) session.getAttribute("_USER_");
+		MemberVO loginMemberVO = (MemberVO) session.getAttribute(Session.USER);
 		String email = loginMemberVO.getEmail();
 		boardVO.setMemberVO(loginMemberVO);
 		boardVO.setEmail(email);
+		
+		String content = boardVO.getContent();
+		content += "\n" + request.getRemoteAddr();
+		boardVO.setContent(content);
 		
 //		String view = this.boardService.createBoard(boardVO, loginMemberVO) ? 
 //				"redirect:/board/list" : "redirect:/board/write";
 		boolean isSuccess = this.boardService.createBoard(boardVO, loginMemberVO);
 		
-		String paramFormat = "IP : %s, Param : %s, Result : %s";
-		paramLogger.debug( String.format(paramFormat 
-							, request.getRemoteAddr()
-							, boardVO.getSubject() + ", "
+		String paramFormat = "IP:%s, Param:%s, Result:%s";
+		paramLogger.debug( String.format(paramFormat
+					, request.getRemoteAddr()
+					, boardVO.getSubject() + ", "
 							+ boardVO.getContent() + ", "
 							+ boardVO.getEmail() + ", "
-							+ boardVO.getFileName() + ", " 
+							+ boardVO.getFileName() + ", "
 							+ boardVO.getOriginFileName()
-							, view.getViewName() // "redirect:/board/list"
-							) );
+					, view.getViewName() // "redirect:/board/list"
+					) );
 		
 		return view;
 	}
@@ -152,102 +174,89 @@ public class BoardController {
 	// http://localhost:8080/HelloSpring/board/detail/1
 	@RequestMapping("/board/detail/{id}")
 	public ModelAndView viewBoardDetailPage( 
-					@PathVariable int id
-					, @SessionAttribute("_USER_") MemberVO memberVO
-					, HttpServletRequest request
-					) {
+				@PathVariable int id
+				, @SessionAttribute(Session.USER) MemberVO memberVO
+				, HttpServletRequest request
+			) {
 		
-//		BoardVO boardVO = null;
-//		try {
-//			boardVO = this.boardService.readOneBoard(id, memberVO);
-//		} catch (PolicyViolationException e) {
-//			try {
-//				return new ModelAndView("redirect:" 
-//									+ e.getRedirect() 
-//									+ "?message" 
-//									+ URLEncoder.encode(e.getMessage(), "UTF-8") ); // Try-Catch
-//			} catch (UnsupportedEncodingException e1) {} 
-//		}
-		BoardVO boardVO = null;
-		boardVO = this.boardService.readOneBoard(id, memberVO);
+		BoardVO boardVO = this.boardService.readOneBoard(id, memberVO);
 		ModelAndView view = new ModelAndView("board/detail");
-		view.addObject("boardVO", boardVO);	
+		view.addObject("boardVO", boardVO);
 		
-		String paramFormat = "IP : %s, Param : %s, Result : %s";
+		String paramFormat = "IP:%s, Param:%s, Result:%s";
 		paramLogger.debug( String.format(paramFormat
-							, request.getRemoteAddr()
-							, id
-							, boardVO.getSubject() + ", "
-							+ boardVO.getContent() + ", "
-							+ boardVO.getEmail() + ", "
-							+ boardVO.getFileName() + ", " 
-							+ boardVO.getOriginFileName() 
-						) );
+					, request.getRemoteAddr()
+					, id
+					, "ID : " + boardVO.getId() + ", "
+							+ "SBJ : " + boardVO.getSubject() + ", "
+							+ "CONT : " + boardVO.getContent() + ", "
+							+ "EMAIL : " + boardVO.getEmail() + ", "
+							+ "FILENAME : " + boardVO.getFileName() + ", "
+							+ "OFN : " + boardVO.getOriginFileName()
+					) );
 		
 		return view;
-		
-//		BoardVO boardVO = this.boardService.readOneBoard(id, memberVO);
-//		
-//		ModelAndView view = new ModelAndView("board/detail");
-//		view.addObject("boardVO", boardVO);
-//		
-//		// 2Point 미만은 게시판 읽기 X , redirect 시키기
-//		// 같은정보면 보기
-//		if( !memberVO.getEmail().equals(boardVO.getEmail())
-//				&& memberVO.getPoint() < 2) {
-//			return new ModelAndView("redirect:/board/list");
-//		} else if( memberVO.getEmail().equals(boardVO.getEmail()) ) {
-//			return view;
-//		}
-//		
-//		return view;
 	}
-
+	
 	@RequestMapping("/board/delete/{id}")
-	public String doBoardDeleteAction( @PathVariable int id 
-									, HttpServletRequest request
-									, @SessionAttribute("_USER_") MemberVO memberVO) {
+	public String doBoardDeleteAction( 
+				@PathVariable int id
+				, HttpServletRequest request
+				, @SessionAttribute(Session.USER) MemberVO memberVO ) {
 		boolean isSuccess = this.boardService.deleteOneBoard(id);
 		
-		String paramFormat = "IP : %s, Actor : %s, Param : %s, Result : %s";
-		paramLogger.debug( String.format(paramFormat 
-							, request.getRemoteAddr()
-							, memberVO.getEmail()
-							, id
-							, isSuccess
-							) );
+		String paramFormat = "IP:%s, Actor:%s Param:%s, Result:%s";
+		paramLogger.debug( String.format(paramFormat
+					, request.getRemoteAddr()
+					, memberVO.getEmail()
+					, id
+					, isSuccess
+					) );
 		
 		return "redirect:/board/list";
 	}
 	
 	@RequestMapping("/board/download/{id}")
-	public void fileDownload(
-					@PathVariable int id
-					, HttpServletRequest request
-					, HttpServletResponse response
-					, @SessionAttribute("_USER_") MemberVO memberVO
-					) {
+	public void fileDownload( 
+				@PathVariable int id
+				, HttpServletRequest request
+				, HttpServletResponse response
+				, @SessionAttribute(Session.USER) MemberVO memberVO
+			) {
 		
-		if( memberVO.getPoint() < 5 ) {
-			throw new PolicyViolationException("포인트가 부족합니다", "/board/detail/" + id);
+		if ( memberVO.getPoint() < 5 ) {
+			throw new PolicyViolationException(
+					"다운로드를 위한 포인트가 부족합니다."
+					, "/board/detail/" + id);
 		}
 		
 		BoardVO boardVO = this.boardService.readOneBoard(id);
-		
+
 		String originFileName = boardVO.getOriginFileName();
 		String fileName = boardVO.getFileName();
 		
 		// Windows \
-		// Unix , Linux /
+		// Unix/Linux/macos /
 		
 		try {
-			// Download
 			new DownloadUtil(this.uploadPath + File.separator + fileName)
 					.download(request, response, originFileName);
 		} catch (UnsupportedEncodingException e) {
 			throw new RuntimeException(e.getMessage(), e);
 		}
-		
 	}
 	
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+

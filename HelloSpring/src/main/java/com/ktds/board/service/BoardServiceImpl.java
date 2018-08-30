@@ -1,52 +1,52 @@
 package com.ktds.board.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.ktds.board.dao.BoardDao;
+import com.ktds.board.vo.BoardSearchVO;
 import com.ktds.board.vo.BoardVO;
-import com.ktds.board.web.BoardController;
 import com.ktds.common.exceptions.PolicyViolationException;
-import com.ktds.member.dao.MemberDao;
+import com.ktds.member.biz.MemberBiz;
 import com.ktds.member.vo.MemberVO;
+
+import io.github.seccoding.web.pager.Pager;
+import io.github.seccoding.web.pager.PagerFactory;
+import io.github.seccoding.web.pager.explorer.ClassicPageExplorer;
+import io.github.seccoding.web.pager.explorer.PageExplorer;
 
 @Service
 public class BoardServiceImpl implements BoardService {
-	
+
 	@Autowired
+	@Qualifier("boardDaoImplMyBatis")
 	private BoardDao boardDao;
 	
 	@Autowired
-	@Qualifier("memberDaoImplMybatis")
-	private MemberDao memberDao;
-
+	private MemberBiz memberBiz;
+	
 	@Override
 	public boolean createBoard(BoardVO boardVO, MemberVO memberVO) {
 		
-		// 업로드를 했다면
-		boolean isUploadFile = boardVO.getOriginFileName() != null;
+		// 업로드를 했다면.
+		boolean isUploadFile = boardVO.getOriginFileName().length() > 0; 
 		
 		int point = 10;
 		if ( isUploadFile ) {
 			point += 10;
 		}
 		
-//		MemberVO loginMemberVO = memberDao.selectOneMember(memberVO);
-		// db
-		this.memberDao.updatePoint(memberVO.getEmail(), point);
+		this.memberBiz.updatePoint(memberVO.getEmail(), point);
 		
-		// session
 		int memberPoint = memberVO.getPoint();
 		memberPoint += point;
-		memberVO.setPoint(point);
+		memberVO.setPoint(memberPoint);
 		
-//		boolean isSuccess = this.boardDao.insertBoard(boardVO) > 0; // -> Rollback
-//		Integer.parseInt("ABC"); // NumberFormatException, -> Rollback
+		boolean isSuccesss = this.boardDao.insertBoard(boardVO) > 0;
+//		Integer.parseInt("ABC"); // NumberFormatException
 		
-		return this.boardDao.insertBoard(boardVO) > 0;
+		return isSuccesss;
 	}
 
 	@Override
@@ -57,51 +57,56 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public BoardVO readOneBoard(int id) {
-//		Integer.parseInt("ABC"); // NumberFormatException, -> Rollback
 		return this.boardDao.selectOneBoard(id);
 	}
-
+	
 	@Override
 	public BoardVO readOneBoard(int id, MemberVO memberVO) {
 		
 		BoardVO boardVO = this.readOneBoard(id);
 		if ( !boardVO.getEmail().equals( memberVO.getEmail() ) ) {
 			
-			if( memberVO.getPoint() < 2 ) {
-				throw new PolicyViolationException("포인트가 부족합니다. You Need More Point", "/board/list");
+			if ( memberVO.getPoint() < 2 ) {
+				throw new PolicyViolationException("포인트가 부족합니다.", "/board/list");
 			}
-		
-			this.memberDao.updatePoint(memberVO.getEmail(), -2);
+			
+			this.memberBiz.updatePoint(memberVO.getEmail(), -2);
 			
 			int point = memberVO.getPoint();
 			point -= 2;
 			memberVO.setPoint(point);
-			
 		}
 		
 		return boardVO;
-				
-//		// 같은 정보면 포인트 삭감 X
-//		if( !memberVO.getEmail().equals( this.boardDao.selectOneBoard(id).getEmail() ) ) {
-//			// db
-//			this.memberDao.updatePoint(memberVO.getEmail(), -2);
-//			// session
-//			int point = memberVO.getPoint();
-//			point -= 2;
-//			memberVO.setPoint(point);
-//		}
-//		
-//		return this.readOneBoard(id);
 	}
-
+	
 	@Override
 	public boolean deleteOneBoard(int id) {
 		return this.boardDao.deleteOneBoard(id) > 0;
 	}
-
+	
 	@Override
-	public List<BoardVO> readAllBoards() {
-		return this.boardDao.selectAllBoards();
+	public PageExplorer readAllBoards(BoardSearchVO boardSearchVO) {
+		
+		int totalCount = this.boardDao.selectAllBoardsCount(boardSearchVO);
+		
+		Pager pager = 
+				PagerFactory.getPager(Pager.ORACLE
+									  , boardSearchVO.getPageNo() + "");
+		pager.setTotalArticleCount(totalCount);
+		
+		PageExplorer pageExplorer = 
+				pager.makePageExplorer(ClassicPageExplorer.class
+									   , boardSearchVO);
+		
+		pageExplorer.setList( this.boardDao.selectAllBoards(boardSearchVO) );
+		
+		return pageExplorer;
 	}
+	
+	
 
+	
+	
+	
 }

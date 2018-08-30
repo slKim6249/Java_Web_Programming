@@ -11,27 +11,38 @@ public class BoardVO {
 
 	@Types
 	private int id;
+	
 	@Types
 	@NotEmpty(message="제목은 필수 입력 값입니다.")
 	private String subject;
+	
 	@Types
 	@NotEmpty(message="내용은 필수 입력 값입니다.")
 	private String content;
-	@Types(alias="B_EMAIL")
+	
+	@Types(alias = "B_EMAIL")
 	private String email;
+	
 	@Types
 	private String crtDt;
+	
 	@Types
 	private String mdfyDt;
+	
 	@Types
 	private String fileName;
+	
 	@Types
 	private String originFileName;
-	
-	// fileUpload
+
 	private MultipartFile file;
-	
+
 	private MemberVO memberVO;
+
+	public BoardVO() {
+		this.fileName = "";
+		this.originFileName = "";
+	}
 	
 	public int getId() {
 		return id;
@@ -96,7 +107,7 @@ public class BoardVO {
 	public void setOriginFileName(String originFileName) {
 		this.originFileName = originFileName;
 	}
-	
+
 	public MultipartFile getFile() {
 		return file;
 	}
@@ -104,7 +115,7 @@ public class BoardVO {
 	public void setFile(MultipartFile file) {
 		this.file = file;
 	}
-	
+
 	public MemberVO getMemberVO() {
 		return memberVO;
 	}
@@ -115,20 +126,29 @@ public class BoardVO {
 	
 	@Override
 	public String toString() {
-		String format = "BoardVO [ID : %d, Subject : %s, Content : %s, Email : %s, "
-				+ "crtDt : %s, mdfyDt : %s, fileName : %s, originFileName : %s,"
-				+ " MemberVO : %s]";
+		String format = "BoardVO [Id: %d, Subject: %s, Content: %s, Email: %s"
+							+ ", CrtDt: %s, MdfyDt: %s, FileName: %s"
+							+ ", OriginFileName: %s, MemberVO: %s ]";
 		return String.format(format
-						, this.id
-						, this.subject 
-						, this.content
-						, this.email 
-						, this.crtDt
-						, this.mdfyDt
-						, this.fileName
-						, this.originFileName
-						, this.memberVO.toString()
-					);
+					, this.id
+					, this.subject
+					, this.content
+					, this.email
+					, this.crtDt
+					, this.mdfyDt
+					, this.fileName
+					, this.originFileName
+					, this.memberVO.toString() );
 	}
-	
+
 }
+
+
+
+
+
+
+
+
+
+

@@ -3,78 +3,68 @@
 	<appender name="STDOUT"
 		class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
-			<pattern>▶ %d{HH:mm:ss.SSS} %-5level %logger{0}.%method:%line -
-				%msg%n
-			</pattern>
+			<pattern>▶ %d{HH:mm:ss.SSS} %-5level %logger{0}.%method:%line - %msg%n</pattern>
 		</encoder>
 	</appender>
 	
 	<appender name="STDOUT_File"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>D:/logs/STDOUT_File.log</file>
+		
+		<file>C:/Users/mcjan/Documents/logs/stdout.log</file>
 		<rollingPolicy
-			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"> <!-- 날짜가 바뀌면 
-			fileNamePattern에 따라 log file을 바꿔줌 -->
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!-- daily rollover -->
-			<fileNamePattern>D:/logs/STDOUT_File.%d{yyyy-MM-dd}.log</fileNamePattern>
-			<!-- keep 30 days' worth of history capped at 3GB total size -->
-			<!-- <maxHistory>30</maxHistory>
-			<totalSizeCap>3GB</totalSizeCap> 3GB초과시 예전파일부터 삭제 -->
+			<fileNamePattern>C:/Users/mcjan/Documents/logs/stdout.%d{yyyy-MM-dd}.log</fileNamePattern>
 		</rollingPolicy>
+		
 		<encoder>
-			<pattern>▶ %d{HH:mm:ss.SSS} %-5level %logger{0}.%method:%line -
-				%msg%n
-			</pattern>
+			<pattern>▶ %d{HH:mm:ss.SSS} %-5level %logger{0}.%method:%line - %msg%n</pattern>
 		</encoder>
 	</appender>
 
 	<appender name="statistics"
-		class="ch.qos.logback.core.rolling.RollingFileAppender"> <!-- File Appender -->
-		<file>D:/logs/statistics.log</file>
-		<rollingPolicy
-			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"> <!-- 날짜가 바뀌면 
-			fileNamePattern에 따라 log file을 바꿔줌 -->
-			<!-- daily rollover -->
-			<fileNamePattern>D:/logs/statistics.%d{yyyy-MM-dd}.log</fileNamePattern>
-			<!-- keep 30 days' worth of history capped at 3GB total size -->
-			<!-- <maxHistory>30</maxHistory>
-			<totalSizeCap>3GB</totalSizeCap> 3GB초과시 예전파일부터 삭제 -->
-		</rollingPolicy>
-		<encoder>
-			<pattern>Statistics : %d{HH:mm:ss.SSS}, %msg%n
-			</pattern>
-		</encoder>
-	</appender>
-
-	<appender name="param"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>D:/logs/param.log</file>
+		<file>C:/Users/mcjan/Documents/logs/statistics.log</file>
 		<rollingPolicy
 			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!-- daily rollover -->
-			<fileNamePattern>D:/logs/param.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<fileNamePattern>C:/Users/mcjan/Documents/logs/statistics.%d{yyyy-MM-dd}.log</fileNamePattern>
+		</rollingPolicy>
+		
+		<encoder>
+			<pattern>Statistics : DateTime : %d{HH:mm:ss.SSS}, %msg%n</pattern>
+		</encoder>
+	</appender>
+	
+	<appender name="param"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>C:/Users/mcjan/Documents/logs/param.log</file>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<fileNamePattern>C:/Users/mcjan/Documents/logs/param.%d{yyyy-MM-dd}.log</fileNamePattern>
 		</rollingPolicy>
 		<encoder>
-			<!-- 어떤 클래스에, 메소드의 라인 -->
-			<pattern>Param : %d{HH:mm:ss.SSS} $logger.%method:%line %msg%n
-			</pattern>
+			<pattern>Param : %d{HH:mm:ss.SSS} %logger.%method:%line %msg%n</pattern>
 		</encoder>
 	</appender>
 
-	<logger level="debug" name="com.ktds">
+	<logger level="debug" name="com.ktds" >
 		<appender-ref ref="param" />
 	</logger>
 
-	<!-- info까지만 찍힌다. -->
-	<logger level="info" name="list.Statistics">
+	<logger level="info" name="list.statistics" >
 		<appender-ref ref="statistics" />
 	</logger>
 
-	<logger level="debug" name="org.springframework">
+	<!-- <logger level="debug" name="org.springframework">
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="STDOUT_File" />
-	</logger>
+	</logger> -->
 
-	<!-- debug까지, 에러발생시 debug 활용 -->
-	<!-- <root level="debug"> <appender-ref ref="STDOUT" /> </root> -->
+	<root level="debug">
+		<appender-ref ref="STDOUT" />
+	</root>
 </configuration>
+
+
