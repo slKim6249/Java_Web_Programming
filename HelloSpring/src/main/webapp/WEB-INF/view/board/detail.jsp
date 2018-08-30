@@ -44,7 +44,6 @@
 	</c:forEach>
 	</div>
 	
-	
 	<form action="/HelloSpring/reply/write" method="post">
 		<input type="hidden" name="boardId" value="${boardVO.id}" />
 		<input type="hidden" name="parentReplyId" value="0" />
