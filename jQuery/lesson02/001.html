@@ -3,6 +3,23 @@
   <head>
     <link rel="stylesheet" type="text/css" href="./layout.css" />
     <title>Vacation Packages</title>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"></script>
+    <script type="text/javascript">
+
+      $(document).ready(function() {
+
+        $('button').click( function() { // btn click
+          var price = $('<p>From $399.99 </p>') // Shadow DOM, JQuery가 직접만든 객체, 렌더링 이후 만들어진 객체
+          $('.vacation').append(price) // before - 전에, after - 후에, append - 내부에 제일 밑에 붙음, prepend
+          $('button').remove()
+        })
+        
+      })
+
+    </script>
   </head>
   <body>
     <fieldset>
