@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript">
+
+        window.onload = function() {
+            var scores = []
+            scores.push( { name: 'Sangmoo', total: 75, average: 70} )
+            scores.push( { name: 'Sangmoon', total: 95, average: 100} )
+            scores.push( { name: 'IChiro', total: 45, average: 50} )
+
+            for ( var i in scores ) { // 비동기 통신 - 응답할 때 많이 씀
+                for ( var key in scores[i] ) {
+                    console.log(scores[i][key]);
+                }
+            }
+        }
+        
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
