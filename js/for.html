@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script type="text/javascript">
+
+
+    // for 방법 1
+    for(var i = 3; i < 100; i+=3) {
+        document.write("for문 1 =>" + i + "<br />")
+        console.log(i)
+      }
+
+
+
+      // for 방법 2
+      for(var i = 3; i < 100; i++) {
+        if ( i % 3 ==0 ) {
+          document.write("for문 2 => 3의 배수 : " + i + "<br />")
+          console.log(i)
+        }
+        //document.write(i)
+      }
+
+      for(var i = 1; i <= 50; i++) {
+        document.write("짝수 : " + i*2 + "<br />")
+        console.log(i)
+      }
+
+      for(var i = 2; i < 10; i++) {
+        for(var j = 1; j < 10; j++) {
+          document.write("구구단 => " + i +" 단 : " + i + " X " + j + " = " + (i*j) + "<br />")
+          console.log(i*j)
+        }
+      }
+
+    </script>
+  </head>
+  <body>
+
+  </body>
+</html>

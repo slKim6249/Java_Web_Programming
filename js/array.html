@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script type="text/javascript">
+
+      // 배열 생성 방법 2가지
+      /*
+      var scores = []
+      var scores = Array()
+      */
+
+      // 배열 생성 및 초기화
+      var scores = [100, 90, 80]
+
+      // 배열에 값 추가
+      scores.push(50)
+
+      console.log(scores)
+      alert(scores)
+      document.write(scores + "<br />")
+
+      scores.pop() // 마지막 요소 제거
+      scores.shift()   // 첫 번째 요소 제거
+
+      console.log(scores)
+      alert(scores)
+      document.write(scores + "<br />")
+
+      scores.push(100)
+      scores.push(90)
+      scores.push(80)
+      scores.push(70)
+
+      // [90, 80, 100, 90, 80, 70]
+      // scplice(시작 인덱스, 요소 개수)
+      scores.splice(1, 3) // 중간 요소 제거
+
+      // [90, 80, 70]
+      console.log(scores)
+      alert(scores)
+      document.write(scores + "<br />")
+
+      console.log(scores.length) // 요소의 개수 : 3
+
+      for( var i in scores) {
+        console.log(i)
+        console.log(scores[i])
+      }
+
+      // 2차원 배열
+      var diamond = [
+        [1, 1, 0, 1, 1],
+        [1, 0, 0, 0, 1],
+        [0, 0, 0, 0, 0],
+        [1, 0, 0, 0, 1],
+        [1, 1, 0, 1, 1]
+      ]
+
+      console.log(diamond)
+
+      // 마름모 네모 구현
+      // 1차원
+      for( var i in diamond ) {
+        // 2차원
+        for ( var j in diamond[i] ) {
+          if ( diamond[i][j] == 1 ) {
+            document.write("&nbsp;&nbsp;&nbsp;")
+          }
+          else {
+            document.write("■")
+          }
+        }
+        document.write("<br />")
+      }
+
+      // scores 배열 변수를 만들어, 6개의 숫자를 할당하세요.
+      var scores = [100, 50, 90, 70, 60, 30]
+      console.log(scores)
+      alert(scores)
+      document.write(scores + "<br />")
+
+      // totalScore 변수를 만들고 배열에 담신 6개의 숫자를 모두 더해 할당하세요.
+      var totalScore = 0
+      for ( var i in scores) {
+        totalScore += scores[i]
+      }
+      console.log(totalScore)
+      alert(totalScore)
+      document.write("총합 : " + totalScore + "<br />")
+
+      // averageScore 변수를 만들고, totalScore와 scores.length를 이용해
+      //평균을 구해 출력해보세요.
+      var averageScore = totalScore / scores.length
+      console.log(averageScore)
+      alert(averageScore)
+      document.write("평균 : " + averageScore)
+
+    </script>
+  </head>
+  <body>
+
+  </body>
+</html>

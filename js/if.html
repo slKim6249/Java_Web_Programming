@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script type="text/javascript">
+
+      var highQualityWool = 1; // 고급 양모
+      var rowQualityWool = 2; // 저급 양모
+
+      var selectedQuality = highQualityWool
+      var quantity = 30;
+
+      var highQualityWoolPrice = 50000
+      var rowQualityWoolPrice = 10000
+
+      if ( selectedQuality == highQualityWool ) {
+        var sum = highQualityWoolPrice * quantity
+        var result = "고급 양모를 " + quantity + " 개를 선택하셨습니다. 가격은 " + sum + "원 입니다."
+      }
+      else {
+        var sum = rowQualityWoolPrice * quantity
+        var result = "저급 양모를 " + quantity + " 개를 선택하셨습니다. 가격은 " + sum + "원 입니다."
+      }
+      document.write(result)
+
+    </script>
+  </head>
+  <body>
+
+  </body>
+</html>

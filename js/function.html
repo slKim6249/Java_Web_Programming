@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script type="text/javascript">
+
+      // 일반 함수
+      function sayHello() {
+        var helloMessage = "안녕하세요"
+        console.log(helloMessage)
+        alert(helloMessage)
+        document.write("일반 함수 - sayHello() : " + helloMessage + "<br />")
+      }
+
+      function calAndPrintNumbers() {
+        sayHello()
+        var numberOne = 10
+        var numberTwo = 20
+        var result = numberOne + numberTwo
+
+        console.log(result)
+        alert(result)
+        document.write("일반함수(함수안의 함수) - calAndPrintNumbers() : " + result + "<br />")
+
+        return result
+      }
+
+      var calResult = calAndPrintNumbers()
+      console.log(calResult);
+      alert(calResult)
+      document.write("calResult(calAndPrintNumbers()) : " + calResult + "<br />")
+
+      // 매개변수가 있는 함수 1
+      function getCalcNumbers(numberOne, numberTwo) {
+        var calculSum = numberOne + numberTwo
+        return calculSum
+      }
+
+      var result = getCalcNumbers(30, 60)
+      console.log(result)
+      alert(result)
+      document.write("매개변수 있는 함수 1 - result(getCalcNumbers(30, 60)) : " + result + "<br />")
+
+      // 매개변수가 있는 함수 2
+      // getCalcNumbers2 함수의 매개변수는 3개인데 실제 getCalcNumbers2(10, 20)처럼
+      // 파라미터를 2개 호출함에도 불구하고 함수 구동이 된다.
+      // 그 이유는 배열이라고 생각하면 편하다.
+      // getCalcNumbers2 함수 안에 있는 매개변수는 인덱스를 뜻한다.
+      // 예를 들어 numberOne은 0번 인덱스, numberTwo는 1번 인덱스...
+      // 그래서 2개 파라미터로 호출하면 매개변수의 numberThree는 undefined가 된다.
+      function getCalcNumbers2(numberOne, numberTwo, numberThree) {
+        if ( numberThree == undefined ) {
+          numberThree = 0
+        }
+        var calculSum = numberOne + numberTwo + numberThree
+        return calculSum
+      }
+
+      var result2 = getCalcNumbers2(10, 20)
+      console.log(result2)
+      alert(result2)
+      document.write("매개변수 있는 함수 2 - result2(getCalcNumbers2) : " + result2 + "<br />")
+
+      // 중첩 함수
+      function getcalcNumbers3(numberOne, numberTwo) {
+        var calcResult = calc(numberOne, numberTwo)
+
+          function calc(numberOne, numberTwo) {
+            return numberOne + numberTwo
+          }
+        return calcResult
+      }
+      var finalResult = getcalcNumbers3(50, 60)
+      console.log(finalResult)
+      alert(finalResult)
+      document.write("중첩함수(getcalcNumbers3-> calc) : " + finalResult + "<br />")
+
+    // 콜백 함수
+    function getCalcNumber4(callback) {
+      var result = callback(100, 200)
+      return result
+    }
+    var callbackFunction = function(numberOne, numberTwo) {
+      return numberOne + numberTwo
+    }
+    var callResult = getCalcNumber4(callbackFunction)
+    console.log(callResult)
+    alert(callResult)
+    document.write("콜백 함수 : " + callResult + "<br />")
+
+    // 함수를 리턴하는 함수
+    function getCalcFuntion5(numberOne, numberTwo) {
+      return function() {
+        return numberOne + numberTwo
+      }
+    }
+
+    var calc = getCalcFuntion5(1000, 2000)
+    var returnFunctionResult = calc()
+    console.log(returnFunctionResult)
+    alert(returnFunctionResult)
+    document.write("함수를 리턴하는 함수 : " + returnFunctionResult + "<br />")
+
+    </script>
+  </head>
+  <body>
+
+  </body>
+</html>
