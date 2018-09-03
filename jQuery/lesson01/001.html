@@ -3,6 +3,24 @@
 <html>
   <head>
     <title>jQuery Adventures</title>
+    <!-- JQuery CDN -->
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"></script>
+    <script type="text/javascript">
+      // window.onload
+      $(document).ready(function() {
+        // var h1Text = document.getElementByTagName('h1')[0]
+        var h1Text  = $('h1').text();
+        alert(h1Text)
+
+        $('h1').text('Where to?');
+        alert( $('h1').text() )
+
+        $('p').text('Change Text');
+      })
+    </script>
   </head>
   <body>
     <h1>Where do you want to go?</h1>
