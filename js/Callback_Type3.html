@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript">
+
+        // 언제 동작이 될지 모를때, 무언가 함께 동작을 하려할 때, 콜백을 사용
+        window.onload = function() { // 렌더링후에 onload 동작
+            var send = document.getElementById('send');
+            console.log(send);
+
+            send.onclick = function() {
+                alert('Hello');
+            }
+
+            var email = document.getElementById('email');
+            email.onkeyup = function() {
+                console.log('Key Up!');
+                console.log(email.value);
+            }
+
+            var body = document.getElementsByTagName('body')[0]
+            body.onmousemove = function( event ) {
+                console.log(event.pageX, event.pageY); // 좌표 출력
+            }
+
+            body.onkeydown = function ( event ) {
+                console.log(event.key); // Key
+                if( event.key == 'ArrowUp' ) {
+                    console.log('위로 이동');
+                }
+                else if( event.key == 'Backspace' ) {
+                    console.log('뒤로 이동');
+                }
+            }
+        }
+        
+    </script>
+</head>
+<body>
+    <input type="button" id="send" value="전송"> <br>
+    <input type="text" id="email">
+</body>
+</html>

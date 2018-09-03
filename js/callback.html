@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript">
+
+        // CallBack - 비동기 Wrapper들이 있을때, Event 처리 때 사용
+        // 함수가 Parameter로 전달된다.
+        // 함수는 변수에 할당할 수 있다. -> 함수 표현식
+        // 함수의 이름을 생략할 수 있다. -> 익명함수
+        // 재귀호출때는 함수의 이름을 쓴다.
+
+        function click( cbFunction ) { // cbFunction에 addition이 있다.
+            console.log('클릭 했습니다.');
+            cbFunction(10, 20, 40, 80);
+        }
+
+        var addition = function () { // 함수 표현식, 변수에 함수 자체가 들어가있다.
+            var result = 0;
+            for( var i in arguments ) {
+                result += arguments[i];
+            }
+            console.log(result);
+        }
+
+        click(addition);
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
