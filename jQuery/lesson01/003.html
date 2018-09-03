@@ -3,6 +3,32 @@
 <html>
   <head>
     <title>jQuery Adventures</title>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"></script>
+      <script type="text/javascript">
+
+        $(document).ready(function() {
+
+          // $('#destinations > li.promo').text("Seoul")
+          // alert( $('li.promo').text() )
+          // console.log( $('li.promo').text() )
+
+          // console.log( $('.promo').text('$') )
+          // console.log( $('.promo').text('Seoul').text() )
+
+          // $('#destinations li').text('Seoul')
+
+          $('#destinations').find('li.promo').text('Tokyo') // DOM Traversing
+
+          $('.promo').parent() // 하위에서 상위로 찾아가는법
+          $('.promo').parent().parent() // body
+          console.log( $('.promo').parent().parent().find('h1').text() )
+          
+        })
+
+      </script>
   </head>
   <body>
     <h1>Where do you want to go?</h1>

@@ -3,6 +3,20 @@
 <html>
   <head>
     <title>jQuery Adventures</title>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"></script>
+      <script type="text/javascript">
+
+        $(document).ready(function() {
+
+          $('#destinations').children('li') // 직속 자식요소만 가져온다, find는 전체를 찾는다.
+
+          console.log( $('#destinations').children('ul').children('li').text() )
+        })
+
+      </script>
   </head>
   <body>
     <h1>Where do you want to go?</h1>
