@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript">
+        function sayHello() {
+            
+            try { // try-catch 사용 가능
+                // console.lo("안녕하세요"); // console.lo 같이 error를 내면 에러를 던진다. -> 밑에 코드 실행X
+                console.log('Hello');
+            } catch ( error ) {
+                console.log(error);
+                console.dir(error); // dir은 detail하게 나온다.
+            } finally {
+                // alert('275');
+            }
+                let num1 = 70;
+                let num2 = 25;
+                let result = num1 + num2;
+                return result;
+            }
+            var result = sayHello(1, 5); // js에서는 Arg ,Param이 개수가 안맞아도 사용가능, Arg에는 Type지정을 안한다.
+            if ( confirm(result) ) { // confirm - 알림창 -> 확인, 취소 가능 true/false를 return, alert는 알림만 가능
+                // 선택한 버튼이 확인일 때
+                alert('정답입니다.');
+            }
+            else {
+                // 선택한 버튼이 취소일 때
+                alert('틀렸습니다.');
+            }
+
+            // Js에서는 기본적으로 전역변수다.
+            // 모든 객체나 func는 window.으로 들어간다.
+            // window.으로 전역변수, 전역객체를 확인할 수 있다.
+            // window.~으로 적으면 전역변수가 된다.
+            
+            /*
+                parameter는 javascript의 내장 객체인 arguments에 의해서 전달돈다.
+                arguments를 사용할 경우 function의 arguments part는 생략이 가능하다.
+                arguments 객체는 읽기전용 배열 객체로, 전달된 Parameter의 값을 가진다.
+            */
+            function addition (  ) { // function 내에 있는 모든 변수는 지역변수다.
+                // console.dir(arguments); // 0번 index부터 arg를 넣는다.
+                // var result = num1 + num2 + arguments[2]; // function 내부에서 var을 쓰면 지역변수, type이 없으면 전역변수
+                // // arguments[2]으로 남은 param을 들고 온다.
+                // console.log(num1, num2, result);
+
+                var result = null; // result를 지역변수로 쓰려면 지역내에 var 선언.
+
+                for ( var  i in arguments ) {
+                    /*
+                        변수를 선언할 때, var를 생략 가능한데
+                        이 경우 해당 변수는 window의 자식 변수로써
+                        전역변수화 된다.
+                    */
+                    result += arguments[i];
+                }
+                console.log(result);
+            }
+
+            addition(27, 20, 550);
+            alert(result);
+
+            // Hoisting
+            // 동작될 때, function내에서 변수 부분들은 맨위에서 선언하고, 정의를 한다.
+            // 순서가 아무리 섞여도 성능에 문제가 없다. 알아보기에 문제가 있다.
+            // ex) 
+            function hoisting() { 
+
+                var a = 10;
+                if ( a == 10 ) {
+                    var b = 20;
+                    for( var i=0; i < a; i++ ) {
+                        var c = i;
+                        console.log(a, b, c);
+                    }
+                }
+                
+                console.log(a, b, c);
+            }
+
+            hoisting();
+
+            // Hoisting - 동작 ex
+            // function hoisting() { 
+            //     var b;
+            //     var c;
+            //     var i;
+            //     var a = 10;
+            //     if ( a == 10 ) {
+            //         b = 20;
+            //         for( i=0; i < a; i++ ) {
+            //             c = i;
+            //             console.log(a, b, c);
+            //         }
+            //     }
+            // }
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
