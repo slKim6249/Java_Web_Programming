@@ -95,4 +95,5 @@ public class MembersController {
 		session.setAttribute(Session.USER, loginMember);
 		return view;
 	}
+	
 }
