@@ -3,9 +3,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<!-- MemberDaoImpl이 사용할 Query 작성 -->
+	
 	<bean	id="memberQueries"
-			class="java.util.ArrayList" >
+			class="java.util.ArrayList">
 		<constructor-arg name="c">
 			<list>
 				<!-- 0번 인덱스 -->
@@ -14,11 +14,12 @@
 											EMAIL
 											, NAME
 											, PASSWORD
-					) VALUES (
+										) 
+					VALUES 				(
 											?
 											, ?
-											, ?
-					)
+											, ? 
+					 					)
 				</value>
 				<!-- 1번 인덱스 -->
 				<value>
@@ -30,6 +31,7 @@
 					WHERE	EMAIL = ?
 					AND		PASSWORD = ?
 				</value>
+				<!-- 2번 인덱스 -->
 				<value>
 					UPDATE	MEMBERS
 					SET		POINT = POINT + ?
@@ -38,6 +40,4 @@
 			</list>
 		</constructor-arg>
 	</bean>
-
-
 </beans>

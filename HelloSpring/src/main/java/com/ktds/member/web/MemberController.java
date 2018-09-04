@@ -1,5 +1,8 @@
 package com.ktds.member.web;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -10,6 +13,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ktds.common.session.Session;
@@ -34,6 +39,19 @@ public class MemberController {
 	public String viewMemberRegistPage() {
 		return "member/regist";
 	}
+	
+	// /member/check/duplicate?email=값
+	@PostMapping("/member/check/duplicate")
+	@ResponseBody // return 되는 객체를 JSON으로 전달
+	public Map<String, Object> doCheckDuplicateEmail(
+					@RequestParam String email) {
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("status", "OK");
+		result.put("duplicated", false);
+		return result;
+	}
+	
 	
 	@PostMapping("/member/regist")
 	public ModelAndView doMemberRegistAction(

@@ -1,7 +1,7 @@
 package com.ktds.reply.vo;
 
 import com.ktds.board.vo.BoardVO;
-import com.ktds.member.vo.MemberVO;
+import com.ktds.member.vo.MembersVO;
 
 public class ReplyVO {
 
@@ -12,17 +12,9 @@ public class ReplyVO {
 	private String reply;
 	private String crtDt;
 	private String parentReplyId;
-
+	
 	private BoardVO boardVO;
-	private MemberVO memberVO;
-
-	public int getLevel() {
-		return level;
-	}
-
-	public void setLevel(int level) {
-		this.level = level;
-	}
+	private MembersVO membersVO;
 
 	public String getReplyId() {
 		return replyId;
@@ -72,6 +64,14 @@ public class ReplyVO {
 		this.parentReplyId = parentReplyId;
 	}
 
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
+
 	public BoardVO getBoardVO() {
 		return boardVO;
 	}
@@ -80,11 +80,12 @@ public class ReplyVO {
 		this.boardVO = boardVO;
 	}
 
-	public MemberVO getMemberVO() {
-		return memberVO;
+	public MembersVO getMembersVO() {
+		return membersVO;
 	}
 
-	public void setMemberVO(MemberVO memberVO) {
-		this.memberVO = memberVO;
+	public void setMembersVO(MembersVO membersVO) {
+		this.membersVO = membersVO;
 	}
+
 }

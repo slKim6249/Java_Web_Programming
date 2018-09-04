@@ -3,6 +3,7 @@ package com.ktds.board.web;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,15 +33,16 @@ import com.ktds.board.vo.BoardVO;
 import com.ktds.common.exceptions.PolicyViolationException;
 import com.ktds.common.session.Session;
 import com.ktds.common.web.DownloadUtil;
-import com.ktds.member.vo.MemberVO;
+import com.ktds.member.vo.MembersVO;
 
 import io.github.seccoding.web.pager.explorer.PageExplorer;
 
 @Controller
 public class BoardController {
 
-//	private Logger logger = LoggerFactory.getLogger(BoardController.class);
-	private Logger statisticsLogger = LoggerFactory.getLogger("list.statistics");
+	//private Logger logger = LoggerFactory.getLogger(BoardController.class);
+	private Logger statisticsLogger = LoggerFactory.getLogger("list.Statistics");
+	// com.ktds.board.web.BoardController.class
 	private Logger paramLogger = LoggerFactory.getLogger(BoardController.class);
 	
 	@Value("${upload.path}")
@@ -51,33 +53,35 @@ public class BoardController {
 	private BoardService boardService;
 	
 	@RequestMapping("/board/list/init")
-	public String viewBoardListPageForInitiate( HttpSession session ) {
+	public String viewBoardListPageAForInitiate( HttpSession session ) {
 		session.removeAttribute(Session.SEARCH);
 		return "redirect:/board/list";
 	}
 	
 	@RequestMapping("/board/list")
 	public ModelAndView viewBoardListPage(
-				@ModelAttribute BoardSearchVO boardSearchVO
-				, HttpServletRequest request
-				, HttpSession session
-			) {
-		
-		// 전체검색 or 상세 -> 목록 or 글쓰기
-		if( boardSearchVO.getSearchKeyword() == null ) {
+			@ModelAttribute BoardSearchVO boardSearchVO
+			, HttpServletRequest request
+			, HttpSession session) { // IP를 얻어올 때 사용
+
+		// 전체 검색 or 상세-> 목록 or 글쓰기
+		if ( boardSearchVO.getSearchKeyword() == null ) {
 			boardSearchVO = (BoardSearchVO) session.getAttribute(Session.SEARCH);
+			
 			if ( boardSearchVO == null ) {
 				boardSearchVO = new BoardSearchVO();
 				boardSearchVO.setPageNo(0);
 			}
 		}
 		
-		PageExplorer pageExplorer = this.boardService.readAllBoards(boardSearchVO);
+		PageExplorer pageExplorer = this.boardService.readAllBoard(boardSearchVO);
 		
-		statisticsLogger.info("URL : /board/list, IP : " 
-						+ request.getRemoteAddr() 
-						+ ", List Size : " 
-						+ pageExplorer.getList().size());
+		// 로그 
+		statisticsLogger.info(
+				"URL : /board/list, IP : " 
+		+ request.getRemoteAddr() 
+		+ ", List Size : " 
+		+ pageExplorer.getList().size());
 		
 		session.setAttribute(Session.SEARCH, boardSearchVO);
 		
@@ -86,27 +90,26 @@ public class BoardController {
 		view.addObject("pagenation", pageExplorer.make());
 		view.addObject("size", pageExplorer.getTotalCount());
 		view.addObject("boardSearchVO", boardSearchVO);
+		// /WEB-INF/view/board/list.jsp로 포워드 시켜준다.
 		return view;
 	}
 	
-	// Spring 4.2 이하에서 사용.
+	// Spring 4.2 이하에서 사용
 	// @RequestMapping(value="/write", method=RequestMethod.GET)
-	// Spring 4.3 이상에서 사용.
+	// Spring 4.3 이상에서 사용
 	@GetMapping("/board/write")
-	public String viewBoardWritePage( ) {
+	public String viewBoardWritePage() {
 		return "board/write";
 	}
 	
 	@PostMapping("/board/write")
-	public ModelAndView doBoardWriteAction( 
-				@Valid @ModelAttribute BoardVO boardVO
-				, Errors errors
-				, HttpServletRequest request
-				, HttpSession session
-			) {
+	public ModelAndView doBoardWriteAction(
+			@Valid @ModelAttribute BoardVO boardVO
+			, Errors errors
+			, HttpSession session
+			, HttpServletRequest request) {
 		
 		ModelAndView view = new ModelAndView("redirect:/board/list/init");
-		
 		// Validation Annotation이 실패했는지 체크
 		if ( errors.hasErrors() ) {
 			view.setViewName("board/write");
@@ -116,15 +119,15 @@ public class BoardController {
 		
 		MultipartFile uploadFile = boardVO.getFile();
 		
-		if ( !uploadFile.isEmpty() )  {
+		if ( !uploadFile.isEmpty() ) {
 			
 			// 실제 파일 이름
 			String originFileName = uploadFile.getOriginalFilename();
 			// 파일 시스템에 저장될 파일의 이름(난수)
 			String fileName = UUID.randomUUID().toString();
 			
-			// 폴더가 존재하지 않는다면, 생성
 			File uploadDir = new File(this.uploadPath);
+			// 폴더가 존재하지 않는다면 생성
 			if ( !uploadDir.exists() ) {
 				uploadDir.mkdirs();
 			}
@@ -144,119 +147,128 @@ public class BoardController {
 			
 		}
 		
-		MemberVO loginMemberVO = (MemberVO) session.getAttribute(Session.USER);
+		// 4.3 미만에서 사용
+		// session.getAttribute은 Object타입이라 Object의 자식인 MemberVO에 넣을 수 없다.
+		// 넣을려면 Casting 해야한다.
+		
+		// 세션을 체크하는 부분이다.
+		MembersVO loginMemberVO = (MembersVO) session.getAttribute(Session.USER);
 		String email = loginMemberVO.getEmail();
-		boardVO.setMemberVO(loginMemberVO);
+		boardVO.setMembersVO(loginMemberVO);
 		boardVO.setEmail(email);
 		
-		String content = boardVO.getContent();
-		content += "\n" + request.getRemoteAddr();
-		boardVO.setContent(content);
+		/*String view = this.boardService.createBoard(boardVO, loginMemberVO) ? 
+				"redirect:/board/list" : "redirect:/board/write";*/
 		
-//		String view = this.boardService.createBoard(boardVO, loginMemberVO) ? 
-//				"redirect:/board/list" : "redirect:/board/write";
-		boolean isSuccess = this.boardService.createBoard(boardVO, loginMemberVO);
+		boolean isSuccess = this.boardService.createBoard(boardVO, loginMemberVO); 
+				
 		
 		String paramFormat = "IP:%s, Param:%s, Result:%s";
-		paramLogger.debug( String.format(paramFormat
-					, request.getRemoteAddr()
-					, boardVO.getSubject() + ", "
-							+ boardVO.getContent() + ", "
-							+ boardVO.getEmail() + ", "
-							+ boardVO.getFileName() + ", "
-							+ boardVO.getOriginFileName()
-					, view.getViewName() // "redirect:/board/list"
-					) );
-		
+		paramLogger.debug(String.format(paramFormat
+				, request.getRemoteAddr()
+				, boardVO.getSubject() + ", " 
+						+ boardVO.getContent() + ", "
+						+ boardVO.getEmail()
+						+ boardVO.getFileName() + ", "
+						+ boardVO.getOriginFileName()
+				, view.getViewName() // "redirect:/board/list"
+				));
 		return view;
+		
+		
+		/*String subject = request.getParameter("subject");
+		String content = request.getParameter("content");
+		String email = request.getParameter("email");
+		
+		BoardVO boardVO = new BoardVO();
+		boardVO.setSubject(subject);
+		boardVO.setContent(content);
+		boardVO.setEmail(email);*/
+		
+		/*boolean isSuccess = this.boardService.createBoard(boardVO);
+		return "redirect:/list";*/
+		
+		//(condition) ? true : false; <- Elvis Operator
+		// 삼항 연산자는 느리다. 자바는 삼항 연산자를 if문으로 다시 변환해주기 때문이다.
+		// 간단한 한줄 정도면 괜찮지만 반복문 안에 적으면 비효율적이다.
 	}
 	
 	// http://localhost:8080/HelloSpring/board/detail/1
 	@RequestMapping("/board/detail/{id}")
-	public ModelAndView viewBoardDetailPage( 
-				@PathVariable int id
-				, @SessionAttribute(Session.USER) MemberVO memberVO
-				, HttpServletRequest request
-			) {
+	public ModelAndView viewBoardDetailPage(
+			@PathVariable int id
+			, @SessionAttribute(Session.USER) MembersVO membersVO
+			, HttpServletRequest request) {
+				
 		
-		BoardVO boardVO = this.boardService.readOneBoard(id, memberVO);
-		ModelAndView view = new ModelAndView("board/detail");
+		/*if ( membersVO.getPoint() < 2 ) {
+			// 데이터는 안보내고 뷰로만 보낼 수 있다.
+			return new ModelAndView("redirect:/board/list");
+		}*/
+		
+		BoardVO boardVO = this.boardService.readOneBoard(id, membersVO);
+ 		ModelAndView view = new ModelAndView("board/detail");
 		view.addObject("boardVO", boardVO);
 		
 		String paramFormat = "IP:%s, Param:%s, Result:%s";
-		paramLogger.debug( String.format(paramFormat
-					, request.getRemoteAddr()
-					, id
-					, "ID : " + boardVO.getId() + ", "
-							+ "SBJ : " + boardVO.getSubject() + ", "
-							+ "CONT : " + boardVO.getContent() + ", "
-							+ "EMAIL : " + boardVO.getEmail() + ", "
-							+ "FILENAME : " + boardVO.getFileName() + ", "
-							+ "OFN : " + boardVO.getOriginFileName()
-					) );
+		paramLogger.debug(String.format(paramFormat
+				, request.getRemoteAddr()
+				, boardVO.getId() + ", "
+						+boardVO.getSubject() + ", " 
+						+ boardVO.getContent() + ", "
+						+ boardVO.getEmail()
+						+ boardVO.getFileName() + ", "
+						+ boardVO.getOriginFileName()
+				, view
+				) );
 		
-		return view;
+		return view; 
 	}
 	
 	@RequestMapping("/board/delete/{id}")
-	public String doBoardDeleteAction( 
-				@PathVariable int id
-				, HttpServletRequest request
-				, @SessionAttribute(Session.USER) MemberVO memberVO ) {
+	public String doBoardDeleteAction(
+			@PathVariable int id
+			, HttpServletRequest request
+			, @SessionAttribute(Session.USER) MembersVO membersVO) {
 		boolean isSuccess = this.boardService.deleteOneBoard(id);
 		
-		String paramFormat = "IP:%s, Actor:%s Param:%s, Result:%s";
-		paramLogger.debug( String.format(paramFormat
-					, request.getRemoteAddr()
-					, memberVO.getEmail()
-					, id
-					, isSuccess
-					) );
+		String paramFormat = "IP:%s, Param:%s, Result:%s";
+		paramLogger.debug(String.format(paramFormat
+				, request.getRemoteAddr()
+				, membersVO.getEmail()
+				+ id
+				, isSuccess 
+				) );
 		
 		return "redirect:/board/list";
 	}
 	
 	@RequestMapping("/board/download/{id}")
-	public void fileDownload( 
-				@PathVariable int id
-				, HttpServletRequest request
-				, HttpServletResponse response
-				, @SessionAttribute(Session.USER) MemberVO memberVO
-			) {
+	public void fileDownload(
+			@PathVariable int id
+			, HttpServletRequest request
+			, HttpServletResponse response
+			, @SessionAttribute(Session.USER) MembersVO membersVO) { 
 		
-		if ( memberVO.getPoint() < 5 ) {
+		if ( membersVO.getPoint() < 5 ) {
 			throw new PolicyViolationException(
 					"다운로드를 위한 포인트가 부족합니다."
 					, "/board/detail/" + id);
 		}
 		
-		BoardVO boardVO = this.boardService.readOneBoard(id);
-
-		String originFileName = boardVO.getOriginFileName();
-		String fileName = boardVO.getFileName();
+		 BoardVO boardVO = this.boardService.readOneBoard(id);
 		
-		// Windows \
-		// Unix/Linux/macos /
-		
-		try {
+		 String originFileName = boardVO.getOriginFileName();
+	     String fileName = boardVO.getFileName();
+	     
+	     // Windows => \
+	     // Unix/Linux/macOS => /
+	     
+	     try {
 			new DownloadUtil(this.uploadPath + File.separator + fileName)
-					.download(request, response, originFileName);
+			 .download(request, response, originFileName);
 		} catch (UnsupportedEncodingException e) {
 			throw new RuntimeException(e.getMessage(), e);
 		}
 	}
-	
-	
 }
-
-
-
-
-
-
-
-
-
-
-
-

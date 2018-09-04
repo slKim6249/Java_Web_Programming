@@ -1,6 +1,6 @@
 package com.ktds.common.exceptions;
 
-public class PolicyViolationException extends RuntimeException {
+public class PolicyViolationException extends RuntimeException{
 
 	private String message;
 	private String redirectUri;

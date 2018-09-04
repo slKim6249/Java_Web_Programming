@@ -1,34 +1,33 @@
-﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>    
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Login</title>
+<meta charset="UTF-8">
+<title>Insert title here</title>
 </head>
 <body>
-
-	<h1>회원 로그인 하기</h1>
-	<form:form 	modelAttribute="memberVO" 
+	<h1>회원 로그인</h1>
+	
+	<form:form	modelAttribute="membersVO"
 				method="post" 
 				action="/HelloSpring/member/login">
-		<div class="errors">
+		<div>
 			<ul>
 				<li><form:errors path="email" /></li>
 				<li><form:errors path="password" /></li>
 			</ul>
+		</div>				
+		<div>
+			<input type="email" name="email" placeholder="Email" />
 		</div>
 		<div>
-			<input type="email" name="email" placeholder="Email" value="${memberVO.email}" />
+			<input type="password" name="password" placeholder="Password" />
 		</div>
 		<div>
-			<input type="password" name="password" placeholder="Password"/>
-		</div>
-		<div>
-			<input type="submit" value="등록" />
+			<input type="submit" value="로그인" />
 		</div>
 	</form:form>
-
 </body>
 </html>

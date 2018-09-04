@@ -7,46 +7,41 @@ import javax.validation.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ktds.common.dao.support.Types;
-import com.ktds.member.vo.MemberVO;
+import com.ktds.member.vo.MembersVO;
 import com.ktds.reply.vo.ReplyVO;
 
 public class BoardVO {
 
 	@Types
 	private int id;
-	
 	@Types
 	@NotEmpty(message="제목은 필수 입력 값입니다.")
 	private String subject;
-	
 	@Types
 	@NotEmpty(message="내용은 필수 입력 값입니다.")
 	private String content;
-	
 	@Types(alias = "B_EMAIL")
 	private String email;
-	
 	@Types
 	private String crtDt;
-	
 	@Types
 	private String mdfyDt;
-	
 	@Types
 	private String fileName;
-	
 	@Types
 	private String originFileName;
 
 	private MultipartFile file;
-	private MemberVO memberVO;
+
+	private MembersVO membersVO;
+	
 	private List<ReplyVO> replyList;
 
 	public BoardVO() {
 		this.fileName = "";
 		this.originFileName = "";
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -119,12 +114,12 @@ public class BoardVO {
 		this.file = file;
 	}
 
-	public MemberVO getMemberVO() {
-		return memberVO;
+	public MembersVO getMembersVO() {
+		return membersVO;
 	}
 
-	public void setMemberVO(MemberVO memberVO) {
-		this.memberVO = memberVO;
+	public void setMembersVO(MembersVO membersVO) {
+		this.membersVO = membersVO;
 	}
 	
 	public List<ReplyVO> getReplyList() {
@@ -134,32 +129,23 @@ public class BoardVO {
 	public void setReplyList(List<ReplyVO> replyList) {
 		this.replyList = replyList;
 	}
-
+	
 	@Override
 	public String toString() {
-		String format = "BoardVO [Id: %d, Subject: %s, Content: %s, Email: %s"
-							+ ", CrtDt: %s, MdfyDt: %s, FileName: %s"
-							+ ", OriginFileName: %s, MemberVO: %s ]";
+		
+		String format = "BoardVO[Id : %s, Subject : %s, Content : %s, "
+				+ "Email : %s, CrtDt : %s, MdfyDt : %s, FileName : %s, "
+				+ "OriginFileName : %s, MemberVO : %s]";
 		return String.format(format
-					, this.id
-					, this.subject
-					, this.content
-					, this.email
-					, this.crtDt
-					, this.mdfyDt
-					, this.fileName
-					, this.originFileName
-					, this.memberVO.toString() );
+				, this.id
+				, this.subject
+				, this.content
+				, this.email
+				, this.crtDt
+				, this.mdfyDt
+				, this.fileName
+				, this.originFileName
+				, this.membersVO.toString());
 	}
 
 }
-
-
-
-
-
-
-
-
-
-

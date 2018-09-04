@@ -2,36 +2,38 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="MemberDao">
-
-	<insert id="insertNewMember" parameterType="MemberVO">
+  
+  <mapper namespace="MembersDao">
+  
+  	<insert id="insertOneMember" parameterType="MembersVO">
 		INSERT INTO MEMBERS (
 								EMAIL
 								, NAME
 								, PASSWORD
-		) VALUES (
+							) 
+		VALUES 				(
 								#{email}
 								, #{name}
-								, #{password}
-		)
-	</insert>
-	
-	<select id="selectOneMember" 
-			parameterType="MemberVO"
-			resultType="MemberVO">
-		SELECT	EMAIL
+								, #{password} 
+					 		)  	
+  	</insert>
+  	
+  	<select id="selectOneMember" 
+  			parameterType="MembersVO"
+  			resultType="MembersVO">
+  		SELECT	EMAIL
 				, NAME
 				, PASSWORD
 				, POINT
 		FROM	MEMBERS
 		WHERE	EMAIL = #{email}
 		AND		PASSWORD = #{password}
-	</select>
-	
-	<update id="updatePoint" parameterType="map">
+  	</select>
+  	
+  	<update id="updatePoint" parameterType="map">
 		UPDATE	MEMBERS
 		SET		POINT = POINT + #{point}
-		WHERE	EMAIL = #{email}
-	</update>
-
-</mapper>
+		WHERE	EMAIL = #{email}  	
+  	</update>
+  	
+  </mapper>

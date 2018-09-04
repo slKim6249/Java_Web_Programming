@@ -11,17 +11,14 @@ public interface BoardDao {
 	
 	public int updateBoard(BoardVO boardVO);
 	
-	public BoardVO selectOneBoard( int id );
+	public BoardVO selectOneBoard(int id);
+	public List<BoardVO> selectAllBoard();
 	
 	public int deleteOneBoard(int id);
 	
 	public int selectAllBoardsCount(BoardSearchVO boardSearchVO);
 	public List<BoardVO> selectAllBoards(BoardSearchVO boardSearchVO);
 	
+	
+	
 }
-
-
-
-
-
-

@@ -2,14 +2,15 @@
 <!DOCTYPE configuration
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
-
+  
+ 
 <configuration>
 
 	<typeAliases>
-		<typeAlias type="com.ktds.member.vo.MemberVO" alias="MemberVO"/>
-		<typeAlias type="com.ktds.board.vo.BoardVO" alias="BoardVO"/>
-		<typeAlias type="com.ktds.board.vo.BoardSearchVO" alias="BoardSearchVO"/>
-		<typeAlias type="com.ktds.reply.vo.ReplyVO" alias="ReplyVO"/>
+		<typeAlias type="com.ktds.member.vo.MembersVO" alias="MembersVO" />
+		<typeAlias type="com.ktds.board.vo.BoardVO" alias="BoardVO" />
+		<typeAlias type="com.ktds.board.vo.BoardSearchVO" alias="BoardSearchVO" />
+		<typeAlias type="com.ktds.reply.vo.ReplyVO" alias="ReplyVO" />		
 	</typeAliases>
-	
+
 </configuration>

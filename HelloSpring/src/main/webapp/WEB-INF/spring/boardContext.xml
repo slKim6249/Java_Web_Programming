@@ -3,39 +3,40 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+
 	<!-- BoardDaoImpl이 사용할 Query 작성 -->
 	<bean	id="boardQueries"
-			class="java.util.ArrayList" >
+			class="java.util.ArrayList">
 		<constructor-arg name="c">
 			<list>
 				<!-- 0번 인덱스 -->
 				<value>
 					INSERT INTO BOARD (
-										   ID
-										   , SUBJECT
-										   , CONTENT
-										   , EMAIL
-										   , CRT_DT
-										   , MDFY_DT
-										   , FILE_NAME
-										   , ORIGIN_FILE_NAME
+											   ID
+											   , SUBJECT
+											   , CONTENT
+											   , EMAIL 
+											   , CRT_DT
+											   , MDFY_DT
+											   , FILE_NAME
+											   , ORIGIN_FILE_NAME			 
 					) VALUES ( 
-		   								   BOARD_ID_SEQ.NEXTVAL
-										   , ?
-										   , ?
-										   , ?
-										   , SYSDATE
-										   , SYSDATE
-										   , ?
-										   , ?
+								BOARD_ID_SEQ.NEXTVAL                
+								, ?         
+								, ?
+								, ?               
+								, SYSDATE          
+								, SYSDATE         
+								, ?       
+								, ?			
 					)
 				</value>
-				<!-- 1번 인덱스 -->
 				<value>
+				<!-- 1번 인덱스 -->
 					SELECT	B.ID                
 							, B.SUBJECT         
 							, B.CONTENT         
-							, B.EMAIL B_EMAIL         
+							, B.EMAIL B_EMAIL           
 							, B.CRT_DT          
 							, B.MDFY_DT         
 							, B.FILE_NAME       
@@ -59,7 +60,7 @@
 					SELECT	B.ID                
 							, B.SUBJECT         
 							, B.CONTENT         
-							, B.EMAIL B_EMAIL         
+							, B.EMAIL B_EMAIL           
 							, B.CRT_DT          
 							, B.MDFY_DT         
 							, B.FILE_NAME       
@@ -75,6 +76,5 @@
 			</list>
 		</constructor-arg>
 	</bean>
-
 
 </beans>

@@ -8,10 +8,10 @@ public class BoardSearchVO {
 	private int pageNo;
 	
 	private String searchKeyword;
-
+	
 	@StartRow
 	private int startRow;
-
+	
 	@EndRow
 	private int endRow;
 
@@ -38,7 +38,7 @@ public class BoardSearchVO {
 	public void setEndRow(int endRow) {
 		this.endRow = endRow;
 	}
-	
+
 	public String getSearchKeyword() {
 		return searchKeyword;
 	}

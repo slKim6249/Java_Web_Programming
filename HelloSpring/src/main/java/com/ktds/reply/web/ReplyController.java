@@ -7,25 +7,25 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.ktds.common.session.Session;
-import com.ktds.member.vo.MemberVO;
+import com.ktds.member.vo.MembersVO;
 import com.ktds.reply.service.ReplyService;
 import com.ktds.reply.vo.ReplyVO;
 
 @Controller
 public class ReplyController {
-	
+
 	@Autowired
 	private ReplyService replyService;
 	
 	@PostMapping("/reply/write")
 	public String doReplyWriteAction(
-			@ModelAttribute ReplyVO replyVO 
-			, @SessionAttribute(Session.USER) MemberVO memberVO
-			) {
+			@ModelAttribute ReplyVO replyVO
+			, @SessionAttribute(Session.USER) MembersVO membersVO) {
 		
-		replyVO.setEmail(memberVO.getEmail());
+		replyVO.setEmail(membersVO.getEmail());
 		boolean isSuccess = this.replyService.createOneReply(replyVO);
 		
-		return "redirect:/board/detail" + replyVO.getBoardId();
+		return "redirect:/board/detail/" + replyVO.getBoardId();
+		
 	}
 }

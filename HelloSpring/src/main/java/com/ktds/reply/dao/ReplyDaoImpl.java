@@ -10,13 +10,13 @@ import org.springframework.stereotype.Repository;
 import com.ktds.reply.vo.ReplyVO;
 
 @Repository
-public class ReplyDaoImpl 
-				extends SqlSessionDaoSupport 
-				implements ReplyDao {
+public class ReplyDaoImpl extends SqlSessionDaoSupport implements ReplyDao{
+
 	
 	@Autowired
 	@Override
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
+		// TODO Auto-generated method stub
 		super.setSqlSessionTemplate(sqlSessionTemplate);
 	}
 

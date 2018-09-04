@@ -4,12 +4,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>404 Not Found</title>
+<title>Insert title here</title>
 </head>
 <body>
-	<p>페이지를 찾을 수 없습니다.</p>
-	<h4>
+	<h1>404 에러가 발생</h1>
+	<p>
+		페이지를 찾을 수 없습니다.
+	</p>
+	<p>
 		<a href="/HelloSpring/board/list">홈으로 돌아가기</a>
-	</h4>
+	</p> 
 </body>
 </html>

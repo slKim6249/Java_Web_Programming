@@ -7,21 +7,21 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.ktds.common.session.Session;
-import com.ktds.member.vo.MemberVO;
+import com.ktds.member.vo.MembersVO;
 
-public class SessionInterceptor extends HandlerInterceptorAdapter {
-
+public class SessionInterceptor extends HandlerInterceptorAdapter{
+	
 	@Override
 	public boolean preHandle(
-				HttpServletRequest request
-				, HttpServletResponse response
-				, Object handler) // handler ==> Controller
+			HttpServletRequest request
+			, HttpServletResponse response
+			, Object handler) // handler ==> Controller
 			throws Exception {
 		
 		HttpSession session = request.getSession();
-		MemberVO member = (MemberVO) session.getAttribute(Session.USER);
+		MembersVO membersVO = (MembersVO) session.getAttribute(Session.USER);
 		
-		if ( member == null ) {
+		if ( membersVO == null ) {
 			response.sendRedirect("/HelloSpring/member/login");
 			return false;
 		}
@@ -30,9 +30,3 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 	}
 	
 }
-
-
-
-
-
-
