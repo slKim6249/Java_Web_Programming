@@ -3,6 +3,31 @@
   <head>
     <link rel="stylesheet" type="text/css" href="./layout-vacation.css" />
     <title>Vacation Packages</title>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"></script>
+    <script type="text/javascript">
+
+      $(document).ready(function() {
+
+        $('#vacations').children('.vacation').find('.quantity').keyup( function() { 
+
+            var price = $(this).closest('.vacation').data('price')
+            var quantity = $(this).val()
+
+            var amount = price * quantity
+            // id는 중복이 안되기 때문에 Travarsing이 필요없다.
+            $('#total').text(amount)
+
+        })
+        .change( function() { 
+            $(this).keyup() // keyup 발생시켜서 값 변경
+        })
+
+      })
+
+    </script>
   </head>
   <body>
     <fieldset>
