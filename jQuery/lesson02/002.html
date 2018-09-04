@@ -21,6 +21,10 @@
         // $(this).closest('.vacation').append(price) // 인접한 해당 태그 부모를 찾는다.
         // $(this).remove() // element와 DOM을 다 제거, 후에 this사용 불가, remove를 후에 사용
 
+        // Click Event같은 것은 DOM만 사용 가능
+
+        // Shadow DOM은 AJAX할때 많이 사용 한다.
+
         var vacation = $(this).closest('.vacation')
         var amount = vacation.data('price')
         var price = $('<p> From $'+ amount + '</p>')
@@ -33,6 +37,11 @@
         })
         
     })
+
+    // $(Parent DOM).on('event', 'children', function() {})
+    // $('.vacation').on('click', '.price', function() {
+    //     alert( $(this).text() ) // this는 .price가 된다.
+    // })
 
     $('#vacations').find('.vacation').find('li').click(function() {
         alert($(this).text())
