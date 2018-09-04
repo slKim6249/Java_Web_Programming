@@ -10,6 +10,16 @@
     <script type="text/javascript">
 
       $(document).ready(function() {
+
+        $('.comments').find('li').click( function() { 
+          alert( $(this).text() )
+        })
+
+        $('.comments').on('click', 'li', function() {
+          
+          alert( $(this).text() )
+
+        })
         
         $('.vacation').children('button').click( function() {
 
@@ -24,7 +34,7 @@
           $('fieldset').find('.vacation').children('.comments').append(worstDeal2)
 
           var worstDeal3 = $('<li> "Worst Deal3!!!!!" </li>')
-          $('fieldset').find('.vacation').children('.comments').eq(0).after(worstDeal3) // li순서는 eq로 지정 0부터 시작
+          $('fieldset').find('.vacation').children('.comments').after(worstDeal3) // li순서는 eq로 지정 0부터 시작
 
           $('fieldset').find('.vacation').children('h2').text('Seoul Vacation')
 
