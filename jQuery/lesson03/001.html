@@ -3,6 +3,27 @@
   <head>
     <link rel="stylesheet" type="text/css" href="./layout.css" />
     <title>Vacation Packages</title>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"></script>
+    <script type="text/javascript">
+
+      $(document).ready(function() {
+
+        // Mouse Event - DOM
+        $('#confirmations').find('.confirmation').find('h2').mouseenter( function() { 
+          // $('.ticket').show()
+          // $('.ticket').fadeIn()
+          // $('.ticket').slideDown(200) // 0.2초간 슬라이드
+          $('.ticket').stop().slideDown() // 현재 실행중인 애니메이션을 중단시키고 슬라이드 다운
+        }).mouseleave( function() {
+          $('.ticket').stop().slideUp()
+        })
+
+      })
+
+    </script>
   </head>
   <body>
     <fieldset>
