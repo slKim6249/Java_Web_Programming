@@ -17,9 +17,20 @@
         // var price = $('<p> From $399.99 </p>')
         // $(this).after(price)
 
-        var price = $('<p> From $399.99 </p>')
-        $(this).closest('.vacation').append(price) // 인접한 해당 태그 부모를 찾는다.
-        $(this).remove() // element와 DOM을 다 제거, 후에 this사용 불가, remove를 후에 사용
+        // var price = $('<p> From $399.99 </p>')
+        // $(this).closest('.vacation').append(price) // 인접한 해당 태그 부모를 찾는다.
+        // $(this).remove() // element와 DOM을 다 제거, 후에 this사용 불가, remove를 후에 사용
+
+        var vacation = $(this).closest('.vacation')
+        var amount = vacation.data('price')
+        var price = $('<p> From $'+ amount + '</p>')
+
+        vacation.append(price)
+        $(this).remove()
+
+        $(price).click(function() { 
+          alert($(this).text())
+        })
         
     })
 
@@ -51,13 +62,17 @@
   </script>
   </head>
 <body>
+  <!-- 
+    html5에는 변수가 있다. 
+    Tag안에 data-변수명으로 사용가능하고 소문자만 사용가능하다.
+  -->
   <fieldset>
     <legend>Vacations</legend>
     <h1>Vacation Packages</h1>
     <h3>jQuery Travels</h3>
     <div id="vacations">
       <ul>
-        <li class='vacation'>
+        <li class='vacation' data-price = "399.99">
           <h2>Hawaiian Vacation</h2>
           <p>Comments on this deal:</p>
           <ul class="comments">
@@ -70,7 +85,7 @@
         </li>
       </ul>
       <ul>
-        <li class='vacation'>
+        <li class='vacation' data-price = "499.98">
           <h2>Olando</h2>
           <p>Comments on this deal:</p>
           <ul class="comments">
@@ -80,7 +95,7 @@
         </li>
       </ul>
       <ul>
-        <li class='vacation'>
+        <li class='vacation' data-price = "599.99">
           <h2>Visit Japan</h2>
           <p>Comments on this deal:</p>
           <ul class="comments">
