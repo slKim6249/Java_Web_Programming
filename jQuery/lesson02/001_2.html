@@ -14,7 +14,7 @@
         $('.vacation').children('button').click( function() {
 
           var price = $('<p>From $399.99 </p>') // Shadow DOM, JQuery가 직접만든 객체, 렌더링 이후 만들어진 객체
-          $('.vacation').append(price)
+          $(this).closest('.vacation').append(price)
           $(this).remove()
 
           var worstDeal1 = $('<li> "Worst Deal!!!!!" </li>')

@@ -1,49 +1,73 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" type="text/css" href="./layout.css" />
-    <title>Vacation Packages</title>
+  <link rel="stylesheet" type="text/css" href="./layout.css" />
+  <title>Vacation Packages</title>
+  <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+  <script type="text/javascript">
+
+    $(document).ready(function() {
+
+    $('#vacations').find('.vacation').find('button').click(function() {
+        
+        // $(this).detach() // element는 제거하고 DOM은 제거하지 않음.
+        // var price = $('<p> From $399.99 </p>')
+        // $(this).after(price)
+
+        var price = $('<p> From $399.99 </p>')
+        $(this).closest('.vacation').append(price)
+        $(this).remove() // element와 DOM을 다 제거, 후에 this사용 불가, remove를 후에 사용
+        
+    })
+
+    })
+  </script>
   </head>
-  <body>
-    <fieldset>
-      <legend>Vacations</legend>
-      <h1>Vacation Packages</h1>
-      <h3>jQuery Travels</h3>
-      <div id="vacations">
-        <ul>
-          <li class='vacation'>
-            <h2>Hawaiian Vacation</h2>
-            <p>Comments on this deal:</p>
-            <ul class="comments">
-              <li>"Amazing Deal!"</li>
-              <li>"Can't wait to take this trip!"</li>
-            </ul>
+<body>
+  <fieldset>
+    <legend>Vacations</legend>
+    <h1>Vacation Packages</h1>
+    <h3>jQuery Travels</h3>
+    <div id="vacations">
+      <ul>
+        <li class='vacation'>
+          <h2>Hawaiian Vacation</h2>
+          <p>Comments on this deal:</p>
+          <ul class="comments">
+            <li>"Amazing Deal!"</li>
+            <li>"Can't wait to take this trip!"</li>
+          </ul>
+          <div>
             <button>GET PRICE</button>
-          </li>
-        </ul>
-        <ul>
-          <li class='vacation'>
-            <h2>Olando</h2>
-            <p>Comments on this deal:</p>
-            <ul class="comments">
-              <li>There aren't any comments on this deal yet.</li>
-            </ul>
-            <button>GET PRICE</button>
-          </li>
-        </ul>
-        <ul>
-          <li class='vacation'>
-            <h2>Visit Japan</h2>
-            <p>Comments on this deal:</p>
-            <ul class="comments">
-              <li>"Never been, but can't wait!</li>
-              <li>&nbsp;</li>
-            </ul>
-            <button>GET PRICE</button>
-          </li>
-        </ul>
-      </div>
-      <p class="call">Call us at 555-2593 to make a reservation today!</p>
-    </fieldset>
-  </body>
+          </div>
+        </li>
+      </ul>
+      <ul>
+        <li class='vacation'>
+          <h2>Olando</h2>
+          <p>Comments on this deal:</p>
+          <ul class="comments">
+            <li>There aren't any comments on this deal yet.</li>
+          </ul>
+          <button>GET PRICE</button>
+        </li>
+      </ul>
+      <ul>
+        <li class='vacation'>
+          <h2>Visit Japan</h2>
+          <p>Comments on this deal:</p>
+          <ul class="comments">
+            <li>"Never been, but can't wait!</li>
+            <li>&nbsp;</li>
+          </ul>
+          <button>GET PRICE</button>
+        </li>
+      </ul>
+    </div>
+    <p class="call">Call us at 555-2593 to make a reservation today!</p>
+  </fieldset>
+</body>
 </html>

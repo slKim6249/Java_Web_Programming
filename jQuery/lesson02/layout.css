@@ -76,6 +76,7 @@ p.call {
 div#vacations ul {
   display: inline-block;
   margin-right: 40px;
+  vertical-align: top;
 }
 
 div#vacations ul:LAST-CHILD {
