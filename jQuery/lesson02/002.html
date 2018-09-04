@@ -18,9 +18,33 @@
         // $(this).after(price)
 
         var price = $('<p> From $399.99 </p>')
-        $(this).closest('.vacation').append(price)
+        $(this).closest('.vacation').append(price) // 인접한 해당 태그 부모를 찾는다.
         $(this).remove() // element와 DOM을 다 제거, 후에 this사용 불가, remove를 후에 사용
         
+    })
+
+    $('#vacations').find('.vacation').find('li').click(function() {
+        alert($(this).text())
+    })
+
+    $('fieldset').find('p').click(function() { 
+        alert($(this).text())
+    })
+
+    $('#vacations').find('.vacation').find('h2').click(function() {
+        alert($(this).text())
+    })
+
+    $('fieldset').find('h1').click(function() { 
+        alert($(this).text())
+    })
+
+    $('fieldset').find('h3').click(function() { 
+        alert($(this).text())
+    })
+
+    $('fieldset').children('legend').click(function() { 
+        alert($(this).text())
     })
 
     })
