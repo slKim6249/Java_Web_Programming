@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="./layout.css" />
+    <title>Vacation Packages</title>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"></script>
+    <script type="text/javascript">
+
+      $(document).ready(function() {
+        
+        $('.vacation').children('button').click( function() {
+
+          var price = $('<p>From $399.99 </p>') // Shadow DOM, JQuery가 직접만든 객체, 렌더링 이후 만들어진 객체
+          $('.vacation').append(price)
+          $(this).remove()
+
+          var worstDeal1 = $('<li> "Worst Deal!!!!!" </li>')
+          $('fieldset').find('.vacation').children('.comments').prepend(worstDeal1)
+
+          var worstDeal2 = $('<li> "Worst Deal2!!!!!" </li>')
+          $('fieldset').find('.vacation').children('.comments').append(worstDeal2)
+
+          var worstDeal3 = $('<li> "Worst Deal3!!!!!" </li>')
+          $('fieldset').find('.vacation').children('.comments').eq(0).after(worstDeal3) // li순서는 eq로 지정 0부터 시작
+
+          $('fieldset').find('.vacation').children('h2').text('Seoul Vacation')
+
+          for ( var i in [0, 0]) {
+            $('fieldset').find('.vacation').children('.comments').children('li').eq(0).remove()
+          }
+
+        })
+
+      })
+
+    </script>
+  </head>
+  <body>
+    <fieldset>
+      <legend>Vacations</legend>
+      <h1>Vacation Packages</h1>
+      <h3>jQuery Travels</h3>
+      <ul>
+        <li class='vacation'>
+          <h2>Hawaiian Vacation</h2>
+          <p>Comments on this deal:</p>
+          <ul class="comments">
+            <li>"Amazing Deal!"</li>
+            <li>"Can't wait to take this trip!"</li>
+          </ul>
+          <button>GET PRICE</button>
+        </li>
+      </ul>
+      <p class="call">Call us at 1-555-jquery-air to make a reservation today!</p>
+    </fieldset>
+  </body>
+</html>
