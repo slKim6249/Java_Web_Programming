@@ -40,9 +40,9 @@ public class MembersController {
 		return "member/regist";
 	}
 	
-	// /member/check/duplicate?email=ê°?
+	// /member/check/duplicate?email=ê°’
 	@PostMapping("/member/check/duplicate")
-	@ResponseBody // return ?˜?Š” ê°ì²´ë¥? JSON?œ¼ë¡? ? „?‹¬
+	@ResponseBody // return ë˜ëŠ” ê°ì²´ë¥¼ JSONìœ¼ë¡œ ì „ë‹¬
 	public Map<String, Object> doCheckDuplicateEmail(
 					@RequestParam String email) {
 		
@@ -91,7 +91,7 @@ public class MembersController {
 		
 		MembersVO loginMember = this.membersService.readOneMember(membersVO);
 		
-		// ë¡œê·¸?¸
+		// ë¡œê·¸ì¸
 		session.setAttribute(Session.USER, loginMember);
 		return view;
 	}

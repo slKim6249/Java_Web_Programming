@@ -11,22 +11,22 @@ import com.ktds.member.validator.MembersValidator;
 public class MembersVO {
 
 	@Types(alias = "M_EMAIL")
-	@NotEmpty(message="?´ë©”ì¼?? ?•„?ˆ˜ ?…? ¥ ê°’ì…?‹ˆ?‹¤."
+	@NotEmpty(message="ì´ë©”ì¼ì€ í•„ìˆ˜ ì…ë ¥ ê°’ì…ë‹ˆë‹¤."
 			, groups={MembersValidator.Regist.class, MembersValidator.Login.class})
 	
-	@Email(message="?´ë©”ì¼ ?˜•?‹?œ¼ë¡? ?‘?„±?•´ì£¼ì„¸?š”."
+	@Email(message="ì´ë©”ì¼ í˜•ì‹ìœ¼ë¡œ ì‘ì„±í•´ì£¼ì„¸ìš”."
 			, groups={MembersValidator.Regist.class, MembersValidator.Login.class})
 	private String email;
 	
 	@Types
-	@NotEmpty(message="?´ë¦„ì? ?•„?ˆ˜ ?…? ¥ ê°’ì…?‹ˆ?‹¤."
+	@NotEmpty(message="ì´ë¦„ì€ í•„ìˆ˜ ì…ë ¥ ê°’ì…ë‹ˆë‹¤."
 			, groups={MembersValidator.Regist.class})
 	private String name;
 	
 	@Types
-	@NotEmpty(message="ë¹„ë?ë²ˆí˜¸?Š” ?•„?ˆ˜ ?…? ¥ ê°’ì…?‹ˆ?‹¤."
+	@NotEmpty(message="ë¹„ë°€ë²ˆí˜¸ëŠ” í•„ìˆ˜ ì…ë ¥ ê°’ì…ë‹ˆë‹¤."
 			, groups={MembersValidator.Regist.class, MembersValidator.Login.class})
-	@Length(min=10, max=20, message="ë¹„ë?ë²ˆí˜¸?Š” 10~20ê¸?? ?‚¬?´ë¡? ?…? ¥?•´ì£¼ì„¸?š”."
+	@Length(min=10, max=20, message="ë¹„ë°€ë²ˆí˜¸ëŠ” 10~20ê¸€ì ì‚¬ì´ë¡œ ì…ë ¥í•´ì£¼ì„¸ìš”."
 			, groups={MembersValidator.Regist.class})
 	private String password;
 	
