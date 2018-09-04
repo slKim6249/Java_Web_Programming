@@ -13,9 +13,19 @@
 
         $('#vacations').children('.vacation').find('.quantity').keyup( function() { 
 
-            var price = $(this).closest('.vacation').data('price')
-            var quantity = $(this).val()
 
+            var quantity = $(this).val()
+            if ( !(quantity >= 0 && quantity <=1000) ) {
+              if( quantity < 0 ) {
+                $(this).val('0')
+              }
+              else {
+                $(this).val('1000')
+              }
+              return
+            }
+
+            var price = $(this).closest('.vacation').data('price')
             var amount = price * quantity
             // id는 중복이 안되기 때문에 Travarsing이 필요없다.
             $('#total').text(amount)
