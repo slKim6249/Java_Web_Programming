@@ -112,6 +112,17 @@
             $('.modal').fadeIn(200)
           })
 
+          $('.back-board').click( function() { 
+            $(this).fadeOut()
+            $('.modal').fadeOut()
+          })
+          
+          $('body').keyup( function(e) {
+            if( e.key == 'Escape' ) { // Escape == esc
+              $('.back-board').fadeOut()
+              $('.modal').fadeOut()
+            }
+          })
       })
 
     </script>
