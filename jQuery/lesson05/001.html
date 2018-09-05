@@ -3,11 +3,53 @@
   <head>
     <link rel="stylesheet" type="text/css" href="./layout.css" />
     <title>Boxes</title>
+    <style type="text/css">
+      .back-board{
+        background-color: #000;
+        opacity: 0.7;
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        display: none;
+      }
+      .modal{
+        position: fixed;
+        z-index: 9;
+        display: none;
+      }
+    </style>
+    <!-- script전에 style을 써야 한다. -->
     <script
       src="https://code.jquery.com/jquery-3.3.1.min.js"
       integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
       crossorigin="anonymous"></script>
     <script type="text/javascript">
+
+      // window에 size가 바뀌면 func수행, $().ready 이후에 수행
+      $(window).resize( function() { 
+        // Browser Size
+        var browserWidth = $(window).width()
+        var browserHeight = $(window).height()
+        var horizontalCenter = browserWidth / 2
+        var verticalCenter = browserHeight / 2
+
+        // Image Size
+        var imageWidth = $('.modal').width()
+        var imageHeight = $('.modal').height()
+
+        horizontalCenter = horizontalCenter - (imageWidth / 2)
+        verticalCenter = verticalCenter - (imageHeight / 2)
+
+        $('.modal').css({
+          left: horizontalCenter + 'px',
+          top: verticalCenter + 'px'
+        })
+          
+        // alert(horizontalCenter) // 1440, 720, Chrome
+        // alert(verticalCenter) // 804, 402, Chrome
+      })
 
       $(document).ready(function() {
 
@@ -25,6 +67,34 @@
           //   }, 200)
           // })
 
+          // Layer - 화면이 겹치게
+
+          // Browser Size
+          var browserWidth = $(window).width()
+          var browserHeight = $(window).height()
+          var horizontalCenter = browserWidth / 2
+          var verticalCenter = browserHeight / 2
+
+          // Image Size
+          var imageWidth = $('.modal').width() // div Size로 계산
+          var imageHeight = $('.modal').height()
+
+          horizontalCenter = horizontalCenter - (imageWidth / 2)
+          verticalCenter = verticalCenter - (imageHeight / 2)
+
+          $('.modal').css({
+            left: horizontalCenter + 'px',
+            top: verticalCenter + 'px'
+          })
+          // .fadeIn(500).resize()
+          // .fadeIn(500)
+            
+          // alert(horizontalCenter) // 1440, 720, Chrome
+          // alert(verticalCenter) // 804, 402, Chrome
+          
+          
+
+          // Mouse Animation
           $('.box').mouseenter( function() {
             $(this).stop().animate({
               opacity: 0.25,
@@ -36,6 +106,10 @@
               opacity: 1,
               height: "100px"
             })
+          })
+          .click( function() {
+            $('.back-board').show()
+            $('.modal').fadeIn(200)
           })
 
       })
@@ -55,5 +129,13 @@
     </div>
     <div class="box inline">
     </div>
+
+    <div class="back-board">
+      
+    </div>
+    <div class="modal">
+      <img src="http://ilya.online/wp-content/uploads/2017/09/jquery1.png" width="300px">
+    </div>
+
   </body>
 </html>
