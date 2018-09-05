@@ -3,6 +3,44 @@
   <head>
     <link rel="stylesheet" type="text/css" href="./layout.css" />
     <title>Boxes</title>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"></script>
+    <script type="text/javascript">
+
+      $(document).ready(function() {
+
+          // $('.box').animate({ // Objeect Literal
+          //   opacity: 0.25 // 1이면 투명 0이면 불투명에 가까워진다.
+          // }, 2000, function() {  // 2초, 완료 후 func()
+          //   alert('애니메이션 완료')
+          // })
+
+          // $('.box').animate({ // Objeect Literal
+          //   opacity: 0.25 // 1이면 투명 0이면 불투명에 가까워진다.
+          // }, 200, function() { 
+          //   $('.box').animate({
+          //     opacity: 1
+          //   }, 200)
+          // })
+
+          $('.box').mouseenter( function() {
+            $(this).stop().animate({
+              opacity: 0.25,
+              height: "150px"
+            })
+          })
+          .mouseleave(function() {
+            $(this).stop().animate({
+              opacity: 1,
+              height: "100px"
+            })
+          })
+
+      })
+
+    </script>
   </head>
   <body class="boxAnimate">
     <div class="box inline">
