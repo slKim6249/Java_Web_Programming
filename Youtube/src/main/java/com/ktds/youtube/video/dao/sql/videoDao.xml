@@ -6,7 +6,30 @@
   <mapper namespace="VideoDao">
   
   	<insert id="insertOneVideo" parameterType="VideoVO">
-  	
+  		INSERT INTO MOVIE (
+			   VIDEO_ID
+			   , CHANNEL_ID
+			   , TITLE
+			   , UPLOAD_ID
+			   , RUNNING_TIME
+			   , VIEW_COUNT
+			   , UPLOAD_DATE
+			   , POSTER_PATH
+			   , VIDEO_PATH
+			  ) 
+		VALUES ( 
+				'VO-' || TO_CHAR(SYSDATE, 'YYYYMMDDHH24')
+						|| '-'
+						|| LPAD(VIDEO_ID_SEQ.NEXTVAL, 6, '0') 
+				, #{channelId} 
+				, #{title} 
+				, #{uploadId}
+			 	, #{runningTime}
+			 	, #{viewCount} 
+			 	, SYSDATE 
+			 	, #{posterPath} 
+			 	, #{videoPath} 
+			 )
   	</insert>
   	
   	<update id="updateOneVideo" parameterType="VideoVO">
@@ -14,15 +37,26 @@
   	</update>
   	
   	<delete id="deleteOneVideo" parameterType="string">
-  	
+  		DELETE
+  		FROM	MOVIE
+  		WHERE	VIDEO_ID = #{videoId}
   	</delete>
   	
   	<select id="selectOneVideo" parameterType="string" resultMap="VideoVO">
-  	
+  		SELECT	VIDEO_ID
+				, CHANNEL_ID
+				, TITLE
+				, UPLOAD_ID
+				, RUNNING_TIME
+				, VIEW_COUNT
+				, UPLOAD_DATE
+				, POSTER_PATH
+				, VIDEO_PATH
+		FROM MOVIE
   	</select>
   	
   	<select id="selectAllVideos" resultType="VideoVO">
-  	
+  		
   	</select>
   	
   	
