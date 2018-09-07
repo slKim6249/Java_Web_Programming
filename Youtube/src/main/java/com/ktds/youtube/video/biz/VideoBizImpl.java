@@ -4,11 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.ktds.youtube.video.dao.VideoDao;
 import com.ktds.youtube.video.vo.VideoVO;
 
-@Component
+@Service
 public class VideoBizImpl implements VideoBiz {
 	
 	@Autowired
