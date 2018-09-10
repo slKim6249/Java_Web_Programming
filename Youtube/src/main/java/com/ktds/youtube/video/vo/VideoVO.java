@@ -1,5 +1,7 @@
 package com.ktds.youtube.video.vo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class VideoVO {
 	private String videoId;
 	private String channelId;
@@ -10,6 +12,26 @@ public class VideoVO {
 	private String uploadDate;
 	private String posterPath;
 	private String videoPath;
+	
+	// fileUpload
+	private MultipartFile video;
+	private MultipartFile poster;
+	
+	public MultipartFile getVideo() {
+		return video;
+	}
+
+	public void setVideo(MultipartFile video) {
+		this.video = video;
+	}
+
+	public MultipartFile getPoster() {
+		return poster;
+	}
+
+	public void setPoster(MultipartFile poster) {
+		this.poster = poster;
+	}
 
 	public String getVideoId() {
 		return videoId;

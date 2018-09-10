@@ -10,7 +10,7 @@ import com.ktds.youtube.video.biz.VideoBiz;
 import com.ktds.youtube.video.vo.VideoVO;
 
 @Service
-public class VideoServiceImpl extends SqlSessionDaoSupport implements VideoService {
+public class VideoServiceImpl implements VideoService {
 	
 	@Autowired
 	private VideoBiz videoBiz;
