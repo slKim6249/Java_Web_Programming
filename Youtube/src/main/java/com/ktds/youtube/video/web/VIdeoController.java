@@ -2,17 +2,16 @@ package com.ktds.youtube.video.web;
 
 import java.io.File;
 import java.io.IOException;
-
-import javax.validation.Valid;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -31,7 +30,7 @@ public class VideoController {
 	
 	@Bean("uploadPath")
 	public String uploadPath() {
-		return "D:/uploadVideos";
+		return "C:/uploadVideos";
 	}
 	
 	@GetMapping("/video/create")
@@ -40,8 +39,7 @@ public class VideoController {
 	}
 	
 	@PostMapping("/video/create")
-	public String doCreateOneVideoAction( @ModelAttribute VideoVO videoVO
-											) {
+	public String doCreateOneVideoAction( VideoVO videoVO ) {
 		
 		MultipartFile videoFile = videoVO.getVideo();
 		MultipartFile posterFile = videoVO.getPoster();
@@ -53,43 +51,53 @@ public class VideoController {
 			
 			File uploadDir = new File(this.uploadPath);
 			
-			// 폴더가 존재하지 않는다면 생성
+			// 폴더가 없으면 만들기
 			if ( !uploadDir.exists() ) {
 				uploadDir.mkdirs();
 			}
 			
-			// 파일이 업로드될 경로 지정
-			File destVideoFile = new File(this.uploadPath, uploadVideoFile);
-			File destPosterFile = new File(this.uploadPath, uploadPosterFile);
+			String upVideoFile = UUID.randomUUID().toString();
+			String upPosterFile = UUID.randomUUID().toString();
+			
+			// 경로 지정
+			File destVideoFile = new File(this.uploadPath, upVideoFile);
+			File destPosterFile = new File(this.uploadPath, upPosterFile);
 			
 			
 			try {
-				// 업로드
+				// 지정한곳에 파일 저장
 				videoFile.transferTo(destVideoFile);
 				posterFile.transferTo(destPosterFile);
 				
-				// DB에 File 정보 저장하기 위한 정보 셋팅
-				videoVO.setVideo(videoFile);
-				videoVO.setPoster(posterFile);
+				// DB에 들어갈 정보 저장
+				videoVO.setVideoPath(upVideoFile); // videoPath에 난수로 이름이 저장된 파일 저장
+				videoVO.setPosterPath(upPosterFile);
 			} catch (IllegalStateException | IOException e) {
 				throw new RuntimeException(e.getMessage(), e);
 			}
 			
 		}
 		
+		videoService.createOneVideo(videoVO);
+		
 		return this.videoService.createOneVideo(videoVO) ? 
 				"redirect:/video/list" : "redirect:/video/create";
 			
 	}
 	
-	
+	@RequestMapping("/video/list")
 	public ModelAndView viewVideoListPage() {
 		ModelAndView view = new ModelAndView("video/list");
 		return view;
 	}
 	
-	public ModelAndView viewOneVideoDetailPage() {
+	@RequestMapping("/video/detail/{id}")
+	public ModelAndView viewOneVideoDetailPage( @PathVariable String id ) {
 		ModelAndView view = new ModelAndView("video/detail");
+		
+		VideoVO videoVO = videoService.readOneVideo(id);
+		view.addObject("videoVO", videoVO);
+		
 		return view;
 	}
 	
