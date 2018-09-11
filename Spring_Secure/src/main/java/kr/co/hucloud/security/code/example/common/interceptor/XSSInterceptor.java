@@ -24,11 +24,6 @@ public class XSSInterceptor extends HandlerInterceptorAdapter {
 		requestParams.entrySet().stream().forEach( entry -> {
 			// 모든 파라미터를 가지고와서 필터에 걸기
 			entry.getValue()[0] = filter.doFilter(entry.getValue()[0]);
-			
-			System.out.println(entry.getKey());
-			System.out.println(entry.getValue()[0]);
-			System.out.println("======================================");
-			
 		});
 		
 		

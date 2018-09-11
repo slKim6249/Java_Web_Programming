@@ -32,8 +32,8 @@ public class MemberDAOImpl implements MemberDAO {
       
       String query = "INSERT INTO USERS ( " +
             "   USER_ID, USER_NAME, USER_PASSWORD,  " +
-            "   IS_ADMIN_YN, CRT_DT, MDFY_DT)  " +
-            "VALUES ( ?, ?, ?, ?, SYSDATE, SYSDATE ) "; 
+            "   IS_ADMIN_YN, CRT_DT, MDFY_DT, SALT)  " +
+            "VALUES ( ?, ?, ?, ?, SYSDATE, SYSDATE, ? ) "; 
       try {
          conn = dataSource.getConnection();
          pstmt = conn.prepareStatement(query);
@@ -41,6 +41,7 @@ public class MemberDAOImpl implements MemberDAO {
          pstmt.setString(2, memberVO.getUserName());
          pstmt.setString(3, memberVO.getUserPassword());
          pstmt.setString(4, "Y");
+         pstmt.setString(5, memberVO.getSalt());
          pstmt.execute();
       }
       catch(SQLException sqle) {
@@ -213,7 +214,7 @@ public class MemberDAOImpl implements MemberDAO {
 
    @Override
    public boolean isBlockUser(String userId) {
-      String query = "SELECT LOGIN_FAIL_COUNT FROM USERS WHERE USER_ID = ? AND LAST_LOGIN + 1/24 >= SYSDATE";
+      String query = "SELECT LOGIN_FAIL_COUNT FROM USERS WHERE USER_ID = ? AND LATEST_LOGIN + 1/24 >= SYSDATE";
       
       Connection conn = null;
       PreparedStatement stmt = null;
@@ -271,7 +272,7 @@ public class MemberDAOImpl implements MemberDAO {
 
    @Override
    public boolean increaseLoginFailCount(String userId) {
-      String query = "UPDATE USERS SET LOGIN_FAIL_COUNT = LOGIN_FAIL_COUNT + 1, LAST_LOGIN = SYSDATE WHERE USER_ID = ? ";
+      String query = "UPDATE USERS SET LOGIN_FAIL_COUNT = LOGIN_FAIL_COUNT + 1, LATEST_LOGIN = SYSDATE WHERE USER_ID = ? ";
         
         Connection conn = null;
         PreparedStatement pstmt = null;

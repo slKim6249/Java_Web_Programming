@@ -14,7 +14,7 @@
         <result property="recommend" column="RECOMMEND"/>
         <result property="userName" column="USER_NAME"/>
         <result property="fileName" column="FILE_NAME"/>
-        <result property="originFileName" column="ORIGIN_FILE_NAME" />
+        <result property="originFileName" column="ORIGIN_FILE_NAME"/>
     </resultMap>
     
     <select id="getBoardById" parameterType="string" resultMap="getBoardByIdMap">
@@ -140,5 +140,6 @@
 		DELETE	
 		FROM	BOARD
 		WHERE	ID = #{id}
+		AND		USER_ID = #{userId}
     </delete>
 </mapper>

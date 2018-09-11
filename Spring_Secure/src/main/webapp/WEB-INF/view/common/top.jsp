@@ -33,7 +33,7 @@ $(document).ready(function() {
 		}
 		
 		
-		$.post("/HuCloud/member/login", $("#loginForm").serialize(), function(data) {
+		$.post("/HuCloud/memberlogin", $("#loginForm").serialize(), function(data) {
 			if(data == "OK") {
 				alert("로그인이 완료되었습니다. 페이지를 새로고침합니다.");
 				location.href="/HuCloud/member";

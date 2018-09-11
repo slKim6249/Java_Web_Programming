@@ -45,7 +45,7 @@ $(document).ready(function() {
 	<div class="content" style="float:left;">
 		<b style="font-size: 30px;">Write</b>
 		<form id="writeForm" name="writeForm" method="post" action="/HuCloud/board/writeArticle" enctype="multipart/form-data">
-		<input type="hidden" name="token" value="${sessionScope._CSRF_TOKEN_}" />
+			<input type="hidden" name="token" value="${sessionScope._CSRF_TOKEN_}" />
 		<table>
 			<tr>
 				<td>

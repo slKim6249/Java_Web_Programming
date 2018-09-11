@@ -7,15 +7,18 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import kr.co.hucloud.security.User;
 import kr.co.hucloud.security.code.example.common.Session;
 import kr.co.hucloud.security.code.example.common.util.SendMessage;
 import kr.co.hucloud.security.code.example.member.service.MemberService;
 import kr.co.hucloud.security.code.example.member.vo.LoginVO;
 import kr.co.hucloud.security.code.example.member.vo.MemberRegistryVO;
+import kr.co.hucloud.security.code.example.member.vo.MemberVO;
 
 @Controller
 public class MemberController {
@@ -26,32 +29,18 @@ public class MemberController {
       this.memberService = memberService;
    }
 
-   @RequestMapping(value=("/member/login"), method=RequestMethod.POST )
+   @RequestMapping(value=("/member/login"), method=RequestMethod.GET )
       public void login(LoginVO loginVO, HttpSession session, HttpServletResponse response) {
          
-         boolean isBlockAccount = memberService.isBlockUser(loginVO.getId());
-         boolean isLoginSuccess = false;
-         // 로그인 횟수 제한 방어코드 작성
-         if ( !isBlockAccount ){
-            isLoginSuccess = memberService.login(session, loginVO);
-            if ( !isLoginSuccess ){
-               memberService.increaseLoginFailCount(loginVO.getId());
-            }
-            else {
-               memberService.unBlockUser(loginVO.getId());
-            }
-         }
-         else {
-            SendMessage.send(response, "BLOCK_ACCOUNT");
-            return;
-         }
+         User user = (User) SecurityContextHolder.getContext().getAuthentication().getDetails();
          
-         // Token 값 생성 및 등록 코드 작성
-         if( isLoginSuccess ) {
-        	 String token = UUID.randomUUID().toString(); // Random 값
-        	 session.setAttribute(Session.CSRF_TOKEN, token);
-         }
+         loginVO.setId(user.getUsername());
+         loginVO.setPassword(user.getPassword());
          
+         boolean isLoginSuccess = memberService.login(session, loginVO);
+         if ( isLoginSuccess ) {
+        	 session.setAttribute(Session.CSRF_TOKEN, user.getToken());
+         }
          //이후 게시판 글 쓰기 페이지에서 Token 값 전달 받아 비교.
          SendMessage.send(response, isLoginSuccess ? "OK" : "NO");
       }
@@ -84,7 +73,7 @@ public class MemberController {
             return;
          }
          
-         //FIXME 회원가입시 비밀번호를 SHA-256 으로 SALT 이용해 암호화 하기
+         // 회원가입시 비밀번호를 SHA-256 으로 SALT 이용해 암호화 하기
          memberService.addMember(memberVO);
          SendMessage.send(response, "OK");
       }

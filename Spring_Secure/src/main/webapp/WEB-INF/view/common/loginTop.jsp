@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="s" uri="http://www.springframework.org/security/tags" %>
 <script type="text/javascript">
 $(document).ready(function() {
 	
@@ -27,7 +28,8 @@ $(document).ready(function() {
 		fullBlock().show();
 		
 		if(confirm("로그아웃 하시겠습니까?")) {
-			$.post("/HuCloud/member/logout", {}, function(data) {
+			location.href="/HuCloud/memberlogout"
+			/* $.post("/HuCloud/memberlogout", {}, function(data) {
 				if(data == "OK") {
 					location.href="/HuCloud";
 				}
@@ -35,7 +37,7 @@ $(document).ready(function() {
 					alert("로그아웃에 실패했습니다. 강사에게 문의하세요.");
 					fullBlock().hide();
 				}
-			});
+			}); */
 		}
 		else {
 			fullBlock().hide();
@@ -84,7 +86,10 @@ function fullBlock() {
 <div class="login">
 	<div class="wrapper" style="margin-top: 6px;">
 		<span class="button loginButton logout">Logout</span>
+		<s:authorize access="hasRole('ROLE_ADMIN')">
 		<span class="button registButton dropTable">Drop All Tables</span>
+		</s:authorize>
+		
 	</div>
 </div>
 <div class="wrapper">
