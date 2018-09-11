@@ -17,7 +17,6 @@ public class BoardVO {
 	private String originFileName;
 	private boolean isDelete;
 	private String token;
-
 	private MultipartFile file;
 
 	public int getId() {
@@ -124,6 +123,7 @@ public class BoardVO {
 		this.fileName = fileName;
 	}
 
+	
 	public String getOriginFileName() {
 		return originFileName == null ? "" : originFileName;
 	}

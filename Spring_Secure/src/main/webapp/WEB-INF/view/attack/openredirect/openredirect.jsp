@@ -29,9 +29,9 @@ $(document).ready(function() {
 	<div class="content" style="float:left;">
 		<form name="redirectURLForm" id="redirectURLForm" method="post" action="<c:url value='/attack/openredirect/url' />">
 			<select	id="redirectURL" name="redirectURL" class="tip" data-tip="아래 선택된 URL 들은 모두 주소값을 Value로 가진다. paros, WireShark 등을 통해 전달되는 파라미터가 변경될 수 있다.">
-				<option value="http://www.naver.com">Naver</option>
-				<option value="http://www.daum.net">DAUM</option>
-				<option value="http://www.google.com">Google</option>
+				<option value="1">Naver</option>
+				<option value="2">DAUM</option>
+				<option value="3">Google</option>
 			</select>
 			<input type="submit" value="Redirect" />
 		</form>

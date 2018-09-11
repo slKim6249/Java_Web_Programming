@@ -13,6 +13,8 @@ public interface MemberService {
 	public void addMember(MemberRegistryVO memberVO);
 
 	public boolean login(HttpSession session, LoginVO loginVO);
+	public boolean login(LoginVO loginVO);
+	public MemberVO getGrade(LoginVO loginVO); // 사용자의 권한
 
 	public List<MemberVO> getUserInfo(String parameter);
 	
