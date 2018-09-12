@@ -2,7 +2,11 @@ package com.ktds.youtube.video.web;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ktds.youtube.common.web.DownloadUtil;
 import com.ktds.youtube.video.service.VideoService;
 import com.ktds.youtube.video.vo.VideoVO;
 
@@ -46,9 +51,6 @@ public class VideoController {
 		
 		if ( !videoFile.isEmpty() && !posterFile.isEmpty() ) {
 			
-			String uploadVideoFile = videoFile.getOriginalFilename();
-			String uploadPosterFile = posterFile.getOriginalFilename();
-			
 			File uploadDir = new File(this.uploadPath);
 			
 			// 폴더가 없으면 만들기
@@ -62,7 +64,6 @@ public class VideoController {
 			// 경로 지정
 			File destVideoFile = new File(this.uploadPath, upVideoFile);
 			File destPosterFile = new File(this.uploadPath, upPosterFile);
-			
 			
 			try {
 				// 지정한곳에 파일 저장
@@ -78,7 +79,7 @@ public class VideoController {
 			
 		}
 		
-		videoService.createOneVideo(videoVO);
+		// videoService.createOneVideo(videoVO);
 		
 		return this.videoService.createOneVideo(videoVO) ? 
 				"redirect:/video/list" : "redirect:/video/create";
@@ -95,10 +96,25 @@ public class VideoController {
 	public ModelAndView viewOneVideoDetailPage( @PathVariable String id ) {
 		ModelAndView view = new ModelAndView("video/detail");
 		
-		VideoVO videoVO = videoService.readOneVideo(id);
-		view.addObject("videoVO", videoVO);
+		VideoVO video = videoService.readOneVideo(id);
+		view.addObject("video", video);
 		
 		return view;
+	}
+	
+	
+	@GetMapping("/video/download/{fileName}")
+	public void download( 
+							@PathVariable String fileName
+							, HttpServletRequest request
+							, HttpServletResponse response) {
+		
+		try {
+			new DownloadUtil(this.uploadPath + File.separator + fileName).download(request, response, fileName);
+		} catch (UnsupportedEncodingException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
+		
 	}
 	
 }

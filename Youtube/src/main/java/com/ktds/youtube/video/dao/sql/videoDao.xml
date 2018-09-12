@@ -42,16 +42,16 @@
   		WHERE	VIDEO_ID = #{videoId}
   	</delete>
   	
-  	<select id="selectOneVideo" parameterType="string" resultMap="videoResultMap">
-  		SELECT	VIDEO_ID videoId
-				, CHANNEL_ID channelId
-				, TITLE title
-				, UPLOAD_ID uploaderId
-				, RUNNING_TIME runningTime
-				, VIEW_COUNT viewCount
-				, UPLOAD_DATE uploadDate
-				, POSTER_PATH posterPath
-				, VIDEO_PATH videoPath
+  	<select id="selectOneVideo" parameterType="string" resultMap="videoResultMap"> <!-- ResultMap을 쓸 때는 alias를 쓰면 안된다. -->
+  		SELECT	VIDEO_ID
+				, CHANNEL_ID
+				, TITLE
+				, UPLOAD_ID
+				, RUNNING_TIME
+				, VIEW_COUNT
+				, UPLOAD_DATE
+				, POSTER_PATH
+				, VIDEO_PATH
 		FROM MOVIE
 		WHERE	VIDEO_ID = #{videoId}
   	</select>
@@ -63,21 +63,21 @@
 		<result property="uploaderId" column="UPLOAD_ID" />
 		<result property="runningTime" column="RUNNING_TIME" />
 		<result property="viewCount" column="VIEW_COUNT" />
-		<result property="uploaddate" column="UPLOAD_DATE" />
+		<result property="uploadDate" column="UPLOAD_DATE" />
 		<result property="posterPath" column="POSTER_PATH" />
 		<result property="videoPath" column="VIDEO_PATH" />
   	</resultMap>
   	
   	<select id="selectAllVideos" resultMap="videoResultMap">
-  		SELECT	VIDEO_ID videoId
-				, CHANNEL_ID channelId
-				, TITLE title
-				, UPLOAD_ID uploaderId
-				, RUNNING_TIME runningTime
-				, VIEW_COUNT viewCount
-				, UPLOAD_DATE uploadDate
-				, POSTER_PATH posterPath
-				, VIDEO_PATH videoPath
+  		SELECT	VIDEO_ID
+				, CHANNEL_ID
+				, TITLE
+				, UPLOAD_ID
+				, RUNNING_TIME
+				, VIEW_COUNT
+				, UPLOAD_DATE 
+				, POSTER_PATH 
+				, VIDEO_PATH 
 		FROM MOVIE
   	</select>
   	

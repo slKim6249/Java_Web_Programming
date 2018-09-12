@@ -56,6 +56,11 @@ section.inline > section {
 	vertical-align: top;
 }
 
+section.inline > section video {
+	width: 300px;
+	height: 250px;
+}
+
 footer {
 	height: 150px;
 	background-color: #333;
