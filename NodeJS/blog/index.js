@@ -2,8 +2,16 @@ const express = require("express");
 const bodypParser = require("body-parser");
 const morgan = require("morgan");
 const multipart = require("connect-multiparty");
+const session = require("express-session");
 //서버 생성
 const app = express(); //리퀘스트가 가면 얘부터 본다. 서버 생성되있으면 무시.
+
+// Session 사용 설정
+app.use( session({
+  secret: 'hello blog',
+  resave: false,
+  saveUninitialized: true
+}) );
 
 //Http request Logger
 app.use(morgan("combined")); //로그 설정

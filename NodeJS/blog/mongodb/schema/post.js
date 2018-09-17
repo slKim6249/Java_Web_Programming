@@ -6,7 +6,11 @@ const post = mongo.Schema({
   title: String,
   content: String,
   tags: [String],
-  auther: member
+  auther: {
+    id: String,
+    name: String,
+    point: Number
+  }
 });
   //post에 title, content, tags를 넣어서 쓸 수 있다.
   module.exports = mongo.model("post", post);

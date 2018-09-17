@@ -5,7 +5,7 @@ const member = mongo.Schema({
   id: String,
   password: String,
   name: String,
-  point, Number
+  point: Number
 });
   
   module.exports = mongo.model("member", member);
