@@ -1,0 +1,3 @@
+function cpus() {
+  return getCPUs(addCPUInfo, cpuValues, []);
+}

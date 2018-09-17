@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="/static/css/layout.css">
+    <script src="/jquery/jquery.min.js" charset="utf-8"></script>
+    <script type="text/javascript">
+      $().ready(function(){
+        alert("aa");
+      });
+
+    </script>
+    </script>
+  </head>
+  <body>
+    <% for (let post of postList ) { %>
+    <header>
+      <%= post.title %>
+    </header>
+    <article class="">
+      <%- post.content %>
+      <section>
+        <% for ( let tag of post.tags ) { %>
+        <span>#<%=tag%></span>
+        <% } %>
+      </section>
+    </article>
+    <% } %>
+  </body>
+</html>
