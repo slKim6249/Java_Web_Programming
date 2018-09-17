@@ -33,13 +33,7 @@ router.post('/login', (req, res) =>{
         }
     })
     
-    // const memberParams = req.body;
-    // memberParams.point = 100;
-
-    // const memberData = new member(memberParams);
-    // memberData.save();
-
-    // res.redirect('/member/login');
+    
 
 });
 
@@ -52,8 +46,14 @@ router.get('/regist', (req, res) =>{
     });
 });
 
-router.post('/regist', (req, res) =>{
+router.post('/post', (req, res) =>{
+    const params = req.body;
+    memberParams.point = 100;
 
+    const memberData = new member(memberParams);
+    memberData.save();
+
+    res.redirect('/member/login');
 });
 
 exports.router = router;
