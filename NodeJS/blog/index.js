@@ -29,9 +29,18 @@ app.use("/jquery", express.static(__dirname + "/node_modules/jquery/dist"));
 // URL Routing
 app.use("/emp", require("./routes/emp.route.js").router);
 app.use( require("./routes/index.route.js").router );
-app.use("/blog", require("./routes/blog.route.js").router);
 app.use("/fileupload", require("./routes/blog.route.js").router);
 app.use("/member", require("./routes/member.route.js").router);
+
+app.use((req, res, next) => { // 순서 중요
+  if( !req.session.USER ) {
+    res.redirect('/member/logun');
+    return;
+  }
+  next();
+})
+
+app.use("/blog", require("./routes/blog.route.js").router);
 
 app.use((req,res) => {  // 슬래시 주소 위에서부터 찾다가 여긴 무조건 들린다. 아무것도 못찾고 여기까지 왓기 때문에
                         // 사용자가 입력한 url찾순서대로 찾는데 위에서부터 그러므로 이 코드가 위에있다면 무조건 404만 뜬다.
