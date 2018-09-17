@@ -7,8 +7,7 @@
   
   	<typeAliases>
   		<typeAlias type="com.ktds.youtube.video.vo.VideoVO" alias="VideoVO"/>
-  		<typeAlias type="com.ktds.youtube.video.vo.GroupVideoVO" alias="GroupVideoVO"/>
-  		
+  		<typeAlias type="com.ktds.youtube.uploader.vo.UploaderVO" alias="UploaderVO" />
   	</typeAliases>
   
   </configuration>

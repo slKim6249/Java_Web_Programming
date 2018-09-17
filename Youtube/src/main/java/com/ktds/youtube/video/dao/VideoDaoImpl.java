@@ -7,12 +7,12 @@ import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.ktds.youtube.video.vo.GroupVideoVO;
+import com.ktds.youtube.video.service.VideoService;
 import com.ktds.youtube.video.vo.VideoVO;
 
 @Repository
 public class VideoDaoImpl extends SqlSessionDaoSupport implements VideoDao {
-
+	
 	@Autowired
 	@Override
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
@@ -40,13 +40,7 @@ public class VideoDaoImpl extends SqlSessionDaoSupport implements VideoDao {
 	}
 
 	@Override
-	public List<GroupVideoVO> selectAllVideos() {
+	public List<VideoVO> selectAllVideos() {
 		return getSqlSession().selectList("VideoDao.selectAllVideos");
 	}
-
-	@Override
-	public int updateViewCount(String videoId) {
-		return getSqlSession().update("VideoDao.updateViewCount", videoId);
-	}
-
 }

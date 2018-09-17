@@ -1,96 +1,72 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<!-- <script
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+ <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script> -->
-		<jsp:include page="/WEB-INF/view/common/layout/layout_header.jsp" />
-		<script type="text/javascript">
-	$().ready(function(){
-		$("#upload").click(function(){
-			
-			if( $("#video").val() =="" ) {
-				alert("ë¹„ë””ì˜¤ë¥¼ ì„ íƒ í•´ ì£¼ì„¸ìš”")
-				$("#video").focus()
-				return;
-			}
-			else if( $("#title").val() =="" ){
-				alert("ì œëª©ì„ ì…ë ¥ í•´ ì£¼ì„¸ìš”")
-				$("#title").focus()
-				return;
-			}
-			else if( $("#uploaderId").val() =="" ){
-				alert("ì—…ë¡œë”ë¥¼ ì…ë ¥ í•´ ì£¼ì„¸ìš”")
-				$("#uploaderId").focus()
-				return;
-			}
-			else if( $("#poster").val() =="" ){
-				alert("í¬ìŠ¤í„°ë¥¼ ì…ë ¥ í•´ ì£¼ì„¸ìš”.")
-				$("#poster").focus()
-				return;
-				
-			}
+  crossorigin="anonymous"></script>
+<script type="text/javascript">
+	$().ready( function(){
 		
+		$('#upload').click(function() {
 			
-			$("#videoUploadForm").attr({
-				"method" : "post",
-				"action" : "/Youtube/video/create",
-				"enctype" : "multipart/form-data"
-			})
-			.submit() 
-			
+			// JQuery ¹æ½ÄÀ¸·Î Form Data Àü¼Û
+			// ¶È°°Àº ÆûÀÌ¶óµµ Àü¼ÛÀÌ µÇ´Â À§Ä¡°¡ ´Ş¶óÁø´Ù.
+			// Validation Check¸¦ ÇÏ±â À§ÇØ¼­ Jquery¸¦ ¾´´Ù.
+			// inputÀÇ id·Î Valid Check
+			// ÀÌ»óÀÌ ÀÖÀ¸¸é return; À¸·Î Á¾·á
+			if( $('#video').val() == "" ) {
+				alert("ºñµğ¿À¸¦ ÀÔ·ÂÇØ ÁÖ¼¼¿ä.")
+				$('#video').focus()
+				return;
+			}
+			else if ( $('#title').val() == "" ) {
+				alert("Á¦¸ñÀ» ÀÔ·ÂÇØ ÁÖ¼¼¿ä.")
+				$('#title').focus()
+				return;
+			}
+			else if ( $('#uploaderId').val() == "" ) {
+				alert("¾÷·Î´õ¸¦ ÀÔ·ÂÇØ ÁÖ¼¼¿ä.")
+				$('#uploaderId').focus()
+				return;
+			}
+			else if ( $('#poster').val() == "" ) {
+				alert("Æ÷½ºÅÍ¸¦ ¼±ÅÃ·ÂÇØ ÁÖ¼¼¿ä.")
+				$('#poster').focus()
+				return;
+			}
+			// ¸ğµç °ÍÀÌ ÀÌ»óÀÌ ¾ø´Ù¸é sumbit
+			/* $('#videoUploadForm').attr({
+				'method': 'post',
+				'action': '/Youtube/video/create'
+			}) 
+			.submit() */
+			$("#videoUploadForm").submit();
 		})
+		
 	})
 </script>
+
+	<jsp:include page="/WEB-INF/view/common/layout/layout_header.jsp" /> <!-- ÇØ´ç °æ·Î¿¡ ÀÖ´Â ÆÄÀÏÀ» ÀÌ ºÎºĞ¿¡ Ã¤¿ö ³Ö´Â´Ù. -->
+				
 				<h1>Video Upload</h1>
 				
-				<form id="videoUploadForm" >
+				<form id="videoUploadForm" method="post" action="/Youtube/video/create" enctype="multipart/form-data" > 
 					<div>
-						<input type="file" id="video" name="video" accept=".mp4, .avi" />
-					</div> 
-					<div>
-						<input type="text" id="title" name="title"/>
+						<input type="file" id="video" name="video" accept=".mp4, .avi, .wmv, .mkv"/> <!-- accept·Î È®ÀåÀÚ¸¦ Á¤ÇÒ ¼ö ÀÖ´Ù. -->
 					</div>
 					<div>
-						<input type="text" id="uploaderId" name="uploaderId"/>
+						<input type="text" id="title" name="title" />
 					</div>
 					<div>
-						<input type="file" id="poster" name="poster" accept=".jpg, .jpeg, .png" />
+						<input type="text" id="uploaderId" name="uploaderId" />
 					</div>
 					<div>
-						<input type="button" id="upload" value="Upload"/>
+						<input type="file" id="poster" name="poster" accept=".jpg, .png, .jpeg" />
+					</div>
+					<div>
+						<input type="button" id="upload" value="Upload" />
 					</div>
 				</form>
-		<jsp:include page="/WEB-INF/view/common/layout/layout_footer.jsp" />					
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+				
+	<jsp:include page="/WEB-INF/view/common/layout/layout_footer.jsp" />
+			

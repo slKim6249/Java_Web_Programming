@@ -1,13 +1,15 @@
 package com.ktds.youtube.video.biz;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.ktds.youtube.video.dao.VideoDao;
-import com.ktds.youtube.video.vo.GroupVideoListVO;
 import com.ktds.youtube.video.vo.VideoVO;
 
-@Component
+@Service
 public class VideoBizImpl implements VideoBiz {
 	
 	@Autowired
@@ -24,8 +26,8 @@ public class VideoBizImpl implements VideoBiz {
 	}
 
 	@Override
-	public boolean deleteOneVideo(String videoID) {
-		return videoDao.deleteOneVideo(videoID) > 0;
+	public boolean deleteOneVideo(String videoId) {
+		return videoDao.deleteOneVideo(videoId) > 0;
 	}
 
 	@Override
@@ -34,15 +36,9 @@ public class VideoBizImpl implements VideoBiz {
 	}
 
 	@Override
-	public GroupVideoListVO readAllVideos() {
-		GroupVideoListVO videoList = new GroupVideoListVO();
-		videoList.setGroupVideoList(videoDao.selectAllVideos());
-		return videoList;
+	public List<VideoVO> readAllVideos() {
+		return videoDao.selectAllVideos();
 	}
 
-	@Override
-	public boolean updateViewCount(String videoId) {
-		return videoDao.updateViewCount(videoId) > 0;
-	}
 
 }

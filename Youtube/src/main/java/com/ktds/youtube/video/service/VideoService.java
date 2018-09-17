@@ -1,6 +1,7 @@
 package com.ktds.youtube.video.service;
 
-import com.ktds.youtube.video.vo.GroupVideoListVO;
+import java.util.List;
+
 import com.ktds.youtube.video.vo.VideoVO;
 
 public interface VideoService {
@@ -8,12 +9,11 @@ public interface VideoService {
 	public boolean createOneVideo(VideoVO videoVO);
 	
 	public boolean updateOneVideo(VideoVO videoVO);
-	public boolean updateViewCount(String videoId);
 	
-	public boolean deleteOneVideo(String videoID);
+	public boolean deleteOneVideo(String videoId);
 	
 	public VideoVO readOneVideo(String videoId);
 	
-	public GroupVideoListVO readAllVideos();
+	public List<VideoVO> readAllVideos();
 	
 }

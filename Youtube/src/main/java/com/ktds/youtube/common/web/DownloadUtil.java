@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * íŒŒì¼ ë‹¤ìš´ë¡œë“œë¥¼ ìœ ìš©í•˜ê²Œ í•¨.
- * Internet Explorer, Mozilia ëª¨ë‘ í˜¸í™˜
+ * ÆÄÀÏ ´Ù¿î·Îµå¸¦ À¯¿ëÇÏ°Ô ÇÔ.
+ * Internet Explorer, Mozilia ¸ğµÎ È£È¯
  * @author Minchang Jang (mc.jang@hucloud.co.kr)
  *
  */
@@ -26,10 +26,10 @@ public class DownloadUtil {
 	}
 	
 	/**
-	 * íŒŒì¼ì„ ë‹¤ìš´ë¡œë“œ í•¨.
+	 * ÆÄÀÏÀ» ´Ù¿î·Îµå ÇÔ.
 	 * @param request
 	 * @param response
-	 * @param displayFileName ë‹¤ìš´ë¡œë“œ í•  ë•Œ ì‚¬ìš©ìì—ê²Œ ë³´ì—¬ì§ˆ íŒŒì¼ì˜ ì´ë¦„
+	 * @param displayFileName ´Ù¿î·Îµå ÇÒ ¶§ »ç¿ëÀÚ¿¡°Ô º¸¿©Áú ÆÄÀÏÀÇ ÀÌ¸§
 	 * @throws UnsupportedEncodingException
 	 */
 	public void download(HttpServletRequest request,
@@ -41,28 +41,28 @@ public class DownloadUtil {
 		response.setContentType("application/download; charset=utf-8");
 		response.setContentLength( (int) downloadFile.length());
 		
-		// ì‚¬ìš©ìì˜ ë¸Œë¼ìš°ì ¸ ì •ë³´ë¥¼ ê°€ì ¸ì˜¨ë‹¤.
+		// »ç¿ëÀÚÀÇ ºê¶ó¿ìÁ® Á¤º¸¸¦ °¡Á®¿Â´Ù.
 		String userAgent = request.getHeader("User-Agent");
-		// ì‚¬ìš©ìì˜ ë¸Œë¼ìš°ì €ê°€ MicroSoft Internet Explorer ì¸ì§€ í™•ì¸í•œë‹¤.
+		// »ç¿ëÀÚÀÇ ºê¶ó¿ìÀú°¡ MicroSoft Internet Explorer ÀÎÁö È®ÀÎÇÑ´Ù.
 		boolean internetExplorer = userAgent.indexOf("MSIE") > -1;
 		if( !internetExplorer ) {
 			internetExplorer = userAgent.indexOf("Gecko") > -1;
 		}
 		
-		// ë‹¤ìš´ë¡œë“œí•  íŒŒì¼ì˜ ì´ë¦„ì„ ë¸Œë¼ìš°ì ¸ë³„ë¡œ ê°€ì ¸ì˜¨ë‹¤.
+		// ´Ù¿î·ÎµåÇÒ ÆÄÀÏÀÇ ÀÌ¸§À» ºê¶ó¿ìÁ®º°·Î °¡Á®¿Â´Ù.
 		String fileName = new String(displayFileName.getBytes(), "UTF-8");
 		if ( internetExplorer ) {
 			fileName = URLEncoder.encode(fileName, "UTF-8").replaceAll("\\+", "%20");
 		}
 		else {
-			// Fileì˜ ì´ë¦„ì„ UTF-8 íƒ€ì…ì—ì„œ ISO-8859-1 íƒ€ì…ìœ¼ë¡œ ë³€ê²½í•œë‹¤.
+			// FileÀÇ ÀÌ¸§À» UTF-8 Å¸ÀÔ¿¡¼­ ISO-8859-1 Å¸ÀÔÀ¸·Î º¯°æÇÑ´Ù.
 			fileName = new String(fileName.getBytes("UTF-8"), "ISO-8859-1");
 		}
 		
-		// ë¸Œë¼ìš°ì ¸ê°€ ë°›ì„ íŒŒì¼ì˜ ì´ë¦„ì„ responseì— ë“±ë¡í•œë‹¤.
+		// ºê¶ó¿ìÁ®°¡ ¹ŞÀ» ÆÄÀÏÀÇ ÀÌ¸§À» response¿¡ µî·ÏÇÑ´Ù.
 		response.setHeader("Content-Disposition",
 				"attachment; filename=\"" + fileName + "\";");
-		// ë¸Œë¼ìš°ì ¸ê°€ ë‹¤ìš´ë¡œë“œ ë°›ì€ í›„ Binary íŒŒì¼ë¡œ ìƒì„±í•˜ë¼ê³  ë³´ë‚¸ë‹¤.
+		// ºê¶ó¿ìÁ®°¡ ´Ù¿î·Îµå ¹ŞÀº ÈÄ Binary ÆÄÀÏ·Î »ı¼ºÇÏ¶ó°í º¸³½´Ù.
 		response.setHeader("Content-Transfer-Encoding", "binary");
 		
 		FileInputStream fin = null;
