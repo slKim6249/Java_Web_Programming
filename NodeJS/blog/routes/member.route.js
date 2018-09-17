@@ -21,12 +21,15 @@ router.post('/login', (req, res) =>{
     const password = req.body.password;
 
     member.find({ id: id, password: password }, (error, results) => {
-        if ( !error && results ) {
+        if ( !error && results[0] ) { // 0번이 Undifined라면, MonggoDB는 배열로 들어간다. 0번부터 들어간다.
             console.log(results);
-            if ( id == results.id && password == results.password ) {
-                req.session.USER = results;
+           // if ( id == results.id && password == results.password ) {
+                req.session.USER = results[0];
                 res.redirect('/blog');
-            }
+           // }
+        }
+        else {
+            res.redirect('/member/login'); // login 실패시 다시 login창으로
         }
     })
     
