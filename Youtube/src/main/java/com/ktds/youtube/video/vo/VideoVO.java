@@ -12,27 +12,16 @@ public class VideoVO {
 	private String uploadDate;
 	private String posterPath;
 	private String videoPath;
+	private String dateDiff;
 	
-	// fileUpload
 	private MultipartFile video;
 	private MultipartFile poster;
+
+	public VideoVO() {
+		this.videoPath = "";
+		this.posterPath ="";
+	}
 	
-	public MultipartFile getVideo() {
-		return video;
-	}
-
-	public void setVideo(MultipartFile video) {
-		this.video = video;
-	}
-
-	public MultipartFile getPoster() {
-		return poster;
-	}
-
-	public void setPoster(MultipartFile poster) {
-		this.poster = poster;
-	}
-
 	public String getVideoId() {
 		return videoId;
 	}
@@ -105,4 +94,28 @@ public class VideoVO {
 		this.videoPath = videoPath;
 	}
 
+	public MultipartFile getVideo() {
+		return video;
+	}
+
+	public void setVideo(MultipartFile video) {
+		this.video = video;
+	}
+
+	public MultipartFile getPoster() {
+		return poster;
+	}
+
+	public void setPoster(MultipartFile poster) {
+		this.poster = poster;
+	}
+
+	public String getDateDiff() {
+		return dateDiff;
+	}
+
+	public void setDateDiff(String dateDiff) {
+		this.dateDiff = dateDiff;
+	}
+	
 }
