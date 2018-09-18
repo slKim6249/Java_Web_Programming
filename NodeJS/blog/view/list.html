@@ -11,15 +11,23 @@
       });
 
     </script>
-    </script>
   </head>
   <body>
     <% for (let post of postList ) { %>
     <header>
-      <%= post.title %>
+      <a href="/blog">
+        <h1><%= post.title %></h1>
+      </a>
     </header>
     <article class="">
       <%- post.content %>
+      <%
+        for ( let file of post.files ) {
+      %>
+          <img src="/static/uploadFiles/ <%=files%>" style="width: 56px;" />
+      <%
+        }
+      %>
       <section>
         <% for ( let tag of post.tags ) { %>
         <span>#<%=tag%></span>

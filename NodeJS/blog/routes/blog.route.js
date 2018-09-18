@@ -2,6 +2,7 @@ const express = require("express");
 const fs = require("fs");
 const ejs = require("ejs"); // 이게 있어야 el, jstl같은 것들을 쓸 수 있다.
 const router = express.Router();
+const multipart = require("connect-multiparty");
 
 const mongo = require("../mongodb/mongo-client");
 const post = require("../mongodb/schema/post");
@@ -33,9 +34,36 @@ router.get("/post", (req, res) => {
   });
 });
 
-router.post("/post", (req, res) => {
+router.post("/post", multipart({ 
+    uploadDir : './static/uploadFiles'
+  }) , (req, res) => {
+
+
+  console.log(req.files);
+
   const params = req.body;
   console.log(params);
+  params.files = [];
+
+  if ( typeof req.files.file[Symbol.iterator] === 'function' ) {
+    for ( let file of req.files.file ) {
+      fillFiles(req.files.file.path);
+    }
+  }
+  else {
+    fillFiles(req.files.file.path);
+  }
+
+  function fillFiles(filePath) {
+    filePath = filePath.substring(filePath.lastIndexOf('\\')+1);
+    params.files.push(filePath);
+  }
+
+  for ( let file of req.files.file ) {
+    let filePath = file.path;
+    filePath = filePath.substring(filePath.lastIndexOf('\\')+2);
+    params.files.push(filePath);
+  }
 
   const postData = new post(params);
   postData.save();
@@ -61,7 +89,5 @@ router.post("/fileupload", (req, res) => {
   res.redirect("/blog");
 
 });
-
-
-
+                
 exports.router = router;

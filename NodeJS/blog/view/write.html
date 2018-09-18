@@ -4,8 +4,11 @@
     <meta charset="utf-8">
     <title></title>
     <script src="/jquery/jquery.min.js" charset="utf-8"></script>
+    <script src="/editor/ckeditor.js" charset="utf-8"></script>
     <script type="text/javascript">
       $().ready(function(){
+
+        ClassicEditor.create();
 
         $("#sendBtn").click(function(){
           $("#postForm").attr({
@@ -39,6 +42,9 @@
       </div>
       <div>
         <textarea id="content" name="content" placeholder="Content"></textarea>
+      </div>
+      <div>
+        <input type="file" class="file"  name="file" multiple placeholder="Choose File">
       </div>
       <div class="tags">
         <input type="text" class="tag" name="tags" placeholder="Tag" />

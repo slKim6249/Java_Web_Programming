@@ -25,6 +25,7 @@ app.use(multipart({ uploadDir:__dirname + "/multipart"}))
 //Static MiddleeWare
 app.use("/static", express.static(__dirname + "/static"));
 app.use("/jquery", express.static(__dirname + "/node_modules/jquery/dist"));
+app.use('')
 
 // URL Routing
 app.use("/emp", require("./routes/emp.route.js").router);

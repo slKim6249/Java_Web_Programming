@@ -6,6 +6,7 @@ const post = mongo.Schema({
   title: String,
   content: String,
   tags: [String],
+  files: [String],
   auther: {
     id: String,
     name: String,

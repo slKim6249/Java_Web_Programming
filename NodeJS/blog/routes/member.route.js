@@ -32,12 +32,25 @@ router.post('/login', (req, res) =>{
             res.redirect('/member/login'); // login 실패시 다시 login창으로
         }
     })
-    
-    
 
 });
 
-router.get('/regist', (req, res) =>{
+router.get('/post/:id', (res, req)=>{
+    const id = res.param.id;
+
+    // ObjectId Type 가져오기
+    const ObjectId = require("mongoose").Types.ObjectId;
+    post.find({_id: new ObjectId(id)}, (error, results) => {
+        if( !error && results[0] ) {
+            fs.readFile('./view/detail.html', 'utf-8', (error, data) => {
+                res.type('text/html')
+                rs.send( ejs.render(data, {post: results[0]}))
+            })
+        }
+    })
+})
+
+router.get('/post', (req, res) =>{
     fs.readFile('./view/member/regist.html', 'utf-8', (error, data) => {
         if( !error ) {
             res.type('text/html');
