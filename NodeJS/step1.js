@@ -1,4 +1,4 @@
-//모듈 Import 하는 방법
+// 모듈 Import 하는 방법
 const os = require("os");
 
 let hostname = os.hostname();

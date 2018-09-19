@@ -1,72 +1,45 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
+const mongo = require('../mongodb/mongo-client');
+const member = require('../mongodb/schema/member');
 
-const mongo = require("../mongodb/mongo-client");
-const member = require("../mongodb/schema/member");
-
-const fs = require("fs");
-
-router.get('/login', (req, res) =>{
-    fs.readFile('./view/member/login.html', 'utf-8', (error, data) => {
-        if( !error ) {
-            res.type('text/html');
-            res.send(data);
-        }
-    });
+router.get("/login", (req, res) => {
+  res.render("member/login");
 });
 
-router.post('/login', (req, res) =>{
+router.post("/login", (req, res) => {
+  const id = req.body.id;
+  const password = req.body.password;
 
-    const id = res.body.id;
-    const password = req.body.password;
-
-    member.find({ id: id, password: password }, (error, results) => {
-        if ( !error && results[0] ) { // 0번이 Undifined라면, MonggoDB는 배열로 들어간다. 0번부터 들어간다.
-            console.log(results);
-           // if ( id == results.id && password == results.password ) {
-                req.session.USER = results[0];
-                res.redirect('/blog');
-           // }
-        }
-        else {
-            res.redirect('/member/login'); // login 실패시 다시 login창으로
-        }
-    })
+  member.find({ id: id, password: password }, (error, results) => {
+    if ( !error && results[0] ) {
+      req.session.USER = results[0];
+      res.redirect("/blog")
+    }
+    else {
+      res.redirect("/member/login");
+    }
+  });
 
 });
 
-router.get('/post/:id', (res, req)=>{
-    const id = res.param.id;
-
-    // ObjectId Type 가져오기
-    const ObjectId = require("mongoose").Types.ObjectId;
-    post.find({_id: new ObjectId(id)}, (error, results) => {
-        if( !error && results[0] ) {
-            fs.readFile('./view/detail.html', 'utf-8', (error, data) => {
-                res.type('text/html')
-                rs.send( ejs.render(data, {post: results[0]}))
-            })
-        }
-    })
-})
-
-router.get('/post', (req, res) =>{
-    fs.readFile('./view/member/regist.html', 'utf-8', (error, data) => {
-        if( !error ) {
-            res.type('text/html');
-            res.send(data);
-        }
-    });
+router.get("/regist", (req, res) => {
+  res.render("member/regist");
 });
 
-router.post('/post', (req, res) =>{
-    const params = req.body;
-    memberParams.point = 100;
+router.post("/regist", (req, res) => {
+  const memberParams = req.body;
+  memberParams.point = 100;
 
-    const memberData = new member(memberParams);
-    memberData.save();
+  const memberData = new member(memberParams);
+  memberData.save();
 
-    res.redirect('/member/login');
+  res.redirect("/member/login");
+});
+
+router.get("/logout", (req, res) => {
+  req.session.destroy();
+  res.redirect("/member/login");
 });
 
 exports.router = router;

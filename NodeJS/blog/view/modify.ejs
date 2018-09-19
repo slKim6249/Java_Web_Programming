@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="/jquery/jquery.min.js" charset="utf-8"></script>
+    <script src="/editor/ckeditor.js" charset="utf-8"></script>
+    <script type="text/javascript">
+      $().ready( function () {
+
+        ClassicEditor.create(
+          document.querySelector("#content")
+          , {
+              ckfinder: { uploadUrl: 'http://localhost:3000/blog/image/upload'}
+            }
+        ).then((editor) => {
+          editor.setData(`<%- post.content %>`);
+        });
+
+
+        $("#sendBtn").click(function () {
+          $("#postForm").attr({
+            action: "/blog/modify/<%=post._id%>"
+            , method: "post"
+            , enctype: "multipart/form-data"
+          }).submit();
+        });
+
+        $("#append-tag").click(function () {
+          let tag = $(`<input type="text" class="tag" name="tags" placeholder="Tag" style="margin-right:6px;">;`);
+          $(this).before(tag);
+          tag.focus();
+        });
+
+        $(".tags").on("keydown", ".tag", function (e) {
+          if ( e.key == "," ) {
+            if ( $(this).val() != "" ) {
+                $("#append-tag").click();
+            }
+            return false;
+          }
+        });
+
+      });
+    </script>
+  </head>
+  <body>
+    <% include ./common/layout/menu %>
+    <form id="postForm">
+      <div class="">
+        <input type="text" id="title" name="title" placeholder="Title" value="<%=post.title%>">
+      </div>
+      <div class="">
+        <textarea id="content" name="content" placeholder="Content"></textarea>
+      </div>
+      <div class="">
+        <input type="file" class="file" name="file" placeholder="Choose upload files" multiple>
+      </div>
+      <div class="tags">
+        <% for ( let tag of post.tags ) { %>
+        <input type="text" class="tag" name="tags" placeholder="Tag" value="<%=tag%>">
+        <% } %>
+        <input type="button" id="append-tag" value="+">
+      </div>
+      <div class="">
+        <input type="button" id="sendBtn" value="Save">
+      </div>
+    </form>
+  </body>
+</html>

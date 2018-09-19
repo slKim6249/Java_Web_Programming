@@ -1,0 +1,52 @@
+<style type="text/css">
+  body {
+    padding: 0px;
+    margin: 0px;
+    font-size: 9pt;
+  }
+
+  nav {
+    background-color: #ddd;
+    padding: 15px;
+    margin-bottom: 15px;
+  }
+
+  nav ul {
+    padding: 0px;
+    margin: 0px;
+  }
+
+  nav ul > li {
+    display: inline-block;
+    margin-left: 30px;
+  }
+
+  nav ul > li:first-child {
+    margin-left: 0px;
+  }
+
+  a, a:visited {
+    text-decoration: none;
+    color: #333;
+  }
+
+  a:active {
+    text-decoration: underline;
+  }
+
+  a:hover {
+    color: #999;
+  }
+</style>
+<nav>
+  <ul>
+    <li><a href="/blog">Home</a></li>
+    <li><a href="/blog/post">Posts</a></li>
+    <% if ( !session ) { %>
+      <li><a href="/member/login">Login</a></li>
+      <li><a href="/member/regist">Regist</a></li>
+    <% } else { %>
+      <li><a href="/member/logout">Logout</a></li>
+    <% } %>
+  </ul>
+</nav>

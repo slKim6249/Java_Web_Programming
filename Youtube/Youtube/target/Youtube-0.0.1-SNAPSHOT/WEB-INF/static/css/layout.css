@@ -1,0 +1,91 @@
+@charset "UTF-8";
+
+body {
+	padding: 0px;
+	margin: 0px;
+}
+
+body, div, input, textarea, p, select, header, aside, section, footer
+, table, tr, td, th, tbody, thead, i, b, span, li, ul, ol {
+	font-size: 9pt;
+	color: #333;
+}
+
+* {
+	color: #333;
+}
+
+h1 {
+	padding: 0px;
+	margin: 0px;
+	margin-bottom: 17px;
+	font-size: 18pt;
+	font-weight: bold;
+}
+
+header {
+	height: 30px;
+	background-color: #ff6060;
+}
+
+section.inline > aside {
+	width: 200px;
+	background-color: #ddd;
+	position: fixed;
+	top: 30px;
+	bottom: 150px;
+}
+
+section.inline > section {
+	position: relative;
+	left: 200px;
+	padding: 15px;
+}
+
+section.inline {
+	
+}
+
+section.inline > aside,
+section.inline > section {
+	display: inline-block;
+	vertical-align: top;
+}
+
+footer {
+	height: 150px;
+	background-color: #333;
+	color: #eee;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+}
+
+/***********************************************/
+
+input, textarea {
+	padding: 10px;
+	width: 300px;
+	border: 1px solid #bbb;
+	border-radius: 7px;
+}
+
+form div {
+	margin-bottom: 10px;
+}
+
+form div:last-child {
+	margin-bottom: 0px;
+}
+
+
+
+
+
+
+
+
+
+
+
+

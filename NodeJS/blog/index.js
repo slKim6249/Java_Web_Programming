@@ -1,59 +1,75 @@
-const express = require("express");
-const bodypParser = require("body-parser");
-const morgan = require("morgan");
-const multipart = require("connect-multiparty");
-const session = require("express-session");
-//서버 생성
-const app = express(); //리퀘스트가 가면 얘부터 본다. 서버 생성되있으면 무시.
+const express = require('express');
+const bodyParser = require('body-parser');
+const morgan = require('morgan');
+const session = require('express-session');
+const path = require('path');
+
+// 서버 생성
+const app = express();
+
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'view'));
 
 // Session 사용 설정
-app.use( session({
-  secret: 'hello blog',
-  resave: false,
-  saveUninitialized: true
-}) );
+app.use(session({
+  secret: "hello blog"
+  , resave: false
+  , saveUninitialized: true
+}));
 
-//Http request Logger
-app.use(morgan("combined")); //로그 설정
+// Http request logger
+app.use(morgan("combined"));
 
-//body -parser Middleeware
-//form데이터가 있다면 request body에 넣어주겠다는 설정.
-app.use(bodypParser.urlencoded({extended: false}));
+// body-parser Middleware
+app.use(bodyParser.urlencoded({extended: false}));
 
-app.use(multipart({ uploadDir:__dirname + "/multipart"}))
-
-//Static MiddleeWare
+// Static Middleware
 app.use("/static", express.static(__dirname + "/static"));
 app.use("/jquery", express.static(__dirname + "/node_modules/jquery/dist"));
-app.use('')
+app.use("/editor", express.static(__dirname + "/node_modules/@ckeditor/ckeditor5-build-classic/build"));
 
-// URL Routing
-app.use("/emp", require("./routes/emp.route.js").router);
-app.use( require("./routes/index.route.js").router );
-app.use("/fileupload", require("./routes/blog.route.js").router);
+app.use((req, res, next) => {
+  res.locals.session = req.session.USER;
+  next();
+});
+
+// URL Routing - routing middleware
 app.use("/member", require("./routes/member.route.js").router);
 
-app.use((req, res, next) => { // 순서 중요
-  if( !req.session.USER ) {
-    res.redirect('/member/logun');
+app.use((req, res, next) => {
+  if ( !req.session.USER ) {
+    res.redirect("/member/login");
     return;
   }
   next();
-})
+});
 
+app.use("/emp", require("./routes/emp.route.js").router);
 app.use("/blog", require("./routes/blog.route.js").router);
+app.use(require("./routes/index.route.js").router);
 
-app.use((req,res) => {  // 슬래시 주소 위에서부터 찾다가 여긴 무조건 들린다. 아무것도 못찾고 여기까지 왓기 때문에
-                        // 사용자가 입력한 url찾순서대로 찾는데 위에서부터 그러므로 이 코드가 위에있다면 무조건 404만 뜬다.
-                        // 리스폰이 나갔냐 안나갔냐를가지고 다음으로 진행 할지 말지를 결정한다
-                        // 그래서 페이지 라우터에서는 순서가 엄청 중요하다.
+
+
+
+app.use((req,res) => {
   res.type("text/html");
   res.sendStatus(404);
 });
 
-
+// app.use( (req, res) => {
+//
+//   let id = req.query.id;
+//   let password = req.query.password;
+//
+//   res.type("text/html");
+//   res.send(`
+//     <h1>Hello, Express</h1>
+//     <p>${id}</p>
+//     <p>${password}</p>
+//     `);
+// });
 
 // 서버 실행
 app.listen(3000, () => {
-  console.log("htpp://localhost:3000 번에서 실행 중");
+  console.log("http://localhost:3000 번에서 실행 중");
 });

@@ -1,69 +1,83 @@
-const express = require("express");
-const fs = require("fs");
-const ejs = require("ejs"); // 이게 있어야 el, jstl같은 것들을 쓸 수 있다.
+const express = require('express');
+const mongo = require('../mongodb/mongo-client');
+const post = require('../mongodb/schema/post');
+const multipart = require('connect-multiparty');
+const fs = require('fs');
 const router = express.Router();
-const multipart = require("connect-multiparty");
 
-const mongo = require("../mongodb/mongo-client");
-const post = require("../mongodb/schema/post");
-
-// http:localhost:3000/blog로 들어 오면
 router.get("/", (req, res) => {
-  fs.readFile("./view/list.html", "utf-8", (error, data) => {
-    if ( !error ){
+  const posts = post.find({}, (error, results) => {
+    res.render("list", {postList: results});
+  });
+});
 
-      post.find({"tags": "123"}, (error, results) => {
-        console.log(results);
-        res.type("text/html");
-        res.send(ejs.render(data, {postList: results}));
-    });
+router.post("/image/upload", multipart( {uploadDir: './static/uploadFiles'} ), (req, res) => {
+  console.log(req.files);
 
+  const fileName = function(filePath) {
+    return filePath.substring( filePath.lastIndexOf("\\") + 1);
+  }(req.files.upload.path);
+
+  res.type("application/json");
+  res.send(JSON.stringify({
+    uploaded: true
+    , url: "/static/uploadFiles/" + fileName
+  }));
+});
+
+router.get("/post/:id", (req, res) => {
+  const id = req.params.id;
+
+  const objectId = require("mongoose").Types.ObjectId;
+  post.find({ _id: new objectId(id) }, (error, results) => {
+    if ( !error && results[0] ) {
+      res.render("detail", {post: results[0]});
     }
-    else{
-      console.log(error);
+  });
+});
+
+router.get("/post/tag/:tag", (req, res) => {
+  const tag = req.params.tag;
+  post.find({tags: tag}, (error, results) => {
+    if( !error && results ) {
+      res.render("list", {postList: results});
     }
   });
 });
 
 router.get("/post", (req, res) => {
-  fs.readFile("./view/write.html", "utf-8", (error, data) => {
-    if ( !error ){
-      res.type("text/html");
-      res.send(data);
-    }
-  });
+    res.render("write");
 });
 
-router.post("/post", multipart({ 
-    uploadDir : './static/uploadFiles'
-  }) , (req, res) => {
-
-
-  console.log(req.files);
-
+router.post("/post", multipart( {uploadDir: './static/uploadFiles'} ), (req, res) => {
   const params = req.body;
-  console.log(params);
+  params.author = req.session.USER;
+  const files = req.files;
   params.files = [];
 
-  if ( typeof req.files.file[Symbol.iterator] === 'function' ) {
-    for ( let file of req.files.file ) {
-      fillFiles(req.files.file.path);
+  // 여러개 파일 업로드
+  if ( typeof files.file[Symbol.iterator] === "function" ) {
+    for ( let file of files.file ) {
+      fillFiles(file.path);
     }
   }
+  // 한개 파일 업로드
   else {
-    fillFiles(req.files.file.path);
+    if ( files.file.size > 0 ) {
+      fillFiles(files.file.path);
+    }
+    else {
+      fs.unlink(files.file.path);
+    }
   }
 
   function fillFiles(filePath) {
-    filePath = filePath.substring(filePath.lastIndexOf('\\')+1);
+    filePath = filePath.substring( filePath.lastIndexOf("\\")+1 );
     params.files.push(filePath);
   }
 
-  for ( let file of req.files.file ) {
-    let filePath = file.path;
-    filePath = filePath.substring(filePath.lastIndexOf('\\')+2);
-    params.files.push(filePath);
-  }
+  console.log(params);
+  console.log(files);
 
   const postData = new post(params);
   postData.save();
@@ -71,23 +85,44 @@ router.post("/post", multipart({
   res.redirect("/blog");
 });
 
-router.get("/fileupload", (req, res) => {
-  fs.readFile("./view/fileupload.html", "utf-8", (error, data) => {
-    if ( !error ){
-      res.type("text/html");
-      res.send(data);
+router.get("/modify/:id", (req, res) => {
+  const ObjectId = require("mongoose").Types.ObjectId;
+  post.find({ _id: new ObjectId(req.params.id) }, (error, results) => {
+    if ( !error && results[0] ) {
+      res.render("modify", { post: results[0] });
+    }
+    else {
+      res.redirect("/post");
     }
   });
 });
 
-router.post("/fileupload", (req, res) => {
-  const params = req.body;
-  console.log(params);
+router.post("/modify/:id", multipart( {uploadDir: './static/uploadFiles'} ), (req, res) => {
+  const id = req.params.id;
+  const ObjectId = require("mongoose").Types.ObjectId;
 
-  console.log(res.file);
+  post.find({ _id: new ObjectId(id) }, (error, results) => {
+    if ( !error && results[0] ) {
+      const postData = new post(results[0]);
+      const postBody = req.body;
 
-  res.redirect("/blog");
+      postData.title = postBody.title;
+      postData.content = postBody.content;
+      postData.tags = postBody.tags;
 
+      postData.save();
+    }
+    res.redirect("/blog/post/" + id);
+  });
 });
-                
+
+router.get("/delete/:id", (req, res) => {
+  const id = req.params.id;
+  const ObjectId = require("mongoose").Types.ObjectId;
+
+  post.deleteOne({_id: new ObjectId(id)}, (error) => {
+    res.redirect("/blog");
+  });
+});
+
 exports.router = router;

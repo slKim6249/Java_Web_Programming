@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="/static/css/layout.css">
+    <script src="/jquery/jquery.min.js" charset="utf-8"></script>
+    <script type="text/javascript">
+      $().ready(function () {
+
+      });
+    </script>
+    <link rel="stylesheet" href="/static/css/editor.css">
+  </head>
+  <body>
+    <% include ./common/layout/menu %>
+    <% for ( let post of postList ) { %>
+      <header>
+        <a href="/blog/post/<%=post._id%>">
+          <h1><%= post.title %></h1>
+        </a>
+      </header>
+      <article class="">
+        <div class="ck ck-content ck-editor__editable ck-rounded-corners ck-blurred ck-editor__editable_inline">
+          <%- post.content %>
+        </div>
+        <div>
+          <%
+            for ( let file of post.files ) {
+            %>
+            <img src="/static/uploadFiles/<%=file%>" style="width: 50px;">
+          <%
+            }
+          %>
+        </div>
+        <section>
+          <% for ( let tag of post.tags ) { %>
+            <span>#<%= tag %></span>
+          <% } %>
+        </section>
+      </article>
+    <% } %>
+  </body>
+</html>

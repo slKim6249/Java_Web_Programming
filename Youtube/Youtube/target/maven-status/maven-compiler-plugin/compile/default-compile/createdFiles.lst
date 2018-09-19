@@ -1,0 +1,8 @@
+com\ktds\youtube\video\biz\VideoBiz.class
+com\ktds\youtube\video\service\VideoService.class
+com\ktds\youtube\video\dao\VideoDao.class
+com\ktds\youtube\video\dao\VideoDaoImpl.class
+com\ktds\youtube\video\web\VideoController.class
+com\ktds\youtube\video\biz\VideoBizImpl.class
+com\ktds\youtube\video\service\VideoServiceImpl.class
+com\ktds\youtube\video\vo\VideoVO.class
