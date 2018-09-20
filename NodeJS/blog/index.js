@@ -46,6 +46,7 @@ app.use((req, res, next) => {
 
 app.use("/emp", require("./routes/emp.route.js").router);
 app.use("/blog", require("./routes/blog.route.js").router);
+app.use("/chat", require("./routes/chat.route.js").router);
 app.use(require("./routes/index.route.js").router);
 
 
