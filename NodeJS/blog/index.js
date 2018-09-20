@@ -125,9 +125,9 @@ socket.on('disconnect', () => {
                           , { safe: true }
                           , ( error, obj ) => {
                             if ( !error ) {
-                              chat.find({'room_name': data.roomName}, (error, results) => {
+                              chat.find({'room_name': roomName}, (error, results) => {
                                 const members = results[0].members;
-                                io.sockets.in(data.roomName).emit('getMemberList', {members: members});
+                                io.sockets.in(roomName).emit('getMemberList', {members: members});
                               })
                             }
                           });
@@ -138,5 +138,9 @@ socket.on('disconnect', () => {
 
 // 2.채팅 전송받고, 모두에게 전달하기
 socket.on('send', (data) => {
+
+  chat.update({ 'room_name': data.roomName }
+              , { $push: { chat: data } } );
+
   io.sockets.in(data.roomName).emit('receive', data);
 })
