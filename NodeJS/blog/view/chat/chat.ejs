@@ -21,7 +21,9 @@
     <h2>입장할 방을 선택해 주세요.</h2>
     <ul>
         <% for (let room of rooms) { %>
-        <li><%=room.room_name%> <%room.members.length%>명</li>
+        <li>
+            <a href="/chat/<%=room.room_name%>"><%=room.room_name%> (<%room.members.length%>명)</a>
+        </li>
         <% } %>
     </ul>
 

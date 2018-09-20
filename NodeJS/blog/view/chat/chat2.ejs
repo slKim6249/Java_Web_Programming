@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="/jquery/jquery.min.js" charset="utf-8"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript">
+        $().ready(function() {
+            // Socket에 연결하기
+           const socket = io.connect();
+
+            // emit ==> Event Call
+           socket.emit('enter_room', {
+               roomName: '<%=data.room_name%>',
+               me: {
+                   id: '<%=data.me.id%>',
+                   name: '<%=data.me.name%>',
+                   point: '<%=data.me.point%>'
+               }
+           });
+
+           // 누구님이 입장하셨습니다. 를 보여주기
+           socket.on('welcome', (data) => {
+               const welcomeMessage = $('<div>${data.message}</div>');
+               $('.chat').append(welcomeMessage);
+               $('.chat').scrollTop(document.querySelector('.chat').scrollHeight);
+           })
+
+           // 채팅 내용 전달받기
+           socket.on('receive', (data) => {
+               const chatMessage = $('<div><div class="from" data-id="${data.me.id}">${data.me.id}</div> <div class="message">${data.message}</div> </div>')
+                $('.chat').append(chatMessage);
+           })
+
+           // 채팅 전송하기
+           $('#chat').keydown(function(e) {
+               if( e.key == 'Enter' ) {
+                   socket.emit('send', {
+                    roomName: '<%=data.room_name%>',
+                    me: {
+                        id: '<%=data.me.id%>',
+                        name: '<%=data.me.name%>',
+                        point: '<%=data.me.point%>'
+                    },
+                    message: $('#chat').val()
+                   })
+               }
+           });
+
+           // 접속자 받아오기
+           socket.on('getMemberList', (data) => {
+               for ( let member of data.members ) {
+                   let li = $('<li data-id="${member.id}">${member.name}</li>')
+                   $('.members').append(li);
+               }
+           })
+        })
+    </script>
+</head>
+<body>
+        <% include ../common/layout/menu %>
+        <h2><%=data.room_name%></h2>
+        <div class="chat">
+        <div class="">
+            <ul class="members">
+
+            </ul>
+        </div>
+        </div>
+        <div> 
+            <input type="hidden" id="name" name="name" value="<%=data.me.name%>" />
+            <textarea name="chat" id="chat"></textarea>
+        </div>
+</body>
+</html>

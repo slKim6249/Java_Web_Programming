@@ -26,7 +26,30 @@ router.post("/", (req, res) => {
 
     chatData.save();
 
-    res.render("<h1>채팅방이 개설되었습니다.</h1>");
+    res.render("chat/chat2", {
+        'data': {
+            'room_name': roomName,
+            'me': user
+        }
+    });
 })
+
+router.get("/chat/:roomName", (req,res) => {
+    const roomName = req.params.roomName;
+    const user = req.session.USER;
+
+    chat.find({'room_name': roomName}, (error, results) => {
+        const oneChatRoom = new chat(results[0])
+        oneChatRoom.members.push(me)
+        oneCharRoom.save();
+
+        res.render("chat/chat2", {
+            'data': {
+                'room_name': roomName,
+                'me': me
+            }
+        });
+    })
+});
 
 exports.router = router;
