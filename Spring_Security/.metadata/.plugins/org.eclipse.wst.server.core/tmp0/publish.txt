@@ -1,0 +1,4 @@
+#Tomcat publish data
+#Wed Sep 19 15:52:51 KST 2018
+org.eclipse.jst.jee.server\:/binary\:C\:\\Users\\Admin\\.m2\\repository\\org\\springframework\\spring-web\\4.1.6.RELEASE\\spring-web-4.1.6.RELEASE.jar=WEB-INF/lib/spring-web-4.1.6.RELEASE.jar
+org.eclipse.jst.jee.server\:/binary\:C\:\\Source\\workspace\\HuCloud\\src\\main\\webapp\\WEB-INF\\lib\\spring-web-4.1.5.RELEASE.jar=WEB-INF/lib/spring-web-4.1.5.RELEASE.jar
